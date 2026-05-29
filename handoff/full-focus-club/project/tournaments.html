@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Турниры — Full Focus · CS2, Dota 2, Valorant · Призовые и эфир на Twitch</title>
+<meta name="description" content="Регулярные турниры по CS2, Dota 2 и Valorant в сети клубов Full Focus. Призовой фонд до 100 000₽, до 16 команд, прямой эфир на Twitch. Зарегистрируй команду на ближайший турнир." />
+
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="club-styles.css" />
+<link rel="stylesheet" href="events-styles.css" />
+<link rel="stylesheet" href="tournaments-styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- React 18 + Babel (pinned) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+        integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+        integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+        integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+        crossorigin="anonymous"></script>
+
+<script src="image-slot.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "CS2 5×5 — Кубок Василеостровской",
+  "startDate": "2026-06-14T14:00:00+03:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Full Focus Василеостровская",
+    "address": "Санкт-Петербург, Бугский переулок, 3"
+  },
+  "organizer": { "@type": "Organization", "name": "Full Focus", "url": "https://fullfocusclub.ru" },
+  "description": "Турнир по Counter-Strike 2 формата 5×5. Призовой фонд 100 000₽, 16 команд, прямой эфир на Twitch."
+}
+</script>
+</head>
+<body>
+
+<div id="app"></div>
+
+<!-- Shared homepage primitives (icons, button, card, hooks) -->
+<script type="text/babel" src="components/shared.jsx"></script>
+<script type="text/babel" src="components/Layout.jsx"></script>
+<script type="text/babel" src="components/club/ClubIcons.jsx"></script>
+
+<!-- Tournaments page -->
+<script type="text/babel" src="components/tournaments/TournamentsIcons.jsx"></script>
+<script type="text/babel" src="components/tournaments/TournamentsData.jsx"></script>
+<script type="text/babel" src="components/tournaments/TournamentsNav.jsx"></script>
+<script type="text/babel" src="components/tournaments/TournamentsHero.jsx"></script>
+<script type="text/babel" src="components/tournaments/NextTournament.jsx"></script>
+<script type="text/babel" src="components/tournaments/TeamForm.jsx"></script>
+<script type="text/babel" src="components/tournaments/TournamentsHow.jsx"></script>
+<script type="text/babel" src="components/tournaments/TournamentCalendar.jsx"></script>
+<script type="text/babel" src="components/tournaments/TournamentsGallery.jsx"></script>
+<script type="text/babel" src="components/tournaments/TournamentsFAQ.jsx"></script>
+
+<script type="text/babel" data-presets="env,react">
+  const { ProgressBar, Ticker, Footer } = window.FF;
+  const {
+    TournamentsNav, TournamentsHero, NextTournament, TeamForm,
+    TournamentsHow, TournamentCalendar, TournamentsGallery, TournamentsFAQ,
+  } = window.TOURN_PAGE;
+
+  const App = () => (
+    <React.Fragment>
+      <ProgressBar />
+      <Ticker />
+      <TournamentsNav />
+      <main>
+        <TournamentsHero />
+        <NextTournament />
+        <TeamForm />
+        <TournamentsHow />
+        <TournamentCalendar />
+        <TournamentsGallery />
+        <TournamentsFAQ />
+      </main>
+      <Footer />
+    </React.Fragment>
+  );
+
+  ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+</script>
+</body>
+</html>

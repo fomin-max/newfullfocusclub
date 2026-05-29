@@ -1,0 +1,381 @@
+/* ============================================================
+   Full Focus — colors & type
+   Cybersport club franchise, dark sci-fi aesthetic.
+   Tokens lifted from the brandbook (Glitch Core / Neon Bloom /
+   Deep Memory / System Fog / Softlight) and from the legacy
+   `fullfocusclub` React codebase (font stack, scrollbar).
+   ============================================================ */
+
+/* ---------- Fonts ---------- */
+
+/* Audiowide — display / logo / hero Latin words.
+   Latin glyphs only. Use ONLY for "FULL FOCUS" lockup and the
+   biggest hero headlines that are Latin. */
+@font-face {
+  font-family: 'Audiowide';
+  src: local('Audiowide'),
+       url('fonts/Audiowide-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Orbitron — H2/H3, numbers, button labels, all uppercase
+   technical UI text. Covers Latin only; falls back to Magistral
+   for Cyrillic so display behaves consistently. */
+@font-face {
+  font-family: 'Orbitron';
+  src: url('fonts/Orbitron-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Orbitron';
+  src: url('fonts/Orbitron-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Orbitron';
+  src: url('fonts/Orbitron-SemiBold.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Orbitron';
+  src: url('fonts/Orbitron-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Orbitron';
+  src: url('fonts/Orbitron-ExtraBold.woff2') format('woff2');
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Orbitron';
+  src: url('fonts/Orbitron-Black.woff2') format('woff2');
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+
+/* Magistral — Cyrillic headings & buttons (the brandbook's
+   secondary face). Licensed copy supplied by the brand. */
+@font-face {
+  font-family: 'Magistral';
+  src: url('fonts/Magistral-Book.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Magistral';
+  src: url('fonts/Magistral-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Magistral';
+  src: url('fonts/Magistral-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Magistral';
+  src: url('fonts/Magistral-ExtraBold.woff2') format('woff2');
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+
+/* Grandis Extended — alt body / banners (brandbook secondary).
+   Licensed copy supplied by the brand. Use when copy needs more
+   editorial width than Magistral. */
+@font-face {
+  font-family: 'Grandis Extended';
+  src: url('fonts/GrandisExtended-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Grandis Extended';
+  src: url('fonts/GrandisExtended-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Grandis Extended';
+  src: url('fonts/GrandisExtended-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* Inter — body text in production landing (per franchise brief).
+   Use the Google Fonts CDN import in document <head>:
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+*/
+
+:root {
+  /* ============================================================
+     COLOR TOKENS — named exactly as the brandbook names them
+     ============================================================ */
+
+  /* Glitch Core — "пульс системы. цвет сбоя, ставшего стилем"
+     Primary brand purple. Use for borders, glow, focus, link. */
+  --ff-glitch-core:        #6632FA;
+  --ff-glitch-core-soft:   rgba(102, 50, 250, 0.6);
+  --ff-glitch-core-line:   rgba(102, 50, 250, 0.3);
+  --ff-glitch-core-wash:   rgba(102, 50, 250, 0.12);
+  --ff-glitch-core-haze:   rgba(102, 50, 250, 0.05);
+
+  /* Neon Bloom — "оазис в пустыне пикселей"
+     Mint accent. Use for CTAs, key numbers, dividers, success. */
+  --ff-neon-bloom:         #00FFB6;
+  --ff-neon-bloom-soft:    rgba(0, 255, 182, 0.6);
+  --ff-neon-bloom-line:    rgba(0, 255, 182, 0.3);
+  --ff-neon-bloom-wash:    rgba(0, 255, 182, 0.08);
+
+  /* Deep Memory — "фоновая тьма" (page background) */
+  --ff-deep-memory:        #080223;
+
+  /* Surface — one notch lighter than Deep Memory for cards */
+  --ff-surface:            #0D0630;
+  --ff-surface-elev:       #15093F;  /* hover/elevated card */
+  --ff-surface-line:       rgba(255, 255, 255, 0.06);
+
+  /* Softlight — "цифровой рассвет" (primary text) */
+  --ff-softlight:          #F2F2F7;
+
+  /* System Fog — "туман, в котором теряются сигналы" (muted) */
+  --ff-system-fog:         #9D9D9C;
+  --ff-system-fog-deep:    #6B6B70;  /* for fine print */
+
+  /* Semantic / state */
+  --ff-danger:             #EF3D52;
+  --ff-success:            var(--ff-neon-bloom);
+  --ff-warning:            #FFB800;
+
+  /* Alpha whites (lifted from fullfocusclub variables.scss) */
+  --ff-white-03:           rgba(255, 255, 255, 0.03);
+  --ff-white-10:           rgba(255, 255, 255, 0.10);
+  --ff-white-25:           rgba(255, 255, 255, 0.25);
+  --ff-white-40:           rgba(255, 255, 255, 0.40);
+  --ff-white-60:           rgba(255, 255, 255, 0.60);
+  --ff-white-80:           rgba(255, 255, 255, 0.80);
+
+  /* Gradients (brandbook page 14) */
+  --ff-grad-radial:        radial-gradient(ellipse at center,
+                            rgba(102, 50, 250, 0.55) 0%,
+                            rgba(102, 50, 250, 0.18) 40%,
+                            rgba(8, 2, 35, 0) 70%);
+  --ff-grad-linear:        linear-gradient(135deg,
+                            #6632FA 0%, #00FFB6 100%);
+  --ff-grad-free:          linear-gradient(160deg,
+                            #6632FA 0%, #080223 100%);
+  --ff-grad-text:          linear-gradient(90deg,
+                            #6632FA 0%, #00FFB6 100%);
+  /* Hero background mesh */
+  --ff-grad-mesh:
+    radial-gradient(at 12% 18%, rgba(102, 50, 250, 0.45) 0%, transparent 45%),
+    radial-gradient(at 88% 78%, rgba(0, 255, 182, 0.18)  0%, transparent 40%),
+    radial-gradient(at 50% 110%, rgba(102, 50, 250, 0.30) 0%, transparent 55%),
+    #080223;
+
+  /* ============================================================
+     TYPE TOKENS
+     ============================================================ */
+
+  /* Stacks. The body stack puts Inter first (production target)
+     and falls back to the brandbook's Magistral/Grandis if Inter
+     fails to load. */
+  --ff-font-display:       'Audiowide', 'Orbitron', system-ui, sans-serif;
+  --ff-font-heading:       'Orbitron', 'Magistral', 'Grandis Extended', system-ui, sans-serif;
+  --ff-font-heading-cyr:   'Magistral', 'Grandis Extended', 'Orbitron', system-ui, sans-serif;
+  --ff-font-body:          'Inter', 'Magistral', 'Grandis Extended', system-ui, sans-serif;
+  --ff-font-mono:          'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Sizes — desktop. Hero uses a fluid clamp on the landing. */
+  --ff-fs-hero:            clamp(56px, 9vw, 140px);   /* Audiowide */
+  --ff-fs-h1:              clamp(40px, 5vw, 72px);    /* Orbitron 700 */
+  --ff-fs-h2:              clamp(28px, 3.4vw, 48px);  /* Orbitron 700 */
+  --ff-fs-h3:              clamp(20px, 2vw, 28px);    /* Orbitron 600 */
+  --ff-fs-stat:            clamp(40px, 5vw, 72px);    /* Orbitron 700, mint */
+  --ff-fs-label:           12px;                       /* Orbitron 600 upper */
+  --ff-fs-button:          14px;                       /* Orbitron 700 upper */
+  --ff-fs-body-lg:         18px;
+  --ff-fs-body:            16px;
+  --ff-fs-body-sm:         14px;
+  --ff-fs-caption:         12px;
+
+  /* Tracking */
+  --ff-track-display:      0.02em;
+  --ff-track-heading:      0.04em;
+  --ff-track-label:        0.18em;
+  --ff-track-button:       0.14em;
+  --ff-track-body:         0.01em;
+
+  /* Leading */
+  --ff-lh-display:         1.02;
+  --ff-lh-heading:         1.08;
+  --ff-lh-body:            1.55;
+  --ff-lh-tight:           1.2;
+
+  /* ============================================================
+     SPACING / RADII / ELEVATION
+     ============================================================ */
+  --ff-space-1:            4px;
+  --ff-space-2:            8px;
+  --ff-space-3:            12px;
+  --ff-space-4:            16px;
+  --ff-space-5:            24px;
+  --ff-space-6:            32px;
+  --ff-space-7:            48px;
+  --ff-space-8:            64px;
+  --ff-space-9:            96px;
+  --ff-space-10:           128px;
+
+  --ff-radius-sm:          4px;
+  --ff-radius-md:          8px;
+  --ff-radius-lg:          12px;   /* default card / button radius */
+  --ff-radius-xl:          20px;
+  --ff-radius-pill:        999px;
+
+  /* Notch / clipped-corner clip-path used on all buttons and
+     some cards. 12px bottom-right cut. */
+  --ff-clip-notch-12:      polygon(0 0, 100% 0, 100% calc(100% - 12px),
+                                   calc(100% - 12px) 100%, 0 100%);
+  --ff-clip-notch-16:      polygon(0 0, 100% 0, 100% calc(100% - 16px),
+                                   calc(100% - 16px) 100%, 0 100%);
+  /* Both-corner variant for hero CTA pills */
+  --ff-clip-notch-both:    polygon(12px 0, 100% 0, 100% calc(100% - 12px),
+                                   calc(100% - 12px) 100%, 0 100%, 0 12px);
+
+  /* Elevation — glow rather than drop-shadow. Sci-fi feel. */
+  --ff-glow-mint:          0 0 0 1px rgba(0, 255, 182, 0.40),
+                           0 0 24px rgba(0, 255, 182, 0.35),
+                           0 0 60px rgba(0, 255, 182, 0.18);
+  --ff-glow-purple:        0 0 0 1px rgba(102, 50, 250, 0.50),
+                           0 0 28px rgba(102, 50, 250, 0.40),
+                           0 0 80px rgba(102, 50, 250, 0.20);
+  --ff-glow-soft:          0 8px 32px rgba(8, 2, 35, 0.6),
+                           0 0 0 1px rgba(102, 50, 250, 0.20);
+  --ff-shadow-card:        0 16px 48px rgba(8, 2, 35, 0.55);
+
+  /* Card blur */
+  --ff-blur-glass:         blur(12px);
+  --ff-blur-nav:           blur(20px);
+
+  /* ============================================================
+     MOTION
+     ============================================================ */
+  --ff-ease-out:           cubic-bezier(0.16, 1, 0.3, 1);
+  --ff-ease-in-out:        cubic-bezier(0.4, 0, 0.2, 1);
+  --ff-dur-fast:           160ms;
+  --ff-dur-base:           240ms;
+  --ff-dur-slow:           480ms;
+  --ff-dur-reveal:         700ms;
+  --ff-dur-pulse:          2400ms;
+  --ff-dur-mesh:           10s;     /* hero mesh loop */
+}
+
+/* ============================================================
+   SEMANTIC TYPE UTILITIES
+   Opt-in helpers — prefixed `.ff-type-*` to avoid collisions
+   with structural class names in UI kits (e.g. `.ff-hero` is
+   a section in the franchise landing).
+   ============================================================ */
+
+.ff-type-hero {
+  font-family: var(--ff-font-display);
+  font-weight: 400;
+  font-size: var(--ff-fs-hero);
+  line-height: var(--ff-lh-display);
+  letter-spacing: var(--ff-track-display);
+  text-transform: uppercase;
+  color: var(--ff-softlight);
+}
+
+.ff-type-h1 {
+  font-family: var(--ff-font-heading);
+  font-weight: 700;
+  font-size: var(--ff-fs-h1);
+  line-height: var(--ff-lh-heading);
+  letter-spacing: var(--ff-track-heading);
+  text-transform: uppercase;
+  color: var(--ff-softlight);
+}
+
+.ff-type-h2 {
+  font-family: var(--ff-font-heading);
+  font-weight: 700;
+  font-size: var(--ff-fs-h2);
+  line-height: var(--ff-lh-heading);
+  letter-spacing: var(--ff-track-heading);
+  text-transform: uppercase;
+  color: var(--ff-softlight);
+}
+
+.ff-type-h3 {
+  font-family: var(--ff-font-heading);
+  font-weight: 600;
+  font-size: var(--ff-fs-h3);
+  line-height: var(--ff-lh-heading);
+  letter-spacing: var(--ff-track-heading);
+  text-transform: uppercase;
+  color: var(--ff-softlight);
+}
+
+.ff-type-stat {
+  font-family: var(--ff-font-heading);
+  font-weight: 700;
+  font-size: var(--ff-fs-stat);
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--ff-neon-bloom);
+  font-variant-numeric: tabular-nums;
+}
+
+.ff-type-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ff-font-heading);
+  font-weight: 600;
+  font-size: var(--ff-fs-label);
+  letter-spacing: var(--ff-track-label);
+  text-transform: uppercase;
+  color: var(--ff-neon-bloom);
+  padding: 6px 10px;
+  border: 1px solid var(--ff-neon-bloom-line);
+  border-radius: 0;
+}
+.ff-type-label::before {
+  content: "";
+  width: 16px;
+  height: 1px;
+  background: var(--ff-neon-bloom);
+}
+
+.ff-type-body {
+  font-family: var(--ff-font-body);
+  font-weight: 400;
+  font-size: var(--ff-fs-body);
+  line-height: var(--ff-lh-body);
+  letter-spacing: var(--ff-track-body);
+  color: var(--ff-white-80);
+}
+
+.ff-type-body-lg {
+  font-family: var(--ff-font-body);
+  font-weight: 400;
+  font-size: var(--ff-fs-body-lg);
+  line-height: var(--ff-lh-body);
+  color: var(--ff-white-80);
+}
+
+.ff-type-caption {
+  font-family: var(--ff-font-body);
+  font-weight: 400;
+  font-size: var(--ff-fs-caption);
+  line-height: 1.5;
+  color: var(--ff-system-fog);
+}
+
+.ff-type-mono {
+  font-family: var(--ff-font-mono);
+  font-feature-settings: "tnum";
+}
+
+.ff-text-gradient {
+  background: var(--ff-grad-text);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}

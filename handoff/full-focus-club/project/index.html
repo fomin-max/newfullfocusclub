@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Full Focus — Сеть киберспортивных клубов в Санкт-Петербурге</title>
+<meta name="description" content="8 клубов нового поколения. Топовое железо, атмосфера и технологии. От 120₽/час. Круглосуточно." />
+
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- React 18 + Babel (pinned) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+        integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+        integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+        integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+        crossorigin="anonymous"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Сколько стоит час игры?","acceptedAnswer":{"@type":"Answer","text":"От 120₽/час для школьников и студентов в будние дни. Стандартный тариф от 170₽/час."}},
+    {"@type":"Question","name":"Как забронировать место?","acceptedAnswer":{"@type":"Answer","text":"Оставьте заявку на сайте или напишите в Telegram клуба."}},
+    {"@type":"Question","name":"Работаете ли вы круглосуточно?","acceptedAnswer":{"@type":"Answer","text":"Да, все клубы работают круглосуточно без выходных."}},
+    {"@type":"Question","name":"Есть ли PlayStation в клубах?","acceptedAnswer":{"@type":"Answer","text":"Да, во всех клубах есть зоны с PS5."}}
+  ]
+}
+</script>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script type="text/babel" src="components/shared.jsx"></script>
+<script type="text/babel" src="components/Layout.jsx"></script>
+<script type="text/babel" src="components/Hero.jsx"></script>
+<script type="text/babel" src="components/FindClub.jsx"></script>
+<script type="text/babel" src="components/SocialStats.jsx"></script>
+<script type="text/babel" src="components/HowItWorks.jsx"></script>
+<script type="text/babel" src="components/Zones.jsx"></script>
+<script type="text/babel" src="components/Promos.jsx"></script>
+<script type="text/babel" src="components/Loyalty.jsx"></script>
+<script type="text/babel" src="components/Reviews.jsx"></script>
+<script type="text/babel" src="components/FranchiseSection.jsx"></script>
+<script type="text/babel" src="components/FFPay.jsx"></script>
+<script type="text/babel" src="components/Tournament.jsx"></script>
+<script type="text/babel" src="components/EventsFranchise.jsx"></script>
+<script type="text/babel" src="components/FAQ.jsx"></script>
+
+<script type="text/babel" data-presets="env,react">
+  const {
+    ProgressBar, Ticker, Navbar, MobileStickyBar, Footer,
+    Hero, FindClub, SocialStats, HowItWorks, Zones, Promos, Loyalty,
+    Reviews, FranchiseSection, FFPay, Tournament, EventsFranchise, FAQ,
+  } = window.FF;
+
+  const App = () => (
+    <React.Fragment>
+      <ProgressBar />
+      <Ticker />
+      <Navbar />
+      <main>
+        <Hero />
+        <FindClub />
+        <SocialStats />
+        <HowItWorks />
+        <Zones />
+        <Promos />
+        <Loyalty />
+        <Tournament />
+        <Reviews />
+        <FranchiseSection />
+        <FFPay />
+        <EventsFranchise />
+        <FAQ />
+      </main>
+      <Footer />
+      <MobileStickyBar />
+    </React.Fragment>
+  );
+
+  ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+</script>
+</body>
+</html>
