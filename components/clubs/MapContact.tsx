@@ -9,8 +9,7 @@ const CLUB_PAGES: Record<string, string> = {
   elektrosila:      '/clubs/elektrosila',
   komendantsky:     '/clubs/komendantsky',
   prosvescheniya:   '/clubs/prosvescheniya',
-  begovaya:         '/clubs/begovaya',
-  sadovaya:         '/clubs/sadovaya',
+sadovaya:         '/clubs/sadovaya',
   tekhnologichesky: '/clubs/tekhnologichesky',
   makhachkala:      '/clubs/makhachkala',
 }
