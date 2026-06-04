@@ -1,4 +1,5 @@
 import Icon from './Icon'
+import LogoFull from './LogoFull'
 
 const CLUBS = [
   ['Василеостровская', '#bf9e4d', '/clubs/vasilyeostrovsky'],
@@ -24,10 +25,7 @@ export default function Footer() {
 
       <div className="ff-footer__inner">
         <div className="ff-footer__brand">
-          <span className="ff-logo">
-            <span className="ff-logo__dot" />
-            FULL FOCUS
-          </span>
+          <LogoFull className="ff-footer__logo-full" height={40} />
           <p className="ff-footer__tagline">
             Сеть киберспортивных клубов нового поколения · С 2022 года
           </p>
@@ -82,10 +80,20 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="ff-footer__copy">
-        <span>© 2022–2026 Full Focus. Все права защищены.</span>
-        <span>ИНН 7810943662 · ОГРН 1227800036860</span>
-        <span>fullfocusclub.ru</span>
+      <div className="ff-footer__legal">
+        <div className="ff-footer__legal-top">
+          <a href="/privacy" className="ff-footer__policy">Политика обработки персональных данных</a>
+          <span className="ff-footer__legal-site">fullfocusclub.ru</span>
+        </div>
+        <div className="ff-footer__legal-body">
+          <p>© 2022–2026. Full Focus Co. Ltd.</p>
+          <p>All rights reserved.</p>
+          <p>&nbsp;</p>
+          <p>Общество с ограниченной ответственностью «ФУЛЛ ФОКУС»</p>
+          <p>ИНН / КПП 7810943662 / 781001001</p>
+          <p>ОГРН 1227800036860</p>
+          <p>196128, г. Санкт-Петербург, вн.тер.г. муниципальный округ Московская застава, пр-кт Московский, д. 149А, литера А, помещ. 1-Н, раб.м. 1-Ф</p>
+        </div>
       </div>
     </footer>
   )

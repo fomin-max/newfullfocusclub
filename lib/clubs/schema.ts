@@ -9,9 +9,11 @@ export function buildClubSchema(d: ClubData) {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': ['GameStore', 'LocalBusiness'],
+        '@type': ['GameStore', 'EntertainmentBusiness', 'LocalBusiness'],
         '@id': `${baseUrl}#business`,
         name: `Full Focus · ${d.CLUB.NAME}`,
+        description: `Компьютерный клуб и киберспортивная арена Full Focus у м. ${d.CLUB.METRO}. ${d.CLUB_ZONES.length} игровых зон: от PRO ZONE с RTX 4090 до PS5 Lounge. Работаем круглосуточно.`,
+        keywords: `компьютерный клуб, киберспортивный клуб, игровой клуб, компьютерный клуб ${d.CLUB.METRO}, киберспортивный клуб ${d.CLUB.METRO}, компьютерный клуб Санкт-Петербург`,
         url: baseUrl,
         telephone: d.CLUB.PHONE.replace(/[^+\d]/g, ''),
         address: {
@@ -62,11 +64,21 @@ export function buildClubSchema(d: ClubData) {
       },
       {
         '@type': 'FAQPage',
-        mainEntity: d.FAQ.map(item => ({
-          '@type': 'Question',
-          name: item.q,
-          acceptedAnswer: { '@type': 'Answer', text: item.a },
-        })),
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: `Есть ли компьютерный клуб рядом с метро ${d.CLUB.METRO}?`,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: `Да, Full Focus — компьютерный клуб и киберспортивная арена у м. ${d.CLUB.METRO} (${d.CLUB.METRO_TIME}). Адрес: ${d.CLUB.ADDRESS}, Санкт-Петербург. Работаем круглосуточно, от ${minPrice}₽/час.`,
+            },
+          },
+          ...d.FAQ.map(item => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: item.a },
+          })),
+        ],
       },
     ],
   }
@@ -74,12 +86,13 @@ export function buildClubSchema(d: ClubData) {
 
 export function buildClubMetadata(d: ClubData): Metadata {
   const minPrice = Math.min(...d.CLUB_ZONES.map(z => z.priceFrom))
-  const title       = `Full Focus · ${d.CLUB.NAME} — ${d.CLUB.ADDRESS} · Круглосуточно`
-  const description = `Киберспортивный клуб Full Focus на ${d.CLUB.METRO}: ${d.CLUB_ZONES.length} зон, RTX 4090, своя кухня. От ${minPrice}₽/час. ${d.CLUB.HOURS}. ${d.CLUB.ADDRESS}, СПб.`
+  const title       = `Full Focus · ${d.CLUB.NAME} — Компьютерный клуб 24/7 у м. ${d.CLUB.METRO}`
+  const description = `Компьютерный клуб Full Focus у м. ${d.CLUB.METRO}: ${d.CLUB_ZONES.length} игровых зон, RTX 4090, PS5, своя кухня. Киберспортивные турниры и корпоративы. От ${minPrice}₽/час. ${d.CLUB.ADDRESS}, СПб.`
 
   return {
     title,
     description,
+    keywords: `компьютерный клуб ${d.CLUB.METRO}, киберспортивный клуб ${d.CLUB.METRO}, компьютерный клуб Санкт-Петербург, игровой клуб СПб, Full Focus ${d.CLUB.NAME}`,
     metadataBase: new URL('https://fullfocusclub.ru'),
     alternates: { canonical: `/clubs/${d.CLUB.SLUG}` },
     openGraph: {

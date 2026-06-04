@@ -26,14 +26,13 @@ export default function Promos() {
               <Card className="ff-promo" brackets>
                 <div className="ff-promo__head">
                   <span className="ff-promo__num">{String(i + 1).padStart(2, '0')} / 06</span>
-                  {p.code && <span className="ff-promo__chip">КОД</span>}
+                  {p.code && <span className="ff-promo__chip">{p.code}</span>}
                 </div>
                 <span style={{ color: 'var(--ff-neon-bloom)', display: 'inline-flex' }}>
                   <Icon name={p.icon} size={26} />
                 </span>
                 <h3 className="ff-promo__title">{p.title}</h3>
                 <p className="ff-promo__desc">{p.desc}</p>
-                {p.code && <span className="ff-promo__code">{p.code}</span>}
               </Card>
             </Reveal>
           ))}

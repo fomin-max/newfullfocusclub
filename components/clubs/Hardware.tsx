@@ -32,7 +32,7 @@ export default function Hardware() {
       <div className="ff-section__inner">
         <Reveal>
           <div className="ff-section-head">
-            <span className="ff-tag">— технические характеристики</span>
+            <span className="ff-tag">технические характеристики</span>
             <h2 className="ff-section-head__title">НА ЧЁМ ТЫ БУДЕШЬ ИГРАТЬ</h2>
             <p className="ff-section-head__sub">
               Топовые конфигурации в каждой зоне — игры запускаются моментально,

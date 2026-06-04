@@ -33,8 +33,8 @@ export default function Features() {
               )
             })}
             <div className="cl-bento__cell cl-bento__cell--deco">
-              <span className="cl-bento__hash">// 01 / 08</span>
-              <h3 className="cl-bento__name" style={{ fontSize: 18 }}>ОДИН ИЗ ВОСЬМИ КЛУБОВ FF</h3>
+              <span className="cl-bento__hash">// 01 / 07</span>
+              <h3 className="cl-bento__name" style={{ fontSize: 18 }}>ОДИН ИЗ СЕМИ КЛУБОВ FF</h3>
               <p className="cl-bento__desc">
                 Сеть с 2022 — топовое железо, единые стандарты, программа лояльности действует во всех клубах.
               </p>

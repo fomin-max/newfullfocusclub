@@ -14,7 +14,7 @@ export default function ClubEvents() {
       <div className="ff-section__inner">
         <Reveal>
           <div className="ff-section-head">
-            <span className="ff-tag">— организуем под ключ</span>
+            <span className="ff-tag">организуем под ключ</span>
             <h2 className="ff-section-head__title">ПРОВЕДИ МЕРОПРИЯТИЕ В КЛУБЕ</h2>
             <p className="ff-section-head__sub">
               Корпоратив, день рождения или закрытый турнир — берём на себя сценарий, кейтеринг, технику и призы.

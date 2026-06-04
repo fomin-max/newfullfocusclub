@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useTilt } from '@/lib/hooks'
 import Card from '@/components/ui/Card'
 import Reveal from '@/components/ui/Reveal'
+import Icon from '@/components/ui/Icon'
 
 const CLUBS = [
   { id: 'vasil',   name: 'Василеостровская',         metro: 'м. Василеостровская',         color: '#bf9e4d', x: 32, y: 38, zones: ['PRO', 'DUO', 'BOOTCAMP', 'ARENA', 'SOLO', 'LOUNGE'], href: '/clubs/vasilyeostrovsky' },
@@ -41,6 +42,26 @@ function ClubCard({ c, setActive }: { c: typeof CLUBS[0]; setActive: (id: string
 
 export default function FindClub() {
   const [active, setActive] = useState<string | null>(null)
+  const rowRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const row = rowRef.current
+    if (!row) return
+
+    const onWheel = (e: WheelEvent) => {
+      // пропускаем горизонтальный скролл трекпада (он уже работает нативно)
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
+      if (row.scrollWidth <= row.clientWidth + 1) return
+      const atStart = row.scrollLeft <= 0
+      const atEnd = row.scrollLeft >= row.scrollWidth - row.clientWidth - 1
+      if ((e.deltaY < 0 && atStart) || (e.deltaY > 0 && atEnd)) return
+      e.preventDefault()
+      row.scrollLeft += e.deltaY
+    }
+
+    row.addEventListener('wheel', onWheel, { passive: false })
+    return () => row.removeEventListener('wheel', onWheel)
+  }, [])
 
   return (
     <section id="find" className="ff-section ff-find">
@@ -48,7 +69,7 @@ export default function FindClub() {
         <Reveal className="ff-section-head">
           <span className="ff-tag">Карта клубов</span>
           <h2 className="ff-section-head__title">Найди свой клуб</h2>
-          <p className="ff-section-head__sub">7 локаций в шаговой доступности от метро. Открыто 24/7.</p>
+          <p className="ff-section-head__sub">8 локаций в шаговой доступности от метро. Открыто 24/7.</p>
         </Reveal>
 
         <Reveal>
@@ -95,13 +116,16 @@ export default function FindClub() {
           </div>
         </Reveal>
 
-        <div className="ff-find__row" role="list">
+        <div className="ff-find__row" role="list" ref={rowRef}>
           {CLUBS.map((c, i) => (
-            <Reveal key={c.id} delay={i * 100}>
+            <Reveal key={c.id} delay={i * 100} className="ff-find__row-cell">
               <ClubCard c={c} setActive={setActive} />
             </Reveal>
           ))}
         </div>
+        <p className="ff-find__hint" aria-hidden="true">
+          <Icon name="arrowRight" size={14} /> Листай вбок — колесом или свайпом
+        </p>
       </div>
     </section>
   )

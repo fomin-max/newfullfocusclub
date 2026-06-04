@@ -1,7 +1,9 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useScrolled, useActiveSection } from '@/lib/hooks'
 import Icon from './Icon'
+import LogoFull from './LogoFull'
 
 const NAV_LINKS = [
   { id: 'find',       name: 'Клубы' },
@@ -19,13 +21,14 @@ const ALL_IDS = ['hero', ...NAV_LINKS.map(l => l.id)]
 export default function Header() {
   const scrolled = useScrolled(60)
   const active = useActiveSection(ALL_IDS)
+  const pathname = usePathname()
+  const logoHref = pathname === '/' ? '#hero' : '/'
 
   return (
     <header className={`ff-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="ff-header__inner">
-        <a className="ff-logo" href="#hero">
-          <span className="ff-logo__dot" />
-          FULL FOCUS
+        <a className="ff-logo" href={logoHref} aria-label="Full Focus — киберспортивный клуб, на главную">
+          <LogoFull className="ff-logo__full" height={34} />
         </a>
         <ul className="ff-nav">
           {NAV_LINKS.map(l => (

@@ -24,8 +24,12 @@ export default function ClubZones() {
   }, [])
 
   useEffect(() => {
-    if (isMobile) return
     const wrap = wrapRef.current; const track = trackRef.current
+    if (isMobile) {
+      if (wrap)  wrap.style.height = ''
+      if (track) track.style.transform = ''
+      return
+    }
     if (!wrap || !track) return
     const update = () => {
       const overflow = Math.max(0, track.scrollWidth - window.innerWidth + 80)
@@ -45,7 +49,7 @@ export default function ClubZones() {
       <div className="cl-zones__sticky">
         <div className="cl-zones__head">
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            <span className="ff-tag">— {CLUB_ZONES.length} форматов</span>
+            <span className="ff-tag">{CLUB_ZONES.length} форматов</span>
             <h2>ВЫБЕРИ СВОЙ ФОРМАТ</h2>
           </div>
           <div className="cl-zones__progress">▸ <strong>{Math.round(progress * 100)}%</strong> / 100</div>

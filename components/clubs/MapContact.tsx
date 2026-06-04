@@ -1,6 +1,8 @@
 'use client'
 
+import { useRef, useEffect } from 'react'
 import Icon from '@/components/ui/Icon'
+import Card from '@/components/ui/Card'
 import Reveal from '@/components/ui/Reveal'
 import { useClubData } from './ClubDataContext'
 
@@ -9,24 +11,52 @@ const CLUB_PAGES: Record<string, string> = {
   elektrosila:      '/clubs/elektrosila',
   komendantsky:     '/clubs/komendantsky',
   prosvescheniya:   '/clubs/prosvescheniya',
-sadovaya:         '/clubs/sadovaya',
+  sadovaya:         '/clubs/sadovaya',
   tekhnologichesky: '/clubs/tekhnologichesky',
   makhachkala:      '/clubs/makhachkala',
+}
+
+const CLUB_ZONES: Record<string, string[]> = {
+  vasilyeostrovsky: ['PRO', 'DUO', 'BOOTCAMP', 'ARENA', 'SOLO', 'LOUNGE'],
+  elektrosila:      ['PRO', 'MAX', 'DUO', 'LOUNGE'],
+  komendantsky:     ['PRO', 'MAX', 'BOOTCAMP', 'LOUNGE'],
+  prosvescheniya:   ['PRO', 'MAX', 'BOOTCAMP', 'DUO', 'SOLO', 'LOUNGE'],
+  sadovaya:         ['PRO', 'MAX', 'BOOTCAMP', 'DUO', 'LOUNGE'],
+  tekhnologichesky: ['PRO', 'MAX', 'BOOTCAMP', 'LOUNGE'],
+  makhachkala:      ['BOOTCAMP', 'QUADRO', 'TRIO', 'DUO', 'SOLO', 'LOUNGE'],
 }
 
 export default function MapContact() {
   const { CLUB, ALL_CLUBS } = useClubData()
   const { MAP } = CLUB
+  const rowRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const row = rowRef.current
+    if (!row) return
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return
+      if (row.scrollWidth <= row.clientWidth + 1) return
+      const atStart = row.scrollLeft <= 0
+      const atEnd = row.scrollLeft >= row.scrollWidth - row.clientWidth - 1
+      if ((e.deltaY < 0 && atStart) || (e.deltaY > 0 && atEnd)) return
+      e.preventDefault()
+      row.scrollLeft += e.deltaY
+    }
+    row.addEventListener('wheel', onWheel, { passive: false })
+    return () => row.removeEventListener('wheel', onWheel)
+  }, [])
+
   const otherClubs = ALL_CLUBS
     .filter(c => c.slug !== CLUB.SLUG)
-    .map(c => ({ ...c, href: CLUB_PAGES[c.slug] ?? '/#find' }))
+    .map(c => ({ ...c, href: CLUB_PAGES[c.slug] ?? '/#find', zones: CLUB_ZONES[c.slug] ?? [] }))
 
   return (
     <section id="contacts" className="ff-section" data-screen-label="10 · КОНТАКТЫ">
       <div className="ff-section__inner">
         <Reveal>
           <div className="ff-section-head">
-            <span className="ff-tag">— как добраться</span>
+            <span className="ff-tag">как добраться</span>
             <h2 className="ff-section-head__title">КАРТА И КОНТАКТЫ</h2>
           </div>
         </Reveal>
@@ -109,18 +139,29 @@ export default function MapContact() {
               </a>
             </div>
           </Reveal>
-          <Reveal delay={80}>
-            <div className="cl-other-clubs__row">
-              {otherClubs.map(c => (
-                <a key={c.slug} className="cl-otherclub" href={c.href}>
-                  <span className="cl-otherclub__metro" style={{ '--metro-color': c.color } as React.CSSProperties}>{c.metro}</span>
-                  <span className="cl-otherclub__name">FF · {c.name}</span>
-                  <span className="cl-otherclub__addr">{c.addr}</span>
-                  <span className="cl-otherclub__cta">К клубу</span>
-                </a>
-              ))}
-            </div>
-          </Reveal>
+
+          <div className="ff-find__row" ref={rowRef}>
+            {otherClubs.map(c => (
+              <div key={c.slug} className="ff-find__row-cell">
+                <Card brackets className="ff-club">
+                  <div className="ff-club__name">{c.name}</div>
+                  <div className="ff-club__metro">
+                    <span className="ff-club__metro-dot" style={{ '--metro-color': c.color } as React.CSSProperties}>М</span>
+                    {c.metro}
+                  </div>
+                  {c.zones.length > 0 && (
+                    <div className="ff-club__zones">
+                      {c.zones.map(z => <span key={z} className="ff-club__zone">{z}</span>)}
+                    </div>
+                  )}
+                  <a href={c.href} className="ff-club__more" role="button">Подробнее</a>
+                </Card>
+              </div>
+            ))}
+          </div>
+          <p className="ff-find__hint" aria-hidden="true">
+            <Icon name="arrowRight" size={14} /> Листай вбок — колесом или свайпом
+          </p>
         </div>
       </div>
     </section>

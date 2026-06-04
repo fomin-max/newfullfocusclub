@@ -8,8 +8,13 @@ import { useBooking } from './BookingContext'
 import type { IconName } from '@/components/ui/Icon'
 
 export default function ClubHero() {
-  const { CLUB }        = useClubData()
-  const { openBooking } = useBooking()
+  const { CLUB, CLUB_ZONES } = useClubData()
+  const { openBooking }      = useBooking()
+
+  const topGpu = CLUB_ZONES
+    .map(z => { const m = z.specShort.match(/RTX (\d+)/); return m ? parseInt(m[1]) : 0 })
+    .reduce((a, b) => Math.max(a, b), 0)
+  const mediaStat = `● ${CLUB_ZONES.length} ЗОН · RTX ${topGpu}`
   const mediaRef        = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -33,7 +38,7 @@ export default function ClubHero() {
           <source src={CLUB.VIDEO_URL} type="video/mp4" />
         </video>
         <span className="cl-hero__cursor" />
-        <div className="cl-hero__media-coord">{CLUB.COORDS}</div>
+        <div className="cl-hero__media-coord">{mediaStat}</div>
         <div className="cl-hero__media-meta">
           <span>{CLUB.MEDIA_LABEL}</span>
           <span><strong>● LIVE</strong> · Санкт-Петербург</span>
@@ -42,7 +47,7 @@ export default function ClubHero() {
 
       <div className="cl-hero__panel">
         <Reveal>
-          <span className="cl-hero__badge">— {CLUB.NAME.toUpperCase()}</span>
+          <span className="cl-hero__badge">{CLUB.NAME.toUpperCase()}</span>
         </Reveal>
         <Reveal delay={80}>
           <h1 className="cl-hero__title">

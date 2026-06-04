@@ -13,7 +13,7 @@ export default function ClubFAQ() {
       <div className="ff-section__inner">
         <Reveal>
           <div className="ff-section-head">
-            <span className="ff-tag">— частые вопросы</span>
+            <span className="ff-tag">частые вопросы</span>
             <h2 className="ff-section-head__title">ВОПРОСЫ И ОТВЕТЫ</h2>
           </div>
         </Reveal>

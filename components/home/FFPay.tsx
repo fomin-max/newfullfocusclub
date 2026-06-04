@@ -13,6 +13,7 @@ export default function FFPay() {
               <span className="ff-pay__brand-mark">F</span>
               FULL FOCUS <span style={{ color: 'var(--ff-neon-bloom)' }}>PAY</span>
             </span>
+            <span className="ff-pay__own">Собственная разработка Full Focus</span>
             <h2 className="ff-pay__title">Пополни Steam<br />прямо здесь</h2>
             <p className="ff-pay__desc">
               Пополняй Steam и зарубежные игровые сервисы — быстро, безопасно, без лишних шагов. Курсы рынка, поддержка 24/7.

@@ -9,6 +9,7 @@ import SocialStats from '@/components/home/SocialStats'
 import HowItWorks from '@/components/home/HowItWorks'
 import Zones from '@/components/home/Zones'
 import Promos from '@/components/home/Promos'
+import Partners from '@/components/home/Partners'
 import Loyalty from '@/components/home/Loyalty'
 import Tournament from '@/components/home/Tournament'
 import Reviews from '@/components/home/Reviews'
@@ -40,9 +41,11 @@ const schemaOrg = {
     {
       '@type': 'FAQPage',
       mainEntity: [
+        { '@type': 'Question', name: 'Full Focus — это компьютерный клуб или киберспортивный?',
+          acceptedAnswer: { '@type': 'Answer', text: 'Full Focus — это сеть современных компьютерных клубов нового поколения (киберспортивных клубов) в Санкт-Петербурге и Махачкале. 7 клубов с мощными ПК RTX 4090, зонами PS5, своей кухней и профессиональными турнирами.' } },
         { '@type': 'Question', name: 'Сколько стоит час игры в Full Focus?',
           acceptedAnswer: { '@type': 'Answer', text: 'От 120₽/час для школьников и студентов в будние дни пн-пт 10:00–16:00. Стандартный тариф — от 170₽/час.' } },
-        { '@type': 'Question', name: 'Как забронировать место в клубе Full Focus?',
+        { '@type': 'Question', name: 'Как забронировать место в компьютерном клубе Full Focus?',
           acceptedAnswer: { '@type': 'Answer', text: 'Оставьте заявку на сайте или напишите в Telegram @fullfocusclub. Бронь подтверждается в течение 15 минут.' } },
         { '@type': 'Question', name: 'Работаете ли вы круглосуточно?',
           acceptedAnswer: { '@type': 'Answer', text: 'Да, все клубы работают круглосуточно без выходных.' } },
@@ -70,6 +73,7 @@ export default function Home() {
         <HowItWorks />
         <Zones />
         <Promos />
+        <Partners />
         <Loyalty />
         <Tournament />
         <Reviews />

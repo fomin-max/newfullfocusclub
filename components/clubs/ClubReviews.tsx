@@ -34,7 +34,7 @@ export default function ClubReviews() {
         <Reveal>
           <div className="cl-reviews__head">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <span className="ff-tag">— что говорят гости</span>
+              <span className="ff-tag">что говорят гости</span>
               <h2 className="ff-section-head__title" style={{ margin: 0 }}>ОТЗЫВЫ ИЗ ЯНДЕКСА И 2ГИС</h2>
             </div>
             <div className="cl-reviews__rating">

@@ -487,6 +487,7 @@
 .cl-zones__progress strong { color: var(--ff-neon-bloom); }
 .cl-zones__track {
   flex: 1;
+  min-height: 0;            /* respect sticky's 100vh instead of growing to tallest card */
   display: flex;
   gap: 24px;
   padding: 24px 40px 60px;
@@ -1368,71 +1369,6 @@
   text-transform: uppercase;
   color: var(--ff-softlight);
 }
-.cl-other-clubs__row {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 8px 0 20px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--ff-glitch-core) transparent;
-}
-.cl-other-clubs__row::-webkit-scrollbar { height: 6px; }
-.cl-other-clubs__row::-webkit-scrollbar-thumb {
-  background: var(--ff-glitch-core-line);
-}
-.cl-otherclub {
-  flex: 0 0 220px;
-  padding: 16px 18px;
-  border: 1px solid var(--ff-glitch-core-line);
-  background: var(--ff-surface);
-  display: flex; flex-direction: column; gap: 6px;
-  transition: border-color 200ms var(--ff-ease-out),
-              transform 200ms var(--ff-ease-out);
-  cursor: pointer;
-}
-.cl-otherclub:hover {
-  border-color: var(--ff-neon-bloom);
-  transform: translateY(-2px);
-}
-.cl-otherclub__metro {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--ff-font-body);
-  font-size: 11px;
-  color: var(--ff-system-fog);
-}
-.cl-otherclub__metro::before {
-  content: "";
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--metro-color, var(--ff-glitch-core));
-}
-.cl-otherclub__name {
-  font-family: var(--ff-font-heading);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: var(--ff-track-heading);
-  text-transform: uppercase;
-  color: var(--ff-softlight);
-}
-.cl-otherclub__addr {
-  font-family: var(--ff-font-body);
-  font-size: 11px;
-  color: var(--ff-system-fog);
-}
-.cl-otherclub__cta {
-  margin-top: auto;
-  padding-top: 8px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--ff-font-heading);
-  font-weight: 700;
-  font-size: 10px;
-  letter-spacing: var(--ff-track-button);
-  color: var(--ff-neon-bloom);
-}
-.cl-otherclub__cta::after {
-  content: "→";
-  transition: transform 200ms var(--ff-ease-out);
-}
-.cl-otherclub:hover .cl-otherclub__cta::after { transform: translateX(4px); }
 
 /* ============================================================
    STICKY CTA (bottom-right)

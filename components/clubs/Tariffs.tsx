@@ -26,7 +26,7 @@ export default function Tariffs() {
         <Reveal>
           <div className="cl-tariffs__head">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <span className="ff-tag">— цены в рублях</span>
+              <span className="ff-tag">цены в рублях</span>
               <h2 className="ff-section-head__title" style={{ margin: 0 }}>ТАРИФЫ</h2>
             </div>
             <div className="cl-tariffs__toggle" role="tablist" aria-label="День недели">

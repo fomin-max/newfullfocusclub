@@ -29,5 +29,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.85,
     },
+    {
+      url: `${BASE}/events`,
+      lastModified: LAST_MOD,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE}/tournaments`,
+      lastModified: LAST_MOD,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE}/franchise`,
+      lastModified: LAST_MOD,
+      changeFrequency: 'monthly',
+      priority: 0.80,
+    },
+    {
+      url: `${BASE}/privacy`,
+      lastModified: LAST_MOD,
+      changeFrequency: 'yearly',
+      priority: 0.30,
+    },
   ]
 }

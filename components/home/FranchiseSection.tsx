@@ -14,7 +14,7 @@ const ADV = [
 export default function FranchiseSection() {
   const line1 = useScramble('ОТКРОЙ СВОЙ', { duration: 600, delay: 120 })
   const line2 = useScramble('FULL FOCUS',  { duration: 600, delay: 260 })
-  const [clubs,  clubsRef]  = useCountFromTo(0, 7)
+  const [clubs,  clubsRef]  = useCountFromTo(0, 8)
   const [money,  moneyRef]  = useCountFromTo(0, 7)
   const [months, monthsRef] = useCountFromTo(30, 18)
 

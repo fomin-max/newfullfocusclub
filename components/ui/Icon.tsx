@@ -6,6 +6,8 @@ export type IconName =
   | 'clock' | 'utensils' | 'briefcase' | 'cards' | 'chair' | 'kitchen'
   | 'billiard' | 'phone' | 'memory' | 'keyboard' | 'projector' | 'tv'
   | 'speakers' | 'route' | 'map' | 'leaf'
+  | 'broadcast' | 'check' | 'mic' | 'award' | 'info' | 'swords'
+  | 'camera' | 'list' | 'ruble' | 'zoom' | 'burger' | 'plus' | 'minus'
 
 interface IconProps {
   name: IconName
@@ -52,6 +54,19 @@ const PATHS: Record<IconName, React.ReactNode> = {
   route:      (<><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></>),
   map:        (<><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></>),
   leaf:       (<><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></>),
+  broadcast:  (<><path d="M18.364 5.636a9 9 0 0 1 0 12.728"/><path d="M5.636 5.636a9 9 0 0 0 0 12.728"/><path d="M15.536 8.464a5 5 0 0 1 0 7.072"/><path d="M8.464 8.464a5 5 0 0 0 0 7.072"/><circle cx="12" cy="12" r="1"/></>),
+  check:      (<><polyline points="20 6 9 17 4 12"/></>),
+  mic:        (<><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></>),
+  award:      (<><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></>),
+  info:       (<><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></>),
+  swords:     (<><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" y1="14" x2="9" y2="18"/><line x1="7" y1="21" x2="9" y2="19"/></>),
+  camera:     (<><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></>),
+  list:       (<><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></>),
+  ruble:      (<><path d="M6 4h8a4 4 0 0 1 0 8H6"/><path d="M6 12h10"/><path d="M6 20V4"/></>),
+  zoom:       (<><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></>),
+  burger:     (<><path d="M3 11h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/><path d="M12 11V7a4 4 0 0 0-8 0v4"/><path d="M8 21v-4a2 2 0 0 1 4 0v4"/><line x1="4" y1="21" x2="20" y2="21"/></>),
+  plus:       (<><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>),
+  minus:      (<line x1="5" y1="12" x2="19" y2="12"/>),
 }
 
 export default function Icon({ name, size = 18, className }: IconProps) {

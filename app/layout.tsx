@@ -1,14 +1,6 @@
 import type { Metadata } from 'next'
-import { Audiowide } from 'next/font/google'
 import localFont from 'next/font/local'
 import './globals.css'
-
-const audiowide = Audiowide({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-audiowide',
-  display: 'swap',
-})
 
 const grandisExtended = localFont({
   src: [
@@ -34,25 +26,30 @@ const magistral = localFont({
 export const metadata: Metadata = {
   title: 'Full Focus — Сеть киберспортивных клубов СПб | 7 клубов 24/7',
   description:
-    'Сеть киберспортивных клубов Full Focus в Санкт-Петербурге — 6 клубов и Махачкала. Мощные ПК, PlayStation 5, турниры, корпоративы. Работаем 24/7. Первый визит — 500₽ в подарок.',
+    'Full Focus — компьютерный клуб нового поколения в Санкт-Петербурге и Махачкале. 7 киберспортивных клубов: мощные ПК RTX 4090, PlayStation 5, турниры, корпоративы. 24/7. Первый визит — 500₽ в подарок.',
   metadataBase: new URL('https://fullfocusclub.ru'),
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Full Focus — Сеть киберспортивных клубов СПб | 7 клубов 24/7',
-    description: 'Киберспортивные клубы в СПб: мощные ПК, PS5, турниры, корпоративы. 7 клубов, работаем 24/7.',
+    description: 'Компьютерный клуб нового поколения в СПб и Махачкале: мощные ПК RTX 4090, PS5, турниры, корпоративы. 7 клубов, 24/7.',
     url: 'https://fullfocusclub.ru',
     siteName: 'Full Focus Club',
     locale: 'ru_RU',
     type: 'website',
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+  },
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="ru"
-      className={`${audiowide.variable} ${grandisExtended.variable} ${magistral.variable}`}
+      className={`${grandisExtended.variable} ${magistral.variable}`}
     >
       <body className="antialiased">{children}</body>
     </html>

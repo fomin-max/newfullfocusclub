@@ -2,6 +2,7 @@
 
 import { useScrolled, useActiveSection } from '@/lib/hooks'
 import Icon from '@/components/ui/Icon'
+import LogoFull from '@/components/ui/LogoFull'
 import { useClubData } from './ClubDataContext'
 import { useBooking } from './BookingContext'
 
@@ -24,9 +25,8 @@ export function ClubNavbar() {
   return (
     <header className={`ff-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="ff-header__inner">
-        <a className="ff-logo" href="/">
-          <span className="ff-logo__dot" />
-          FULL FOCUS
+        <a className="ff-logo" href="/" aria-label="Full Focus — на главную">
+          <LogoFull className="ff-logo__full" height={34} />
         </a>
         <ul className="ff-nav">
           {CLUB_NAV.map(l => (
