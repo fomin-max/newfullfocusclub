@@ -25,7 +25,7 @@ export default function Hero() {
 
       <div className="ff-hero__inner">
         <div className="ff-hero__top">
-          <span className="ff-tag">Сеть киберспортивных клубов · Санкт-Петербург</span>
+          <span className="ff-tag">Сеть киберспортивных клубов</span>
 
           <h1 className="ff-hero__title" aria-label="Твоя игра начинается здесь">
             <span className="line">{line1}</span>

@@ -5,7 +5,16 @@ import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 
 const FORM_TYPES = ['Корпоратив', 'День рождения', 'Закрытый турнир', 'Другое']
-const FORM_CLUBS = ['Василеостровская', 'Комендантский проспект', 'Другой клуб сети']
+const FORM_CLUBS = [
+  'Василеостровская',
+  'Комендантский проспект',
+  'Электросила',
+  'Просвещения',
+  'Садовая',
+  'Технологический',
+  'Махачкала',
+  'Другой клуб сети',
+]
 
 export default function EventsForm() {
   const [type, setType]       = useState(FORM_TYPES[0])

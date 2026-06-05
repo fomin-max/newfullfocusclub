@@ -1,30 +1,27 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
+import { supabase, type Tournament } from '@/lib/supabase'
 
-const TARGET_DATE = '2026-06-14T14:00:00+03:00'
-
-const DETAILS = [
-  { icon: 'swords'    as const, lbl: 'Формат',     val: '5 × 5',                    accent: false },
-  { icon: 'list'      as const, lbl: 'Слотов',     val: '16 команд',                accent: false },
-  { icon: 'gamepad'   as const, lbl: 'Дисциплина', val: 'Counter-Strike 2',         accent: false },
-  { icon: 'trophy'    as const, lbl: 'Призовой',   val: '100 000 ₽',               accent: true  },
-  { icon: 'ruble'     as const, lbl: 'Взнос',      val: '500 ₽ / игрок',           accent: false },
-  { icon: 'broadcast' as const, lbl: 'Эфир',       val: 'twitch · fullfocus',       accent: false },
-  { icon: 'pin'       as const, lbl: 'Место',      val: 'ARENA 5×5 · Василеостровская', accent: false },
-]
+function formatDate(iso: string) {
+  const d = new Date(iso)
+  const day = d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', timeZone: 'Europe/Moscow' })
+  const weekday = d.toLocaleDateString('ru-RU', { weekday: 'long', timeZone: 'Europe/Moscow' })
+  const time = d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Moscow' })
+  return `${day.toUpperCase()} · ${weekday.toUpperCase()} · ${time}`
+}
 
 function calcTime(target: string) {
   const diff = Math.max(0, new Date(target).getTime() - Date.now())
   const s = Math.floor(diff / 1000)
   return {
-    days: Math.floor(s / 86400),
-    hours: Math.floor((s % 86400) / 3600),
+    days:    Math.floor(s / 86400),
+    hours:   Math.floor((s % 86400) / 3600),
     minutes: Math.floor((s % 3600) / 60),
     seconds: s % 60,
-    over: diff === 0,
+    over:    diff === 0,
   }
 }
 
@@ -52,18 +49,16 @@ function FlipUnit({ value, label }: { value: number; label: string }) {
   )
 }
 
-function Countdown() {
-  const [t, setT] = useState(() => calcTime(TARGET_DATE))
+function Countdown({ target }: { target: string }) {
+  const [t, setT] = useState(() => calcTime(target))
   useEffect(() => {
-    const id = setInterval(() => setT(calcTime(TARGET_DATE)), 1000)
+    const id = setInterval(() => setT(calcTime(target)), 1000)
     return () => clearInterval(id)
-  }, [])
+  }, [target])
 
-  if (t.over) {
-    return <div className="tn-count tn-count--over">ТУРНИР НАЧАЛСЯ · СЛЕДИ ЗА ЭФИРОМ</div>
-  }
+  if (t.over) return <div className="tn-count tn-count--over">ТУРНИР НАЧАЛСЯ · УДАЧИ ВСЕМ!</div>
   return (
-    <div className="tn-count" role="timer" aria-label="До старта турнира">
+    <div className="tn-count" role="timer">
       <FlipUnit value={t.days}    label="дней"   />
       <span className="tn-count__sep">:</span>
       <FlipUnit value={t.hours}   label="часов"  />
@@ -76,8 +71,34 @@ function Countdown() {
 }
 
 export default function NextTournament() {
-  const scrollTo = (id: string) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const [tournament, setTournament] = useState<Tournament | null>(null)
+  const [loading, setLoading]       = useState(true)
+
+  const fetch = useCallback(async () => {
+    const { data } = await supabase
+      .from('tournaments')
+      .select('*')
+      .in('status', ['registration_open', 'upcoming'])
+      .order('date', { ascending: true })
+      .limit(1)
+      .single()
+    setTournament(data)
+    setLoading(false)
+  }, [])
+
+  useEffect(() => { fetch() }, [fetch])
+
+  if (loading) return null
+  if (!tournament) return null
+
+  const details = [
+    { icon: 'swords'  as const, lbl: 'Формат',     val: tournament.format.replace(/_/g, ' '),        accent: false },
+    { icon: 'users'   as const, lbl: 'Участников',  val: `до ${tournament.max_participants}`,          accent: false },
+    { icon: 'gamepad' as const, lbl: 'Дисциплина',  val: 'Counter-Strike 2',                          accent: false },
+    { icon: 'trophy'  as const, lbl: 'Призовой',    val: `${tournament.prize_pool?.toLocaleString('ru')} ₽`, accent: true },
+    { icon: 'ruble'   as const, lbl: 'Взнос',       val: `${tournament.entry_fee.toLocaleString('ru')} ₽ / игрок`, accent: false },
+    { icon: 'pin'     as const, lbl: 'Место',       val: tournament.location_name ?? '',               accent: false },
+  ]
 
   return (
     <section id="next" className="ff-section">
@@ -86,7 +107,7 @@ export default function NextTournament() {
           <span className="ff-tag">регистрация открыта</span>
           <h2 className="ff-section-head__title">БЛИЖАЙШИЙ ТУРНИР</h2>
           <p className="ff-section-head__sub">
-            Полная команда, полный фокус. Регистрация открыта прямо сейчас.
+            {tournament.subtitle ?? 'Регистрируйся прямо сейчас.'}
           </p>
         </Reveal>
 
@@ -98,30 +119,30 @@ export default function NextTournament() {
             <span className="tn-next__corner tn-next__corner--br" />
 
             <div className="tn-next__main">
-              <span className="tn-next__date">14 ИЮНЯ · СУББОТА · 14:00</span>
-              <h3 className="tn-next__title">
-                CS2 5×5 —<br />КУБОК ВАСИЛЕОСТРОВСКОЙ
-              </h3>
-              <div className="tn-next__venue">
-                <Icon name="pin" size={16} />
-                <span>Full Focus Василеостровская · Бугский переулок, 3</span>
-              </div>
-              <Countdown />
+              <span className="tn-next__date">{formatDate(tournament.date)}</span>
+              <h3 className="tn-next__title">{tournament.title}</h3>
+              {tournament.location_name && (
+                <div className="tn-next__venue">
+                  <Icon name="pin" size={16} />
+                  <span>{tournament.location_name}</span>
+                </div>
+              )}
+              <Countdown target={tournament.date} />
               <div className="tn-next__ctas">
-                <button className="ff-btn ff-btn--primary is-pulse"
-                        onClick={() => scrollTo('form')}>
-                  ЗАРЕГИСТРИРОВАТЬ КОМАНДУ <Icon name="arrowRight" size={14} />
-                </button>
-                <a className="ff-btn ff-btn--secondary" href="https://twitch.tv/fullfocus"
-                   target="_blank" rel="noopener noreferrer">
-                  СМОТРЕТЬ НА TWITCH <Icon name="broadcast" size={14} />
+                <a className="ff-btn ff-btn--primary is-pulse"
+                   href={`/tournaments/${tournament.slug}#registration`}>
+                  ЗАРЕГИСТРИРОВАТЬСЯ <Icon name="arrowRight" size={14} />
+                </a>
+                <a className="ff-btn ff-btn--secondary"
+                   href={`/tournaments/${tournament.slug}#participants`}>
+                  СПИСОК УЧАСТНИКОВ <Icon name="users" size={14} />
                 </a>
               </div>
             </div>
 
             <div className="tn-next__aside">
               <ul className="tn-next__specs">
-                {DETAILS.map((d, i) => (
+                {details.filter(d => d.val).map((d, i) => (
                   <li key={i} className={`tn-spec${d.accent ? ' is-accent' : ''}`}>
                     <span className="tn-spec__icon"><Icon name={d.icon} size={16} /></span>
                     <span className="tn-spec__lbl">{d.lbl}</span>
@@ -136,7 +157,10 @@ export default function NextTournament() {
         <Reveal delay={120}>
           <p className="tn-next__note">
             <Icon name="info" size={15} />
-            Взнос оплачивается на месте в день турнира. Регистрация подтверждается в течение 15 минут в Telegram.
+            {tournament.participant_type === 'individual'
+              ? 'Регистрируйся индивидуально. Команды формируются в день турнира.'
+              : `Регистрация команды. Взнос ${tournament.entry_fee.toLocaleString('ru')} ₽ с игрока, оплачивается на месте.`
+            }
           </p>
         </Reveal>
       </div>

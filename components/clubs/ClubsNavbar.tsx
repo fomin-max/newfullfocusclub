@@ -3,6 +3,7 @@
 import { useScrolled, useActiveSection } from '@/lib/hooks'
 import Link from 'next/link'
 import LogoFull from '@/components/ui/LogoFull'
+import LogoMark from '@/components/ui/LogoMark'
 import Icon from '@/components/ui/Icon'
 
 const NAV_LINKS = [
@@ -26,6 +27,7 @@ export default function ClubsNavbar() {
       <div className="ff-header__inner">
         <Link className="ff-logo" href="/" aria-label="Full Focus — на главную">
           <LogoFull className="ff-logo__full" height={34} />
+          <LogoMark className="ff-logo__mark" size={32} />
         </Link>
         <ul className="ff-nav">
           {NAV_LINKS.map(l => (

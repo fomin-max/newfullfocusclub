@@ -80,9 +80,14 @@
   - [ ] Логотипы партнёров: Quantum, БК Зенит, Skynet, Lova Lova
   - [ ] Фото Комендантского
   - [ ] Реальные названия сериалов
-- [ ] `/tournaments` — турниры (дизайн готов)
-  - [ ] Обновить дату таймера после прошедшего турнира
-  - [ ] Реальные фото с турниров
+- [x] `/tournaments` — турниры ✅
+  - [x] Страница турнира `/tournaments/[slug]` — динамическая из Supabase
+  - [x] Форма регистрации (individual/team) → пишет в Supabase
+  - [x] Realtime счётчик мест и список участников (только confirmed)
+  - [x] Telegram-уведомление при новой заявке (@fullfocushub_bot)
+  - [x] Captain's Draft #1 — 13 июня, slug: captains-draft-1
+  - [ ] Реальные фото с турниров (галерея)
+  - [ ] Раздел «Турниры» в ffhub (админка) — промпт готов
 - [ ] `/franchise` — франшиза (дизайн готов)
   - [ ] 🔑 Верифицировать все цифры с клиентом
   - [ ] Якорь `#zayavka` для формы
@@ -106,6 +111,11 @@
 
 ## Фаза 7 — Деплой ⏳
 
+- [ ] Добавить переменные окружения на VPS (`.env.production` или в PM2 ecosystem):
+  ```
+  NEXT_PUBLIC_SUPABASE_URL=https://pdsdpvjaxpyttbtmjhwp.supabase.co
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkc2RwdmpheHB5dHRidG1qaHdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0OTE4ODQsImV4cCI6MjA5MTA2Nzg4NH0.p5zoKeFW1Gsm0T1kzsIs3i3ozQsLWeUo7bT0Igal6a0
+  ```
 - [ ] `next build` на VPS (swap 2GB настроен)
 - [ ] PM2 ecosystem config, `pm2 start`, `pm2 save`, `pm2 startup`
 - [ ] Nginx конфиг для fullfocusclub.ru (proxy_pass → localhost:3000)

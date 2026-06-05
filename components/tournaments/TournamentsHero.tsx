@@ -1,18 +1,37 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
-
-const FACTS = [
-  { icon: 'trophy'    as const, val: 'до 100 000 ₽',       lbl: 'Призовой фонд' },
-  { icon: 'users'     as const, val: 'до 16 команд',       lbl: 'Слотов в сетке' },
-  { icon: 'broadcast' as const, val: 'twitch · fullfocus', lbl: 'Прямой эфир' },
-]
+import { supabase, type Tournament } from '@/lib/supabase'
 
 export default function TournamentsHero() {
   const heroRef   = useRef<HTMLElement>(null)
   const magnetRef = useRef<HTMLSpanElement>(null)
+  const [nearest, setNearest] = useState<Tournament | null>(null)
+
+  useEffect(() => {
+    supabase
+      .from('tournaments')
+      .select('*')
+      .in('status', ['registration_open', 'upcoming'])
+      .order('date', { ascending: true })
+      .limit(1)
+      .single()
+      .then(({ data }) => setNearest(data))
+  }, [])
+
+  const regUrl = nearest ? `/tournaments/${nearest.slug}#registration` : '/tournaments#next'
+
+  const facts = nearest ? [
+    { icon: 'trophy'    as const, val: `${nearest.prize_pool?.toLocaleString('ru')} ₽`, lbl: 'Призовой фонд' },
+    { icon: 'users'     as const, val: `до ${nearest.max_participants} участников`,       lbl: 'Слотов' },
+    { icon: 'broadcast' as const, val: 'twitch · fullfocus',                             lbl: 'Прямой эфир' },
+  ] : [
+    { icon: 'trophy'    as const, val: '—', lbl: 'Призовой фонд' },
+    { icon: 'users'     as const, val: '—', lbl: 'Слотов' },
+    { icon: 'broadcast' as const, val: 'twitch · fullfocus', lbl: 'Прямой эфир' },
+  ]
 
   useEffect(() => {
     const el = heroRef.current
@@ -79,10 +98,9 @@ export default function TournamentsHero() {
         <Reveal delay={220}>
           <div className="tn-hero__ctas">
             <span className="tn-hero__magnet" ref={magnetRef}>
-              <button className="ff-btn ff-btn--primary is-pulse"
-                      onClick={() => scrollTo('form')}>
-                ЗАРЕГИСТРИРОВАТЬ КОМАНДУ <Icon name="arrowRight" size={14} />
-              </button>
+              <a className="ff-btn ff-btn--primary is-pulse" href={regUrl}>
+                ЗАРЕГИСТРИРОВАТЬСЯ <Icon name="arrowRight" size={14} />
+              </a>
             </span>
             <button className="ff-btn ff-btn--secondary"
                     onClick={() => scrollTo('next')}>
@@ -92,7 +110,7 @@ export default function TournamentsHero() {
         </Reveal>
         <Reveal delay={300}>
           <div className="tn-hero__facts">
-            {FACTS.map((f, i) => (
+            {facts.map((f, i) => (
               <div className="tn-fact" key={i}>
                 <span className="tn-fact__icon"><Icon name={f.icon} size={20} /></span>
                 <span className="tn-fact__val">{f.val}</span>

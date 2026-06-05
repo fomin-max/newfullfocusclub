@@ -1,8 +1,62 @@
 /* ============================================================
    Full Focus — /tournaments page styles.
-   Builds on colors_and_type.css + styles.css + club-styles.css + events-styles.css.
-   Prefix: .tn-*  (reuses .ev-* primitives where identical)
+   Prefix: .tn-*  (ev-* primitives are defined below for this page)
    ============================================================ */
+
+/* ============================================================
+   ev-how — timeline (from events.css)
+   ============================================================ */
+.ev-how { position: relative; }
+.ev-how__line {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  right: calc((100% - 84px) / 4 - 11px);
+  height: 2px;
+  background: rgba(0,255,182,0.14);
+  z-index: 0;
+}
+.ev-how__line-fill {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--ff-glitch-core), var(--ff-neon-bloom));
+  transform-origin: left center;
+  transform: scaleX(0);
+  box-shadow: 0 0 10px rgba(0,255,182,0.4);
+  transition: transform 120ms linear;
+}
+.ev-how__list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.ev-how__step { display: flex; flex-direction: column; gap: 12px; position: relative; padding-right: 12px; z-index: 1; }
+.ev-how__dot {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(0,255,182,0.18);
+  border: 2px solid rgba(0,255,182,0.3);
+  margin-bottom: 8px;
+  flex: 0 0 auto;
+  transition: background 300ms var(--ff-ease-out), border-color 300ms var(--ff-ease-out), box-shadow 300ms var(--ff-ease-out);
+}
+.ev-how__step.is-reached .ev-how__dot {
+  background: var(--ff-neon-bloom);
+  border-color: rgba(0,255,182,0.9);
+  box-shadow: 0 0 0 4px rgba(0,255,182,0.18), 0 0 18px rgba(0,255,182,0.65);
+}
+.ev-how__step.is-reached:first-child .ev-how__dot { animation: ff-dot-pulse 2200ms ease-in-out infinite; }
+.ev-how__num { font-family: var(--ff-font-heading); font-weight: 700; font-size: 13px; letter-spacing: var(--ff-track-button); color: var(--ff-glitch-core); }
+.ev-how__name { font-family: var(--ff-font-heading); font-weight: 700; font-size: 20px; letter-spacing: var(--ff-track-heading); text-transform: uppercase; color: var(--ff-softlight); margin: 0; line-height: 1.1; }
+.ev-how__desc { font-family: var(--ff-font-body); font-size: 14px; line-height: 1.55; color: var(--ff-system-fog); max-width: 26ch; margin: 0; }
+
+/* ============================================================
+   ev-gallery — masonry grid (from events.css)
+   ============================================================ */
+.ev-gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; grid-auto-flow: dense; gap: 16px; }
+.ev-gallery__cell { position: relative; }
+.ev-gallery__cell--tall { grid-row: span 2; }
+.ev-gallery__cell--wide { grid-column: span 2; }
+.ev-gallery__tile { position: relative; width: 100%; height: 100%; border-radius: var(--ff-radius-md); overflow: hidden; border: 1px solid var(--ff-glitch-core-line); transition: transform 320ms var(--ff-ease-out), box-shadow 320ms var(--ff-ease-out); }
+.ev-gallery__tile:hover { transform: scale(1.02); box-shadow: 0 0 0 1px rgba(0,255,182,0.4), 0 0 26px rgba(0,255,182,0.2); z-index: 2; }
+.ev-gallery__overlay { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; background: linear-gradient(180deg, transparent 45%, rgba(8,2,35,0.85) 100%); opacity: 0; transition: opacity 280ms var(--ff-ease-out); }
+.ev-gallery__tile:hover .ev-gallery__overlay { opacity: 1; }
+.ev-gallery__label { font-family: var(--ff-font-heading); font-weight: 700; font-size: 11px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: var(--ff-softlight); }
 
 /* ============================================================
    §1 HERO  (mirrors .ev-hero, distinct word-stack title)
@@ -275,7 +329,76 @@
 .tn-next__note svg { color: var(--ff-neon-bloom); flex: 0 0 auto; margin-top: 1px; }
 
 /* ============================================================
-   §3 FORM  (reuses .ev-field / .ev-select / .ev-form__success)
+   §3 FORM fields (copied from events.css — ev-field / ev-select / ev-form__success)
+   ============================================================ */
+.ev-field { display: flex; flex-direction: column; gap: 8px; }
+.ev-field--grow { flex: 1; }
+.ev-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ev-field label {
+  font-family: var(--ff-font-heading);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: var(--ff-track-label);
+  text-transform: uppercase;
+  color: var(--ff-system-fog);
+}
+.ev-field input,
+.ev-field textarea,
+.ev-select select {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--ff-glitch-core-line);
+  border-radius: var(--ff-radius-sm);
+  padding: 13px 14px;
+  color: var(--ff-softlight);
+  font-family: var(--ff-font-body);
+  font-size: 15px;
+  transition: border-color 200ms var(--ff-ease-out), box-shadow 200ms var(--ff-ease-out);
+  outline: none;
+}
+.ev-field textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
+.ev-field input:focus,
+.ev-field textarea:focus,
+.ev-select select:focus {
+  border-color: var(--ff-neon-bloom);
+  box-shadow: 0 0 0 1px rgba(0,255,182,0.4), 0 0 16px rgba(0,255,182,0.18);
+}
+.ev-field input::placeholder,
+.ev-field textarea::placeholder { color: rgba(157,157,156,0.7); }
+.ev-select { position: relative; }
+.ev-select select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 36px; }
+.ev-select__arr {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--ff-neon-bloom); pointer-events: none; font-size: 12px;
+}
+.ev-form__success {
+  text-align: center;
+  padding: 30px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.ev-form__success-mark {
+  width: 76px; height: 76px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ff-deep-memory);
+  background: var(--ff-neon-bloom);
+  border-radius: 50%;
+  box-shadow: 0 0 32px rgba(0,255,182,0.5);
+  margin-bottom: 4px;
+}
+.ev-form__success h3 {
+  font-family: var(--ff-font-heading);
+  font-weight: 700; font-size: 26px;
+  letter-spacing: var(--ff-track-heading);
+  text-transform: uppercase; color: var(--ff-softlight); margin: 0;
+}
+.ev-form__success p {
+  font-family: var(--ff-font-body); font-size: 15px;
+  color: var(--ff-system-fog); margin: 0 0 8px;
+}
+.ev-faq__cta { display: flex; justify-content: center; margin-top: 32px; }
+
+/* ============================================================
+   §3 FORM card
    ============================================================ */
 .tn-form-sec { position: relative; isolation: isolate; overflow: hidden; }
 .tn-form-sec__bg {
@@ -423,6 +546,12 @@
    §6 GALLERY lightbox  (tiles reuse .ev-gallery)
    ============================================================ */
 .tn-gallery__tile { cursor: pointer; }
+.tn-gallery__placeholder {
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(102,50,250,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, rgba(0,255,182,0.06) 0%, transparent 50%),
+    var(--ff-surface);
+}
 .tn-lightbox {
   position: fixed; inset: 0; z-index: 2000;
   display: flex; align-items: center; justify-content: center;
@@ -472,6 +601,10 @@
   .tn-next__aside { border-left: 0; border-top: 1px solid rgba(255,255,255,0.07); }
   .tn-cal__grid { grid-template-columns: 1fr; }
   .tn-form { grid-template-columns: 1fr; }
+  .ev-how__list { grid-template-columns: 1fr 1fr; gap: 32px 24px; }
+  .ev-how__line { display: none; }
+  .ev-gallery { grid-template-columns: repeat(2, 1fr); }
+  .ev-gallery__cell--wide { grid-column: span 2; }
 }
 
 @media (max-width: 767px) {
@@ -487,6 +620,9 @@
   .tn-count__sep { display: none; }
   .tn-form__submit .ff-btn { transform: none !important; }
   .tn-lightbox { padding: 20px; }
+  .ev-how__list { grid-template-columns: 1fr; }
+  .ev-gallery { grid-template-columns: 1fr; }
+  .ev-gallery__cell--wide, .ev-gallery__cell--tall { grid-column: auto; grid-row: auto; }
 }
 
 /* Reduced motion */
@@ -495,4 +631,6 @@
   .tn-count__num.is-flip { animation: none !important; }
   .tn-cal.is-active:hover { transform: none !important; }
   .tn-hero__magnet, .tn-form__submit .ff-btn { transform: none !important; }
+  .ev-how__step.is-reached:first-child .ev-how__dot { animation: none !important; }
+  .ev-gallery__tile { transform: none !important; transition: none !important; }
 }

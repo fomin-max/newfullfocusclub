@@ -8,12 +8,14 @@ const DISCIPLINES = ['Counter-Strike 2']
 const SOURCES     = ['Из соцсетей', 'От друга', 'Был в клубе', 'Другое']
 
 export default function TournamentForm() {
-  const [discipline, setDiscipline] = useState(DISCIPLINES[0])
-  const [teamName, setTeamName]     = useState('')
-  const [captain, setCaptain]       = useState('')
-  const [players, setPlayers]       = useState(['', '', '', ''])
-  const [source, setSource]         = useState(SOURCES[0])
-  const [done, setDone]             = useState(false)
+  const [discipline, setDiscipline]   = useState(DISCIPLINES[0])
+  const [teamName, setTeamName]       = useState('')
+  const [captain, setCaptain]         = useState('')
+  const [captainNick, setCaptainNick] = useState('')
+  const [players, setPlayers]         = useState(['', '', '', ''])
+  const [steam, setSteam]             = useState('')
+  const [source, setSource]           = useState(SOURCES[0])
+  const [done, setDone]               = useState(false)
 
   const updatePlayer = (i: number, v: string) =>
     setPlayers(prev => prev.map((p, idx) => idx === i ? v : p))
@@ -44,12 +46,12 @@ export default function TournamentForm() {
                   <span className="tn-form__col-title">КОМАНДА</span>
                   <div className="ev-field">
                     <label>Название команды</label>
-                    <input type="text" placeholder="Team Name" value={teamName}
+                    <input type="text" placeholder="Например: Focus Five" value={teamName}
                            onChange={e => setTeamName(e.target.value)} required />
                   </div>
                   <div className="ev-field">
                     <label>Telegram капитана</label>
-                    <input type="text" placeholder="@captain" value={captain}
+                    <input type="text" placeholder="@username" value={captain}
                            onChange={e => setCaptain(e.target.value)} required />
                   </div>
                   <div className="ev-field">
@@ -61,18 +63,6 @@ export default function TournamentForm() {
                       <span className="ev-select__arr">▾</span>
                     </div>
                   </div>
-                </div>
-
-                {/* RIGHT — игроки */}
-                <div className="tn-form__col">
-                  <span className="tn-form__col-title">ИГРОКИ (НИКИ В CS2)</span>
-                  {players.map((p, i) => (
-                    <div className="ev-field" key={i}>
-                      <label>Игрок {i + 2}</label>
-                      <input type="text" placeholder={`nick_${i + 2}`} value={p}
-                             onChange={e => updatePlayer(i, e.target.value)} />
-                    </div>
-                  ))}
                   <div className="ev-field">
                     <label>Откуда узнали о турнире</label>
                     <div className="ev-select">
@@ -81,6 +71,28 @@ export default function TournamentForm() {
                       </select>
                       <span className="ev-select__arr">▾</span>
                     </div>
+                  </div>
+                </div>
+
+                {/* RIGHT — состав */}
+                <div className="tn-form__col">
+                  <span className="tn-form__col-title">СОСТАВ · 5 ИГРОКОВ</span>
+                  <div className="ev-field">
+                    <label>Игрок 1 (Капитан)</label>
+                    <input type="text" placeholder="Никнейм капитана" value={captainNick}
+                           onChange={e => setCaptainNick(e.target.value)} required />
+                  </div>
+                  {players.map((p, i) => (
+                    <div className="ev-field" key={i}>
+                      <label>Игрок {i + 2}</label>
+                      <input type="text" placeholder="Никнейм" value={p}
+                             onChange={e => updatePlayer(i, e.target.value)} />
+                    </div>
+                  ))}
+                  <div className="ev-field">
+                    <label>Steam профиль капитана</label>
+                    <input type="text" placeholder="steamcommunity.com/id/..." value={steam}
+                           onChange={e => setSteam(e.target.value)} />
                   </div>
                 </div>
 

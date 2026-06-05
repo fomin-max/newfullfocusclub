@@ -14,9 +14,9 @@ const ADV = [
 export default function FranchiseSection() {
   const line1 = useScramble('ОТКРОЙ СВОЙ', { duration: 600, delay: 120 })
   const line2 = useScramble('FULL FOCUS',  { duration: 600, delay: 260 })
-  const [clubs,  clubsRef]  = useCountFromTo(0, 8)
+  const [clubs,  clubsRef]  = useCountFromTo(0, 7)
   const [money,  moneyRef]  = useCountFromTo(0, 7)
-  const [months, monthsRef] = useCountFromTo(30, 18)
+  const [months, monthsRef] = useCountFromTo(0, 10)
 
   const secRef = useRef<HTMLElement>(null)
   const onMove = useCallback((e: React.MouseEvent) => {
@@ -71,7 +71,7 @@ export default function FranchiseSection() {
               <span className="ff-fr__num-label">инвестиции</span>
             </div>
             <div className="ff-fr__stat" ref={monthsRef as React.RefObject<HTMLDivElement>}>
-              <span className="ff-fr__num">&lt; {months} мес</span>
+              <span className="ff-fr__num">от {months} мес</span>
               <span className="ff-fr__num-label">окупаемость</span>
             </div>
           </div>

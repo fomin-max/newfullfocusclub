@@ -8,8 +8,8 @@ import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 import TournamentsHero from '@/components/tournaments/TournamentsHero'
 import NextTournament from '@/components/tournaments/NextTournament'
-import TournamentForm from '@/components/tournaments/TournamentForm'
 import TournamentsFAQ from '@/components/tournaments/TournamentsFAQ'
+import TournamentHowSection from '@/components/tournaments/TournamentHowSection'
 import './tournaments.css'
 
 export const metadata: Metadata = {
@@ -42,35 +42,29 @@ const schemaOrg = {
     },
     {
       '@type': 'SportsEvent',
-      name: 'CS2 5×5 — Кубок Василеостровской',
-      startDate: '2026-06-14T14:00:00+03:00',
+      name: 'FULL FOCUS Captain\'s Draft #1',
+      startDate: '2026-06-13T11:00:00+03:00',
       location: {
         '@type': 'Place',
-        name: 'Full Focus Василеостровская',
-        address: { '@type': 'PostalAddress', streetAddress: 'Бугский переулок, 3', addressLocality: 'Санкт-Петербург' },
+        name: 'Full Focus',
+        address: { '@type': 'PostalAddress', streetAddress: 'Большой проспект В.О. 18А', addressLocality: 'Санкт-Петербург' },
       },
       organizer: { '@type': 'Organization', name: 'Full Focus Club', url: 'https://fullfocusclub.ru' },
-      description: 'CS2 турнир 5×5 с призовым фондом 100 000 ₽. Взнос 500 ₽ с игрока.',
+      description: 'Captain\'s Draft турнир по CS2 с призовым фондом 20 000 ₽. Взнос 1000 ₽ с игрока.',
+      url: 'https://fullfocusclub.ru/tournaments/captains-draft-1',
     },
   ],
 }
-
-const STEPS = [
-  { num: '01', name: 'РЕГИСТРАЦИЯ',   desc: 'Заполни форму команды. Укажи ники всех 5 игроков и Telegram капитана.' },
-  { num: '02', name: 'ПОДТВЕРЖДЕНИЕ', desc: 'Свяжемся с капитаном в течение 15 минут. Подтвердим слот в турнире.' },
-  { num: '03', name: 'ОПЛАТА',        desc: 'В день турнира оплати взнос на месте — 500 ₽ с каждого игрока.' },
-  { num: '04', name: 'ТУРНИР',        desc: 'Приходи в 13:30 на чек-ин. Старт в 14:00 на ARENA 5×5.' },
-]
 
 const CALENDAR = [
   {
     id: 'jun',
     status: 'active',
     badge: 'РЕГИСТРАЦИЯ ОТКРЫТА',
-    date: '14 ИЮНЯ · CS2 5×5',
-    title: 'Кубок Василеостровской',
-    prize: '100 000 ₽',
-    cta: { label: 'ЗАРЕГИСТРИРОВАТЬСЯ', href: '#form' },
+    date: '13 ИЮНЯ · CAPTAIN\'S DRAFT',
+    title: 'Full Focus Captain\'s Draft #1',
+    prize: '20 000 ₽',
+    cta: { label: 'ЗАРЕГИСТРИРОВАТЬСЯ', href: '/tournaments/captains-draft-1#registration' },
   },
   {
     id: 'jul',
@@ -93,14 +87,14 @@ const CALENDAR = [
 ]
 
 const GALLERY = [
-  { span: 'tall', src: '/assets/club-interior.jpg',  label: 'ARENA 5×5 · Василеостровская' },
-  { span: 'wide', src: '/assets/club-background.jpg', label: 'Финал турнира' },
-  { span: 'std',  src: '/assets/club-interior.jpg',   label: 'Чек-ин команд' },
-  { span: 'std',  src: '/assets/club-background.jpg', label: 'Игровая зона' },
-  { span: 'tall', src: '/assets/club-interior.jpg',   label: 'Студия трансляции' },
-  { span: 'std',  src: '/assets/club-background.jpg', label: 'Награждение' },
-  { span: 'wide', src: '/assets/club-interior.jpg',   label: 'Зрительская зона' },
-  { span: 'std',  src: '/assets/club-background.jpg', label: 'Кубок чемпиона' },
+  { span: 'tall', label: 'ARENA 5×5 · Василеостровская' },
+  { span: 'wide', label: 'Финал турнира' },
+  { span: 'std',  label: 'Чек-ин команд' },
+  { span: 'std',  label: 'Игровая зона' },
+  { span: 'tall', label: 'Студия трансляции' },
+  { span: 'std',  label: 'Награждение' },
+  { span: 'wide', label: 'Зрительская зона' },
+  { span: 'std',  label: 'Кубок чемпиона' },
 ]
 
 const FAQ_ITEMS = [
@@ -147,36 +141,8 @@ export default function TournamentsPage() {
         {/* §2 Next Tournament with countdown */}
         <NextTournament />
 
-        {/* §3 Registration Form */}
-        <TournamentForm />
-
         {/* §4 How to participate */}
-        <section id="how" className="ff-section" style={{ paddingTop: 0 }}>
-          <div className="ff-section__inner">
-            <Reveal className="ff-section-head">
-              <span className="ff-tag">как участвовать</span>
-              <h2 className="ff-section-head__title">КАК УЧАСТВОВАТЬ</h2>
-              <p className="ff-section-head__sub">
-                От регистрации до первого матча — четыре простых шага.
-              </p>
-            </Reveal>
-            <div className="ev-how">
-              <div className="ev-how__line is-drawn" />
-              <div className="ev-how__list">
-                {STEPS.map((s, i) => (
-                  <Reveal key={s.num} delay={80 * i}>
-                    <div className="ev-how__step">
-                      <span className="ev-how__dot" />
-                      <span className="ev-how__num">{s.num}</span>
-                      <h3 className="ev-how__name">{s.name}</h3>
-                      <p className="ev-how__desc">{s.desc}</p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <TournamentHowSection />
 
         {/* §5 Calendar */}
         <section id="calendar" className="ff-section" style={{ paddingTop: 0 }}>
@@ -221,11 +187,14 @@ export default function TournamentsPage() {
         </section>
 
         {/* §6 Gallery */}
-        <section id="gallery" className="ff-section" style={{ paddingTop: 0 }}>
+        <section id="gallery" className="ff-section">
           <div className="ff-section__inner">
             <Reveal className="ff-section-head">
               <span className="ff-tag">атмосфера</span>
-              <h2 className="ff-section-head__title">КАК ЭТО ВЫГЛЯДИТ</h2>
+              <h2 className="ff-section-head__title">АТМОСФЕРА</h2>
+              <p className="ff-section-head__sub">
+                Фото с наших турниров. Перетащи свои — галерея запомнит их.
+              </p>
             </Reveal>
             <div className="ev-gallery">
               {GALLERY.map((g, i) => (
@@ -233,10 +202,8 @@ export default function TournamentsPage() {
                   key={i}
                   className={`ev-gallery__cell ${g.span === 'tall' ? 'ev-gallery__cell--tall' : g.span === 'wide' ? 'ev-gallery__cell--wide' : ''}`}
                 >
-                  <div className="ev-gallery__tile tn-gallery__tile">
-                    <img src={g.src} alt={g.label}
-                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    <div className="ev-gallery__overlay">
+                  <div className="ev-gallery__tile tn-gallery__tile tn-gallery__placeholder">
+                    <div className="ev-gallery__overlay" style={{ opacity: 1 }}>
                       <span className="ev-gallery__label">{g.label}</span>
                     </div>
                   </div>

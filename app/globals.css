@@ -166,8 +166,9 @@ html, body {
   font-family: var(--ff-font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
+/* overflow-x clip on a specific wrapper, not body — body overflow breaks position:sticky */
+body > * { max-width: 100vw; overflow-x: clip; }
 h1, h2, h3, h4, h5, h6 { font-family: var(--ff-font-heading); }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
@@ -216,8 +217,9 @@ body::before {
 .ff-header__inner { width: 100%; max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .ff-logo { display: inline-flex; align-items: center; text-decoration: none; }
 .ff-logo__full { display: block; flex: 0 0 auto; }
+.ff-logo__mark { display: none; flex: 0 0 auto; color: #6632FA; }
 .ff-nav { display: flex; gap: 28px; list-style: none; padding: 0; margin: 0; }
-.ff-nav a { font-family: var(--ff-font-heading); font-weight: 600; font-size: 11px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: rgba(242,242,247,0.7); transition: color 160ms var(--ff-ease-out); position: relative; padding: 6px 0; }
+.ff-nav a { font-family: var(--ff-font-heading); font-weight: 600; font-size: 11px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: rgba(242,242,247,0.7); transition: color 160ms var(--ff-ease-out); position: relative; padding: 6px 0; white-space: nowrap; }
 .ff-nav a:hover { color: var(--ff-softlight); }
 .ff-nav a.is-active { color: var(--ff-neon-bloom); }
 .ff-nav a.is-active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: var(--ff-neon-bloom); box-shadow: 0 0 6px var(--ff-neon-bloom-soft); }
@@ -339,9 +341,9 @@ body::before {
 .ff-stat { display: flex; flex-direction: column; gap: 12px; padding: 8px 24px; position: relative; }
 .ff-stat + .ff-stat::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, transparent 0%, rgba(102,50,250,0.3) 20%, rgba(102,50,250,0.3) 80%, transparent 100%); }
 .ff-stat:first-child { padding-left: 0; }
-.ff-stat__pre { font-family: var(--ff-font-heading); font-weight: 600; font-size: 12px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: var(--ff-system-fog); }
-.ff-stat__num { font-family: var(--ff-font-heading); font-weight: 700; font-size: clamp(36px, 4vw, 60px); line-height: 1; color: var(--ff-neon-bloom); font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 6px; letter-spacing: 0; }
-.ff-stat__unit { font-size: 0.42em; font-weight: 600; color: rgba(0,255,182,0.7); letter-spacing: var(--ff-track-button); text-transform: uppercase; }
+.ff-stat__pre { font-family: var(--ff-font-heading); font-weight: 600; font-size: 0.3em; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: var(--ff-system-fog); align-self: flex-end; padding-bottom: 0.12em; }
+.ff-stat__num { font-family: var(--font-orbitron, var(--ff-font-heading)); font-weight: 700; font-size: clamp(36px, 4vw, 60px); line-height: 1; color: var(--ff-neon-bloom); font-variant-numeric: tabular-nums slashed-zero; font-feature-settings: "zero" 1; display: flex; align-items: baseline; flex-wrap: nowrap; gap: 6px; letter-spacing: 0; }
+.ff-stat__unit { font-family: var(--ff-font-heading); font-size: 0.42em; font-weight: 600; color: rgba(0,255,182,0.7); letter-spacing: var(--ff-track-button); text-transform: uppercase; white-space: nowrap; }
 .ff-stat__lbl { font-family: var(--ff-font-body); font-size: 13px; color: var(--ff-system-fog); letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.4; }
 
 /* ─── §4 How it works ────────────────────────────────────────── */
@@ -425,7 +427,7 @@ body::before {
 .ff-level__name { font-family: var(--ff-font-heading); font-weight: 800; font-size: 22px; letter-spacing: var(--ff-track-heading); text-transform: uppercase; color: var(--ff-softlight); line-height: 1; }
 .ff-level__pct { font-family: var(--ff-font-heading); font-weight: 800; font-size: 56px; line-height: 1; color: var(--ff-neon-bloom); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; margin: 12px 0 4px; }
 .ff-level__pct sup { font-size: 0.5em; vertical-align: super; color: rgba(0,255,182,0.7); font-weight: 700; margin-left: 2px; }
-.ff-level__cashback { font-family: var(--ff-font-heading); font-weight: 600; font-size: 10px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: rgba(0,255,182,0.7); }
+.ff-level__cashback { font-family: var(--ff-font-heading); font-weight: 600; font-size: 10px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: rgba(0,255,182,0.7); min-height: 2.6em; display: flex; align-items: flex-start; }
 .ff-level__bar { margin-top: auto; height: 4px; background: rgba(255,255,255,0.06); position: relative; overflow: hidden; }
 .ff-level__bar-fill { position: absolute; inset: 0; background: var(--ff-grad-text); transform-origin: left; transform: scaleX(var(--p, 0)); transition: transform 1200ms var(--ff-ease-out); }
 .ff-level__range { font-family: var(--ff-font-mono); font-size: 12px; color: var(--ff-system-fog); letter-spacing: 0.02em; padding-top: 10px; }
@@ -559,6 +561,12 @@ body::before {
 .ff-mobile-book { display: none; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 80; background: rgba(8,2,35,0.96); border: 1px solid var(--ff-glitch-core-line); border-radius: var(--ff-radius-lg); padding: 8px; backdrop-filter: blur(12px); box-shadow: 0 16px 48px rgba(8,2,35,0.7); }
 
 /* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  .ff-header__inner { gap: 16px; }
+  .ff-nav { gap: 18px; }
+  .ff-logo__full { display: none; }
+  .ff-logo__mark { display: block; }
+}
 @media (max-width: 1024px) {
   .ff-section { padding: 80px 24px; }
   .ff-header { padding: 0 24px; }

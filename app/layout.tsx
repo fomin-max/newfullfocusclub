@@ -1,6 +1,14 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import { Orbitron } from 'next/font/google'
 import './globals.css'
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['700', '800', '900'],
+  variable: '--font-orbitron',
+  display: 'swap',
+})
 
 const grandisExtended = localFont({
   src: [
@@ -49,7 +57,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="ru"
-      className={`${grandisExtended.variable} ${magistral.variable}`}
+      className={`${grandisExtended.variable} ${magistral.variable} ${orbitron.variable}`}
     >
       <body className="antialiased">{children}</body>
     </html>

@@ -59,7 +59,7 @@ const FORMATS = [
     icon: 'cake' as const,
     name: 'ДЕНЬ РОЖДЕНИЯ',
     desc: 'Закажи клуб для своей компании. Своя кухня на Василеостровской, атмосфера и турнир между гостями.',
-    badge: 'ДЕПОЗИТ × 2 В ДЕНЬ ДР',
+    badge: 'ДЕПОЗИТ × 2',
     featured: true,
     details: ['Любое количество', 'Кейтеринг', 'Кастомные призы'],
   },
@@ -67,7 +67,7 @@ const FORMATS = [
     icon: 'trophy' as const,
     name: 'ЗАКРЫТЫЙ ТУРНИР',
     desc: 'Арендуй ARENA 5×5 для командного турнира. Проектор по центру, трансляция, призы — как на настоящем киберспортивном ивенте.',
-    badge: 'ARENA 5×5 · ВАСИЛЕОСТРОВСКАЯ',
+    badge: 'ARENA 5×5',
     details: ['Формат 5×5', 'Проектор', 'Трансляция'],
   },
 ]
@@ -141,16 +141,10 @@ const PROOF = [
     name: 'БК ЗЕНИТ САНКТ-ПЕТЕРБУРГ',
     badge: 'БК ЗЕНИТ · ОФИЦИАЛЬНОЕ ПРОМО',
     desc: 'Баскетбольный клуб Зенит снял промо-ролик к новому сезону в Full Focus Василеостровская.',
-    cta: { label: 'СМОТРЕТЬ РОЛИК', href: 'https://youtu.be/AV0z2DHdTIk' },
+    cta: { label: 'СМОТРЕТЬ РОЛИК', embedSrc: 'https://rutube.ru/play/embed/8bdcb8ea9b03bc51028e0689b8e9b91f' },
   },
 ]
 
-const STEPS = [
-  { num: '01', name: 'ЗАЯВКА',      desc: 'Оставь заявку с деталями — формат, дата, количество гостей, клуб.' },
-  { num: '02', name: 'ОБСУЖДЕНИЕ',  desc: 'Свяжемся в течение 15 минут. Обсудим сценарий и детали.' },
-  { num: '03', name: 'ПОДГОТОВКА',  desc: 'Берём организацию на себя — оборудование, кейтеринг, ведущий.' },
-  { num: '04', name: 'МЕРОПРИЯТИЕ', desc: 'Ты просто приходишь и наслаждаешься. Мы делаем всё остальное.' },
-]
 
 const GALLERY = [
   { span: 'tall', src: '/assets/club-interior.jpg',  label: 'Интерьер · Василеостровская' },
@@ -191,6 +185,8 @@ const FAQ_ITEMS = [
 ]
 
 import EventsFAQ from '@/components/events/EventsFAQ'
+import EventsHowSection from '@/components/events/EventsHowSection'
+import ProofVideoButton from '@/components/events/ProofVideoButton'
 
 export default function EventsPage() {
   return (
@@ -221,10 +217,10 @@ export default function EventsPage() {
                 <Reveal key={f.name} delay={80 + i * 120}>
                   <article className={`ev-format ${f.featured ? 'is-featured' : ''}`}>
                     <span className="ev-format__glow" />
+                    {f.badge && <span className="ev-format__badge">{f.badge}</span>}
                     <div className="ev-format__body">
                       <div className="ev-format__top">
                         <span className="ev-format__icon"><Icon name={f.icon} size={28} /></span>
-                        {f.badge && <span className="ev-format__badge">{f.badge}</span>}
                       </div>
                       <h3 className="ev-format__name">{f.name}</h3>
                       <p className="ev-format__desc">{f.desc}</p>
@@ -372,10 +368,7 @@ export default function EventsPage() {
                       <h3 className="ev-proof__name">{p.name}</h3>
                       <p className="ev-proof__desc">{p.desc}</p>
                       {p.cta && (
-                        <a href={p.cta.href} target="_blank" rel="noopener noreferrer"
-                           className="ev-proof__cta">
-                          {p.cta.label} <Icon name="arrowRight" size={13} />
-                        </a>
+                        <ProofVideoButton label={p.cta.label} embedSrc={p.cta.embedSrc} />
                       )}
                     </div>
                   </article>
@@ -386,29 +379,7 @@ export default function EventsPage() {
         </section>
 
         {/* §6 How It Works */}
-        <section id="how" className="ff-section" style={{ paddingTop: 0 }}>
-          <div className="ff-section__inner">
-            <Reveal className="ff-section-head">
-              <span className="ff-tag">как это работает</span>
-              <h2 className="ff-section-head__title">КАК ЭТО РАБОТАЕТ</h2>
-            </Reveal>
-            <div className="ev-how">
-              <div className="ev-how__line is-drawn" />
-              <div className="ev-how__list">
-                {STEPS.map((s, i) => (
-                  <Reveal key={s.num} delay={80 * i}>
-                    <div className="ev-how__step">
-                      <span className="ev-how__dot" />
-                      <span className="ev-how__num">{s.num}</span>
-                      <h3 className="ev-how__name">{s.name}</h3>
-                      <p className="ev-how__desc">{s.desc}</p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <EventsHowSection />
 
         {/* §7 Gallery */}
         <section id="gallery" className="ff-section" style={{ paddingTop: 0 }}>

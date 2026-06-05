@@ -9,18 +9,19 @@ import FranchiseHero from '@/components/franchise/FranchiseHero'
 import FranchiseStats from '@/components/franchise/FranchiseStats'
 import FranchiseFinalCTA from '@/components/franchise/FranchiseFinalCTA'
 import FranchiseFAQ from '@/components/franchise/FranchiseFAQ'
+import FranchiseRoadmap from '@/components/franchise/FranchiseRoadmap'
 import './franchise.css'
 
 export const metadata: Metadata = {
   title: 'Франшиза Full Focus — Компьютерный и киберспортивный клуб нового поколения',
   description:
-    'Франшиза компьютерного и киберспортивного клуба Full Focus: готовая бизнес-модель, IT-экосистема (Hub, Club, Pay), поддержка на каждом шаге. От 7 млн ₽, окупаемость от 18 мес. 7 клубов в сети.',
+    'Франшиза компьютерного и киберспортивного клуба Full Focus: готовая бизнес-модель, IT-экосистема (Hub, Club, Pay), поддержка на каждом шаге. От 7 млн ₽, окупаемость от 10 мес. 7 клубов в сети.',
   keywords: 'франшиза компьютерного клуба, франшиза киберспортивного клуба, открыть компьютерный клуб, франшиза игрового клуба, франшиза клуба СПб',
   metadataBase: new URL('https://fullfocusclub.ru'),
   alternates: { canonical: '/franchise' },
   openGraph: {
     title: 'Франшиза Full Focus — Компьютерный и киберспортивный клуб нового поколения',
-    description: 'Франшиза компьютерного и киберспортивного клуба. Готовая IT-экосистема, проверенная бизнес-модель. От 7 млн ₽, окупаемость от 18 мес.',
+    description: 'Франшиза компьютерного и киберспортивного клуба. Готовая IT-экосистема, проверенная бизнес-модель. От 7 млн ₽, окупаемость от 10 мес.',
     url: 'https://fullfocusclub.ru/franchise',
     siteName: 'Full Focus Club',
     locale: 'ru_RU',
@@ -62,7 +63,7 @@ const schemaOrg = {
           name: 'Сколько стоит открыть компьютерный клуб по франшизе Full Focus?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Инвестиции зависят от формата: СТАРТ (90–130 м²) — от 7 млн ₽, КЛУБ (140–200 м²) — от 12 млн ₽, АРЕНА (250+ м²) — от 20 млн ₽. Окупаемость — от 18 месяцев.',
+            text: 'Инвестиции зависят от формата: СТАРТ (90–130 м²) — от 7 млн ₽, КЛУБ (140–200 м²) — от 12 млн ₽, АРЕНА (250+ м²) — от 20 млн ₽. Окупаемость — от 10 месяцев.',
           },
         },
         {
@@ -80,9 +81,9 @@ const schemaOrg = {
 
 /* ─── Data ─────────────────────────────────────────────────── */
 const CLUBS_REVENUE = [
-  { city: 'Санкт-Петербург', format: 'Клуб',  area: '180 м²', pcs: '32',  revenue: '2.4 млн ₽' },
-  { city: 'Махачкала',       format: 'Арена',  area: '420 м²', pcs: '52',  revenue: '3.8 млн ₽' },
-  { city: 'Санкт-Петербург', format: 'Старт',  area: '110 м²', pcs: '22',  revenue: '1.6 млн ₽' },
+  { city: 'Санкт-Петербург', format: 'Клуб',  area: '180 м²', pcs: '32', ps: '4', revenue: '2.4 млн ₽' },
+  { city: 'Махачкала',       format: 'Арена',  area: '420 м²', pcs: '52', ps: '4', revenue: '3.8 млн ₽' },
+  { city: 'Санкт-Петербург', format: 'Старт',  area: '110 м²', pcs: '22', ps: '4', revenue: '1.6 млн ₽' },
 ]
 
 const VALUES = [
@@ -174,7 +175,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Каков срок окупаемости?',
-    a: 'Средний срок окупаемости — от 18 месяцев. В крупных городах с высоким трафиком — быстрее.',
+    a: 'Средний срок окупаемости — от 10 месяцев. В крупных городах с высоким трафиком — быстрее.',
   },
   {
     q: 'Нужен ли опыт в киберспорте или IT?',
@@ -237,7 +238,8 @@ export default function FranchisePage() {
                       </div>
                       <dl className="ff-club-card__meta">
                         <div><dt>Площадь</dt><dd>{c.area}</dd></div>
-                        <div><dt>ПК</dt><dd>{c.pcs}</dd></div>
+                        <div><dt>PC</dt><dd>{c.pcs}</dd></div>
+                        <div><dt>PS</dt><dd>{c.ps}</dd></div>
                       </dl>
                       <div className="ff-club-card__revenue">
                         <span className="ff-club-card__revenue-pre">Выручка · апр. 2025</span>
@@ -307,7 +309,7 @@ export default function FranchisePage() {
                 </h2>
                 <p className="ff-section-head__sub">
                   Три продукта, которые работают на твой бизнес — уже включены во
-                  франшизу. Ни один конкурент так не делает.
+                  франшизу. Без доплат, без сторонних подрядчиков.
                 </p>
               </div>
             </Reveal>
@@ -394,12 +396,12 @@ export default function FranchisePage() {
                       <div className="ff-format-card__name">{f.name}</div>
                       <dl className="ff-format-card__meta">
                         <div className="ff-format-card__row"><dt>Площадь</dt><dd>{f.area}</dd></div>
-                        <div className="ff-format-card__row"><dt>ПК</dt><dd>{f.pcs}</dd></div>
+                        <div className="ff-format-card__row"><dt>PC</dt><dd>{f.pcs}</dd></div>
                         <div className="ff-format-card__row"><dt>Дополнительно</dt><dd>{f.extras}</dd></div>
                       </dl>
                       <div>
                         <div className="ff-format-card__price">
-                          {f.price} млн ₽<small> · от</small>
+                          <small>от · </small>{f.price} млн ₽
                         </div>
                       </div>
                       <div style={{ marginTop: 'auto' }}>
@@ -468,27 +470,7 @@ export default function FranchisePage() {
         </section>
 
         {/* §9 Steps */}
-        <section className="ff-section ff-steps" id="steps">
-          <div className="ff-section__inner">
-            <Reveal>
-              <div className="ff-section-head">
-                <span className="ff-tag">Дорожная карта</span>
-                <h2 className="ff-section-head__title">5 шагов до открытия</h2>
-              </div>
-            </Reveal>
-            <Reveal delay={120}>
-              <div className="ff-steps__list">
-                {STEPS.map(s => (
-                  <div className="ff-step" key={s.n}>
-                    <span className="ff-step__num">[ {s.n} ]</span>
-                    <span className="ff-step__name">{s.name}</span>
-                    <span className="ff-step__desc">{s.desc}</span>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </section>
+        <FranchiseRoadmap />
 
         {/* §10 Final CTA */}
         <FranchiseFinalCTA />

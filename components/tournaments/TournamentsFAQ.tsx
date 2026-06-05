@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
+import Icon from '@/components/ui/Icon'
 
 interface FAQItem { q: string; a: string }
 
@@ -34,7 +35,7 @@ export default function TournamentsFAQ({ items }: { items: FAQItem[] }) {
         <div className="ev-faq__cta">
           <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer"
              className="ff-btn ff-btn--secondary">
-            Остались вопросы? Напишите нам
+            НАПИСАТЬ В TELEGRAM <Icon name="telegram" size={15} />
           </a>
         </div>
       </div>

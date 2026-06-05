@@ -27,8 +27,9 @@ export default function FranchiseFinalCTA() {
     <section className="ff-final" id="contacts">
       <div className="ff-final__halo" />
       <div className="ff-final__inner">
+
         <Reveal>
-          <div>
+          <div className="ff-final__left">
             <span className="ff-tag">Контакты</span>
             <h2 className="ff-final__title" style={{ marginTop: 18 }}>
               ТЫ ОТКРЫВАЕШЬ КЛУБ.<br />
@@ -38,7 +39,17 @@ export default function FranchiseFinalCTA() {
               Оставь заявку — пришлём финмодель, презентацию и подобранные
               города. Без звонков с подменных номеров.
             </p>
+            <ul className="ff-checklist">
+              {CHECKLIST.map(t => (
+                <li className="ff-checklist__item" key={t}>{t}</li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
 
+        <Reveal delay={160}>
+          <div className="ff-final__card">
+            <p className="ff-final__card-title">Получить материалы</p>
             {!done ? (
               <form className="ff-form" onSubmit={submit}>
                 <div className="ff-form__row">
@@ -76,13 +87,13 @@ export default function FranchiseFinalCTA() {
                 <div>
                   <button type="submit"
                           className="ff-btn ff-btn--primary ff-btn--lg ff-btn--block is-pulse">
-                    ПОЛУЧИТЬ ПРЕЗЕНТАЦИЮ И ФИНМОДЕЛЬ
+                    Получить презентацию и финмодель
                   </button>
                 </div>
                 <p className="ff-finecount">Свяжемся в течение 24 часов · Без спама</p>
               </form>
             ) : (
-              <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <div style={{
                   display: 'flex', gap: 14, alignItems: 'center',
                   padding: '24px', background: 'rgba(0,255,182,0.08)',
@@ -109,13 +120,6 @@ export default function FranchiseFinalCTA() {
           </div>
         </Reveal>
 
-        <Reveal delay={160}>
-          <ul className="ff-checklist">
-            {CHECKLIST.map(t => (
-              <li className="ff-checklist__item" key={t}>{t}</li>
-            ))}
-          </ul>
-        </Reveal>
       </div>
     </section>
   )
