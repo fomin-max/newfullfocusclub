@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import ProgressBar from '@/components/ui/ProgressBar'
 import Ticker from '@/components/ui/Ticker'
 import Header from '@/components/ui/Header'
@@ -253,7 +254,7 @@ export default async function TournamentPage({ params }: Props) {
                     <Reveal key={i} className="cd-partner" delay={i * 70}>
                       <div className="cd-partner__logo">
                         {p.logo_url
-                          ? <img src={p.logo_url} alt={p.name} />
+                          ? <Image src={p.logo_url} alt={p.name} width={80} height={80} style={{ objectFit: 'contain' }} />
                           : <span className="cd-partner__logo-placeholder">{p.name}</span>
                         }
                       </div>

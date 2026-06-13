@@ -5,20 +5,24 @@ export interface AggClub {
   city: 'spb' | 'mkh'
   cityLabel: string
   metro: string
+  hasMetro?: boolean
+  address: string
   color: string
   x: number
   y: number
+  lng: number
+  lat: number
   zones: string[]
 }
 
 export const AGG_CLUBS: AggClub[] = [
-  { id: 'vasil',   slug: 'vasilyeostrovsky', name: 'Василеостровская',        city: 'spb', cityLabel: 'СПб',       metro: 'м. Василеостровская',         color: '#bf9e4d', x: 32, y: 40, zones: ['PRO','DUO','BOOTCAMP','ARENA','SOLO','LOUNGE'] },
-  { id: 'electro', slug: 'elektrosila',       name: 'Электросила',             city: 'spb', cityLabel: 'СПб',       metro: 'м. Электросила',               color: '#0066b3', x: 55, y: 82, zones: ['PRO','MAX','DUO','LOUNGE'] },
-  { id: 'komen',   slug: 'komendantsky',      name: 'Комендантский',           city: 'spb', cityLabel: 'СПб',       metro: 'м. Комендантский пр.',         color: '#8bc34a', x: 22, y: 18, zones: ['PRO','MAX','BOOTCAMP','LOUNGE'] },
-  { id: 'prosv',   slug: 'prosvescheniya',    name: 'Просвещения',             city: 'spb', cityLabel: 'СПб',       metro: 'м. Пр. Просвещения',           color: '#c12a2c', x: 48, y: 12, zones: ['PRO','MAX','BOOTCAMP','DUO','SOLO','LOUNGE'] },
-  { id: 'tech',    slug: 'tekhnologichesky',  name: 'Технологический',         city: 'spb', cityLabel: 'СПб',       metro: 'м. Технологический институт',  color: '#0066b3', x: 50, y: 64, zones: ['PRO','MAX','BOOTCAMP','LOUNGE'] },
-  { id: 'sadov',   slug: 'sadovaya',          name: 'Садовая',                 city: 'spb', cityLabel: 'СПб',       metro: 'м. Садовая',                   color: '#b14385', x: 52, y: 52, zones: ['PRO','MAX','BOOTCAMP','DUO','LOUNGE'] },
-  { id: 'makha',   slug: 'makhachkala',       name: 'Махачкала',               city: 'mkh', cityLabel: 'Махачкала', metro: 'Центр города',                 color: '#6632FA', x: 84, y: 56, zones: ['BOOTCAMP','DUO','SOLO','LOUNGE'] },
+  { id: 'vasil',   slug: 'vasilyeostrovsky', name: 'Василеостровская',        city: 'spb', cityLabel: 'СПб',       metro: 'м. Василеостровская',         address: 'Бугский переулок, 3',          color: '#009E40', x: 32, y: 40, lng: 30.285601, lat: 59.938389, zones: ['PRO','DUO','BOOTCAMP','ARENA','SOLO','LOUNGE'] },
+  { id: 'electro', slug: 'elektrosila',       name: 'Электросила',             city: 'spb', cityLabel: 'СПб',       metro: 'м. Электросила',               address: 'Московский проспект, 149А',    color: '#0062AC', x: 55, y: 82, lng: 30.317797, lat: 59.874116, zones: ['PRO','MAX','DUO','LOUNGE'] },
+  { id: 'komen',   slug: 'komendantsky',      name: 'Комендантский',           city: 'spb', cityLabel: 'СПб',       metro: 'м. Комендантский пр.',         address: 'Проспект Испытателей, 33',     color: '#8E479B', x: 22, y: 18, lng: 30.265316, lat: 60.008051, zones: ['PRO','MAX','BOOTCAMP','LOUNGE'] },
+  { id: 'prosv',   slug: 'prosvescheniya',    name: 'Просвещения',             city: 'spb', cityLabel: 'СПб',       metro: 'м. Пр. Просвещения',           address: 'Проспект Просвещения, 43',     color: '#0062AC', x: 48, y: 12, lng: 30.365117, lat: 60.045799, zones: ['PRO','MAX','BOOTCAMP','DUO','SOLO','LOUNGE'] },
+  { id: 'tech',    slug: 'tekhnologichesky',  name: 'Технологический',         city: 'spb', cityLabel: 'СПб',       metro: 'м. Технологический институт',  address: '3-я Красноармейская, 10',      color: '#E4171B', x: 50, y: 64, lng: 30.313694, lat: 59.914358, zones: ['PRO','MAX','BOOTCAMP','LOUNGE'] },
+  { id: 'sadov',   slug: 'sadovaya',          name: 'Садовая',                 city: 'spb', cityLabel: 'СПб',       metro: 'м. Садовая',                   address: 'Улица Казанская, 33',          color: '#8E479B', x: 52, y: 52, lng: 30.311556, lat: 59.929723, zones: ['PRO','MAX','BOOTCAMP','DUO','LOUNGE'] },
+  { id: 'makha',   slug: 'makhachkala',       name: 'Махачкала',               city: 'mkh', cityLabel: 'Махачкала', metro: 'Центр города', hasMetro: false,  address: 'Улица Манташева, 107Б',        color: '#888888', x: 84, y: 56, lng: 47.519765, lat: 42.976510, zones: ['BOOTCAMP','DUO','SOLO','LOUNGE'] },
 ]
 
 export const CITY_META = {

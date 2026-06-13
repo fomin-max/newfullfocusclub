@@ -6,7 +6,7 @@ export default function EventsBanner() {
     <section id="events" className="ff-section">
       <div className="ff-section__inner">
         <Reveal>
-          <a href="/events" className="ff-events-banner">
+          <a href="/events#form" className="ff-events-banner">
             <div className="ff-events-banner__text">
               <span className="ff-banner__hash">//// МЕРОПРИЯТИЯ</span>
               <h3 className="ff-banner__title">

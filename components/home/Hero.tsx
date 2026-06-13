@@ -21,7 +21,7 @@ export default function Hero() {
       <div className="ff-hero__mesh" />
       <div className="ff-hero__noise" />
       <div className="ff-hero__scan" />
-      <div className="ff-hero__hash" aria-hidden="true">////&nbsp;&nbsp;FULL FOCUS&nbsp;&nbsp;//&nbsp;&nbsp;SPB&nbsp;&nbsp;//&nbsp;&nbsp;2026</div>
+      <div className="ff-hero__hash" aria-hidden="true">////&nbsp;&nbsp;FULL FOCUS&nbsp;&nbsp;//&nbsp;&nbsp;SPB&nbsp;&nbsp;//&nbsp;&nbsp;MKH&nbsp;&nbsp;//&nbsp;&nbsp;2026</div>
 
       <div className="ff-hero__inner">
         <div className="ff-hero__top">

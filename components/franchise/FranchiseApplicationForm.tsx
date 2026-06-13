@@ -14,10 +14,21 @@ export default function FranchiseApplicationForm() {
   const [contact, setContact] = useState('')
   const [comment, setComment] = useState('')
   const [done, setDone]       = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setDone(true)
+    setLoading(true)
+    try {
+      await fetch('/api/franchise', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone: contact, budget, city, comment, source: 'application' }),
+      })
+    } finally {
+      setLoading(false)
+      setDone(true)
+    }
   }
 
   return (
@@ -76,9 +87,10 @@ export default function FranchiseApplicationForm() {
                 </div>
 
                 <div className="ev-form__submit">
-                  <button type="submit" className="ff-btn ff-btn--primary ff-btn--lg is-pulse"
+                  <button type="submit" disabled={loading}
+                          className="ff-btn ff-btn--primary ff-btn--lg is-pulse"
                           style={{ width: '100%' }}>
-                    ОТПРАВИТЬ ЗАЯВКУ <Icon name="arrowRight" size={15} />
+                    {loading ? 'ОТПРАВЛЯЕМ...' : <><span>ОТПРАВИТЬ ЗАЯВКУ</span><Icon name="arrowRight" size={15} /></>}
                   </button>
                 </div>
               </form>

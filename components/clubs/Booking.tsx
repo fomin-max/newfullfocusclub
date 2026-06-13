@@ -14,7 +14,6 @@ const SLOTS: string[] = Array.from({ length: 45 }, (_, i) => {
 
 const STEP_LABELS = ['ВЫБЕРИ ЗОНУ', 'ДАТА И ВРЕМЯ', 'КОНТАКТЫ']
 
-// duration is stored in minutes
 const QUICK_PICKS = [
   { min: 60,  label: '1 ЧАС'  },
   { min: 120, label: '2 ЧАСА' },
@@ -39,7 +38,7 @@ function formatDuration(min: number): string {
   return [hStr, mStr].filter(Boolean).join(' ')
 }
 
-function DurationPicker({ value, onChange }: { value: number | null, onChange: (v: number) => void }) {
+function DurationPicker({ value, onChange }: { value: number, onChange: (v: number) => void }) {
   const cur = value ?? 60
   return (
     <div className="tp-dur-wrap">
@@ -72,7 +71,8 @@ function DurationPicker({ value, onChange }: { value: number | null, onChange: (
 }
 
 function todayStr() {
-  return new Date().toISOString().split('T')[0]
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 function slotMinutes(slot: string): number {
@@ -82,7 +82,9 @@ function slotMinutes(slot: string): number {
 
 function minBookableMinutes(): number {
   const now = new Date()
-  return Math.ceil((now.getHours() * 60 + now.getMinutes() + 1) / 30) * 30
+  const raw = Math.ceil((now.getHours() * 60 + now.getMinutes() + 1) / 30) * 30
+  const h = Math.floor(raw / 60)
+  return h < 10 ? raw + 24 * 60 : raw
 }
 
 function availableSlots(date: string): string[] {
@@ -92,8 +94,8 @@ function availableSlots(date: string): string[] {
 }
 
 // ─── TimePicker ───────────────────────────────────────────────────────────────
-const ITEM_H = 48   // mobile item height px
-const ITEM_W = 80   // desktop item width px
+const ITEM_H = 48
+const ITEM_W = 80
 
 function TimePicker({ slots, selected, onSelect }: {
   slots: string[]
@@ -117,7 +119,6 @@ function TimePicker({ slots, selected, onSelect }: {
     }
   }, [])
 
-  // When slots change (new date) → reset to first slot
   useEffect(() => {
     const key = `${slots.length}:${slots[0] ?? ''}`
     if (key === slotsKey.current) return
@@ -127,13 +128,11 @@ function TimePicker({ slots, selected, onSelect }: {
     setTimeout(() => scrollToIdx(0, false), 16)
   }, [slots, onSelect, scrollToIdx])
 
-  // On mount → scroll to initial selection
   useEffect(() => {
     const idx = selected ? slots.indexOf(selected) : 0
     setTimeout(() => scrollToIdx(Math.max(0, idx), false), 50)
   }, []) // eslint-disable-line
 
-  // Mobile: detect centred item after scroll settles
   const handleScroll = () => {
     if (!isMob()) return
     if (scrollTimer.current) clearTimeout(scrollTimer.current)
@@ -171,8 +170,10 @@ function TimePicker({ slots, selected, onSelect }: {
   )
 }
 
+const scrollToLive = () =>
+  document.getElementById('live')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
 function StickyCTA() {
-  const { openBooking } = useBooking()
   const [show, setShow] = useState(false)
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 300)
@@ -182,7 +183,7 @@ function StickyCTA() {
   }, [])
   return (
     <div className={`cl-sticky ${show ? 'is-show' : ''}`}>
-      <button className="ff-btn ff-btn--primary is-pulse" onClick={() => openBooking()}>
+      <button className="ff-btn ff-btn--primary is-pulse" onClick={scrollToLive}>
         ЗАБРОНИРОВАТЬ →
       </button>
     </div>
@@ -191,31 +192,87 @@ function StickyCTA() {
 
 function BookingModal() {
   const { CLUB, CLUB_ZONES } = useClubData()
-  const { open, initialZone, closeBooking } = useBooking()
-  const [step,     setStep]    = useState(1)
-  const [zone,     setZone]    = useState<string | null>(null)
+  const { open, target, closeBooking } = useBooking()
+
+  // if seat is pre-selected from LiveMap — skip step 1
+  const hasSeat   = Boolean(target.seatId)
+  const startStep = hasSeat ? 2 : 1
+
+  const [step,     setStep]    = useState(startStep)
+  const [zone,     setZone]    = useState<string | null>(target.zone ?? null)
   const [date,     setDate]    = useState('')
   const [slot,     setSlot]    = useState<string | null>(null)
-  const [duration, setDuration] = useState<number | null>(null)
+  const [duration, setDuration] = useState<number>(60)
   const [name,     setName]    = useState('')
   const [contact,  setContact] = useState('')
   const [done,     setDone]    = useState(false)
+  const [loading,  setLoading] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  type ZonePricing = { hourly: number; perMin: number; packages: Record<number, number> }
+  type ByZone = Record<string, { weekday: ZonePricing; weekend: ZonePricing }>
+  const [tariffs, setTariffs] = useState<ByZone>({})
 
-  useEffect(() => { if (!date) setDate(new Date().toISOString().split('T')[0]) }, [])
+  useEffect(() => { if (!date) setDate(todayStr()) }, [])
+
+  useEffect(() => {
+    if (!open) return
+    fetch(`/api/tariffs/${CLUB.SLUG}`)
+      .then(r => r.json())
+      .then(d => setTariffs(d.byZone ?? {}))
+      .catch(() => {})
+  }, [open, CLUB.SLUG])
 
   useEffect(() => {
     if (open) {
-      setDone(false); setStep(1); setSlot(null); setDuration(null)
-      if (initialZone && CLUB_ZONES.find(z => z.id === initialZone)) setZone(initialZone)
+      setDone(false)
+      setLoading(false)
+      setSubmitError(null)
+      const today = todayStr()
+      if (!date) setDate(today)
+      const firstSlot = availableSlots(date || today)[0] ?? null
+      setSlot(firstSlot)
+      setDuration(60)
+      if (target.seatId) {
+        setStep(2)
+      } else {
+        setStep(1)
+        setZone(target.zone && CLUB_ZONES.find(z => z.id === target.zone) ? target.zone : null)
+      }
     }
-  }, [open, initialZone, CLUB_ZONES])
+  }, [open, target, CLUB_ZONES])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
 
+  function estimatedPrice(): number | null {
+    let zoneName: string | undefined
+    if (hasSeat && target.seatLabel) {
+      zoneName = target.seatLabel.split(' · ').slice(1).join(' · ')
+    } else if (zone) {
+      zoneName = CLUB_ZONES.find(z => z.id === zone)?.name
+    }
+    if (!zoneName) return null
+    const zoneData = tariffs[zoneName]
+    if (!zoneData) return null
+    const jsDay = new Date(date || todayStr()).getDay()
+    const p = jsDay === 0 || jsDay === 6 ? zoneData.weekend : zoneData.weekday
+    if (!p.hourly) return null
+    // Exact package match (1ч, 3ч, 5ч …)
+    if (p.packages[duration] != null) return p.packages[duration]
+    // Otherwise: full hours × hourly + remaining minutes × per-minute rate
+    const hours      = Math.floor(duration / 60)
+    const remainMin  = duration % 60
+    return Math.round(hours * p.hourly + remainMin * (p.perMin / 60))
+  }
+
   if (!open) return null
+
+  const totalSteps = hasSeat ? 2 : 3
+  const stepLabel  = hasSeat
+    ? ['ДАТА И ВРЕМЯ', 'КОНТАКТЫ'][step - 2]
+    : STEP_LABELS[step - 1]
 
   return (
     <div className="cl-modal is-open" role="dialog" aria-modal="true" aria-label="Бронирование">
@@ -225,15 +282,25 @@ function BookingModal() {
         {!done && (
           <>
             <div className="cl-modal__bar">
-              {[1,2,3].map(n => <div key={n} className={step >= n ? 'on' : ''} />)}
+              {Array.from({ length: totalSteps }, (_, i) => (
+                <div key={i} className={(hasSeat ? step - 1 : step) > i ? 'on' : ''} />
+              ))}
             </div>
             <div className="cl-modal__step-label">
-              <strong>0{step}</strong> / 03 · {STEP_LABELS[step - 1]}
+              <strong>0{hasSeat ? step - 1 : step}</strong> / 0{totalSteps} · {stepLabel}
             </div>
           </>
         )}
 
-        {!done && step === 1 && (
+        {/* Seat pre-selected badge */}
+        {!done && hasSeat && (
+          <div className="cl-modal__seat-badge">
+            ✓ Место <strong>{target.seatLabel}</strong>
+          </div>
+        )}
+
+        {/* Step 1 — zone selection (only when no seat pre-selected) */}
+        {!done && !hasSeat && step === 1 && (
           <>
             <h3 className="cl-modal__title">КУДА БРОНИРУЕМ?</h3>
             <div className="cl-modal__zones">
@@ -251,6 +318,7 @@ function BookingModal() {
           </>
         )}
 
+        {/* Step 2 — date & time */}
         {!done && step === 2 && (
           <>
             <h3 className="cl-modal__title">КОГДА?</h3>
@@ -271,21 +339,28 @@ function BookingModal() {
             />
             <label className="cl-field__label">Продолжительность</label>
             <DurationPicker value={duration} onChange={setDuration} />
-            {slot && duration && (
+            {slot && (
               <div className="tp-summary">
                 <span className="tp-summary__time">{slot}</span>
                 <span className="tp-summary__arrow">→</span>
                 <span className="tp-summary__time is-end">{addMinutes(slot, duration)}</span>
                 <span className="tp-summary__dur">{formatDuration(duration)}</span>
+                {estimatedPrice() !== null && (
+                  <span className="tp-summary__price">~{estimatedPrice()} ₽</span>
+                )}
               </div>
             )}
             <div className="cl-modal__nav">
-              <button className="ff-btn ff-btn--ghost" onClick={() => setStep(1)}>← НАЗАД</button>
-              <button className="ff-btn ff-btn--primary" disabled={!slot || !duration} onClick={() => setStep(3)}>ДАЛЕЕ →</button>
+              {hasSeat
+                ? <button className="ff-btn ff-btn--ghost" onClick={closeBooking}>ОТМЕНА</button>
+                : <button className="ff-btn ff-btn--ghost" onClick={() => setStep(1)}>← НАЗАД</button>
+              }
+              <button className="ff-btn ff-btn--primary" disabled={!slot} onClick={() => setStep(3)}>ДАЛЕЕ →</button>
             </div>
           </>
         )}
 
+        {/* Step 3 — contacts */}
         {!done && step === 3 && (
           <>
             <h3 className="cl-modal__title">КОНТАКТЫ</h3>
@@ -295,12 +370,57 @@ function BookingModal() {
             </div>
             <div className="cl-field">
               <label>Телефон или Telegram</label>
-              <input type="text" value={contact} onChange={e => setContact(e.target.value)} placeholder="+7 / @username" />
+              <input
+                type="text"
+                inputMode="tel"
+                autoComplete="tel"
+                value={contact}
+                onChange={e => setContact(e.target.value)}
+                placeholder="+7 912 345-67-89 или @username"
+                className={contact && !/^[\+\d\s\-\(\)@a-zA-Z0-9_\.]+$/.test(contact) ? 'is-error' : ''}
+              />
+              {contact && !/^[\+\d\s\-\(\)@a-zA-Z0-9_\.]+$/.test(contact) && (
+                <span className="cl-field__error">Введи номер телефона (+7...) или Telegram (@username)</span>
+              )}
             </div>
+            {submitError && (
+              <p className="cl-modal__error">{submitError}</p>
+            )}
             <div className="cl-modal__nav">
               <button className="ff-btn ff-btn--ghost" onClick={() => setStep(2)}>← НАЗАД</button>
-              <button className="ff-btn ff-btn--primary is-pulse" disabled={!name || !contact} onClick={() => setDone(true)}>
-                ОТПРАВИТЬ →
+              <button
+                className="ff-btn ff-btn--primary is-pulse"
+                disabled={loading || !name || !contact || !/^[\+\d\s\-\(\)@a-zA-Z0-9_\.]+$/.test(contact)}
+                onClick={async () => {
+                  setLoading(true)
+                  setSubmitError(null)
+                  try {
+                    const res = await fetch('/api/booking', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        club_slug:    CLUB.SLUG,
+                        seat_id:      target.seatId,
+                        seat_label:   target.seatLabel,
+                        zone:         zone ?? undefined,
+                        date,
+                        time_start:   slot!,
+                        time_end:     addMinutes(slot!, duration),
+                        duration_min: duration,
+                        name,
+                        contact,
+                      }),
+                    })
+                    if (!res.ok) throw new Error('server')
+                    setDone(true)
+                  } catch {
+                    setSubmitError('Ошибка отправки. Попробуй ещё раз или свяжись с нами напрямую.')
+                  } finally {
+                    setLoading(false)
+                  }
+                }}
+              >
+                {loading ? 'ОТПРАВЛЯЕМ…' : 'ОТПРАВИТЬ →'}
               </button>
             </div>
           </>
@@ -308,17 +428,21 @@ function BookingModal() {
 
         {done && (
           <div className="cl-modal__success">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <h3>ЗАЯВКА ПРИНЯТА</h3>
-            <p>
-              Свяжемся в течение 15 минут.<br />
-              Если срочно — пиши в{' '}
-              <a href={`https://t.me/${CLUB.TELEGRAM.replace('@', '')}`} target="_blank" rel="noopener"
-                 style={{ color: 'var(--ff-neon-bloom)' }}>{CLUB.TELEGRAM}</a>.
-            </p>
-            <div style={{ marginTop: 24 }}>
+            <p>Свяжемся в течение 15 минут.</p>
+            <div className="cl-modal__success__actions">
+              <a className="ff-btn ff-btn--ghost"
+                 href={`https://t.me/${CLUB.TELEGRAM.replace('@', '')}`}
+                 target="_blank" rel="noopener">
+                НАПИСАТЬ В TELEGRAM →
+              </a>
+              <a className="ff-btn ff-btn--ghost"
+                 href={`tel:${CLUB.PHONE.replace(/\s|\(|\)|-/g, '')}`}>
+                📞 {CLUB.PHONE}
+              </a>
               <button className="ff-btn ff-btn--primary" onClick={closeBooking}>ХОРОШО →</button>
             </div>
           </div>

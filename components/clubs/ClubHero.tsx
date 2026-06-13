@@ -1,21 +1,23 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Icon from '@/components/ui/Icon'
 import Reveal from '@/components/ui/Reveal'
 import { useClubData } from './ClubDataContext'
-import { useBooking } from './BookingContext'
+const scrollToLive = () =>
+  document.getElementById('live')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 import type { IconName } from '@/components/ui/Icon'
 
 export default function ClubHero() {
   const { CLUB, CLUB_ZONES } = useClubData()
-  const { openBooking }      = useBooking()
 
   const topGpu = CLUB_ZONES
     .map(z => { const m = z.specShort.match(/RTX (\d+)/); return m ? parseInt(m[1]) : 0 })
     .reduce((a, b) => Math.max(a, b), 0)
-  const mediaStat = `● ${CLUB_ZONES.length} ЗОН · RTX ${topGpu}`
-  const mediaRef        = useRef<HTMLDivElement>(null)
+  const mediaStat = `● ${CLUB_ZONES.length + (CLUB.ZONES_EXTRA ?? 0)} ЗОН · RTX ${topGpu}`
+  const mediaRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const el = mediaRef.current
@@ -30,11 +32,38 @@ export default function ClubHero() {
     return () => el.removeEventListener('mousemove', onMove)
   }, [])
 
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    const isDesktop = window.innerWidth >= 1024
+    // Desktop без горизонтального видео — только постер
+    if (isDesktop && !CLUB.VIDEO_URL_DESKTOP) return
+    const id = requestAnimationFrame(() => {
+      video.load()
+      video.play().catch(() => {})
+    })
+    return () => cancelAnimationFrame(id)
+  }, [CLUB.VIDEO_URL_DESKTOP])
+
   return (
     <section id="hero" className="cl-hero" data-screen-label="01 · HERO">
       <div className="cl-hero__media" ref={mediaRef}>
-        <video className="cl-hero__video" autoPlay muted loop playsInline
-               poster={CLUB.POSTER_URL} preload="metadata">
+        {/* Poster as prioritized Image — preloaded by Next.js for fast LCP */}
+        <Image
+          src={CLUB.POSTER_URL}
+          alt={`${CLUB.NAME} — интерьер компьютерного клуба Full Focus`}
+          fill
+          priority
+          sizes="60vw"
+          className="cl-hero__poster"
+        />
+        <video ref={videoRef} className="cl-hero__video" muted loop playsInline preload="none"
+               {...(CLUB.VIDEO_URL_DESKTOP ? { 'data-has-desktop': '' } : {})}>
+          {CLUB.VIDEO_URL_DESKTOP ? (<>
+            <source media="(min-width: 1024px)" src={CLUB.VIDEO_URL_DESKTOP.replace(/\.mp4$/, '.webm')} type="video/webm" />
+            <source media="(min-width: 1024px)" src={CLUB.VIDEO_URL_DESKTOP} type="video/mp4" />
+          </>) : null}
+          <source src={CLUB.VIDEO_URL.replace(/\.mp4$/, '.webm')} type="video/webm" />
           <source src={CLUB.VIDEO_URL} type="video/mp4" />
         </video>
         <span className="cl-hero__cursor" />
@@ -59,7 +88,7 @@ export default function ClubHero() {
           <div className="cl-hero__meta">
             <div className="cl-meta-row">
               <span className="cl-metro-pill" style={{ '--metro-color': CLUB.METRO_COLOR } as React.CSSProperties}>
-                <span className="cl-metro-pill__dot">М</span>
+                {CLUB.HAS_METRO !== false && <span className="cl-metro-pill__dot">М</span>}
                 <strong>{CLUB.METRO}</strong>
               </span>
               <span>{CLUB.METRO_TIME}</span>
@@ -76,7 +105,7 @@ export default function ClubHero() {
         </Reveal>
         <Reveal delay={220}>
           <div className="cl-hero__ctas">
-            <button className="ff-btn ff-btn--primary is-pulse" onClick={() => openBooking()}>
+            <button className="ff-btn ff-btn--primary is-pulse" onClick={scrollToLive}>
               ЗАБРОНИРОВАТЬ <Icon name="arrowRight" size={14} />
             </button>
             <button className="ff-btn ff-btn--secondary"

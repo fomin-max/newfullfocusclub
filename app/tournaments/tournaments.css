@@ -620,7 +620,14 @@
   .tn-count__sep { display: none; }
   .tn-form__submit .ff-btn { transform: none !important; }
   .tn-lightbox { padding: 20px; }
-  .ev-how__list { grid-template-columns: 1fr; }
+  .ev-how__list { grid-template-columns: 1fr; gap: 0; padding-left: 44px; }
+  .ev-how__step { padding-bottom: 28px; padding-right: 0; }
+  .ev-how__step:last-child { padding-bottom: 0; }
+  .ev-how__dot { position: absolute; left: -43px; top: 0; margin-bottom: 0; background: rgba(0,255,182,0.18) !important; border-color: rgba(0,255,182,0.3) !important; box-shadow: none !important; }
+  .ev-how__step.is-reached .ev-how__dot { background: var(--ff-neon-bloom) !important; border-color: rgba(0,255,182,0.9) !important; box-shadow: 0 0 0 4px rgba(0,255,182,0.18), 0 0 18px rgba(0,255,182,0.65) !important; }
+  .ev-how__step::after { content: ""; position: absolute; left: -33px; top: 11px; bottom: -11px; width: 2px; background: rgba(0,255,182,0.14); transition: background 300ms var(--ff-ease-out), box-shadow 300ms var(--ff-ease-out); }
+  .ev-how__step:last-child::after { display: none; }
+  .ev-how__step.is-reached::after { background: rgba(0,255,182,0.7); box-shadow: 0 0 8px rgba(0,255,182,0.35); }
   .ev-gallery { grid-template-columns: 1fr; }
   .ev-gallery__cell--wide, .ev-gallery__cell--tall { grid-column: auto; grid-row: auto; }
 }

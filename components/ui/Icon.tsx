@@ -8,6 +8,7 @@ export type IconName =
   | 'speakers' | 'route' | 'map' | 'leaf'
   | 'broadcast' | 'check' | 'mic' | 'award' | 'info' | 'swords'
   | 'camera' | 'list' | 'ruble' | 'zoom' | 'burger' | 'plus' | 'minus'
+  | 'mouse' | 'headphones'
 
 interface IconProps {
   name: IconName
@@ -67,6 +68,8 @@ const PATHS: Record<IconName, React.ReactNode> = {
   burger:     (<><path d="M3 11h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/><path d="M12 11V7a4 4 0 0 0-8 0v4"/><path d="M8 21v-4a2 2 0 0 1 4 0v4"/><line x1="4" y1="21" x2="20" y2="21"/></>),
   plus:       (<><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>),
   minus:      (<line x1="5" y1="12" x2="19" y2="12"/>),
+  mouse:      (<><rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="2" x2="12" y2="10"/></>),
+  headphones: (<><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></>),
 }
 
 export default function Icon({ name, size = 18, className }: IconProps) {

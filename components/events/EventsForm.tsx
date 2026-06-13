@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 
@@ -13,22 +14,51 @@ const FORM_CLUBS = [
   'Садовая',
   'Технологический',
   'Махачкала',
-  'Другой клуб сети',
+  'Другое',
 ]
 
+const SLUG_TO_CLUB: Record<string, string> = {
+  vasilyeostrovsky: 'Василеостровская',
+  komendantsky:     'Комендантский проспект',
+  elektrosila:      'Электросила',
+  prosvescheniya:   'Просвещения',
+  sadovaya:         'Садовая',
+  tekhnologichesky: 'Технологический',
+  makhachkala:      'Махачкала',
+}
+
 export default function EventsForm() {
+  const params = useSearchParams()
+  const initialClub = SLUG_TO_CLUB[params.get('club') ?? ''] ?? FORM_CLUBS[0]
+
   const [type, setType]       = useState(FORM_TYPES[0])
-  const [club, setClub]       = useState(FORM_CLUBS[0])
+  const [club, setClub]       = useState(initialClub)
   const [date, setDate]       = useState('')
   const [people, setPeople]   = useState('')
   const [name, setName]       = useState('')
   const [contact, setContact] = useState('')
   const [comment, setComment] = useState('')
-  const [done, setDone]       = useState(false)
+  const [done,    setDone]    = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error,   setError]   = useState<string | null>(null)
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setDone(true)
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event_type: type, club, date, people, name, contact, comment }),
+      })
+      if (!res.ok) throw new Error('server')
+      setDone(true)
+    } catch {
+      setError('Ошибка отправки. Попробуй ещё раз или напиши нам напрямую.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -67,7 +97,7 @@ export default function EventsForm() {
                   <div className="ev-field-row">
                     <div className="ev-field">
                       <label>Дата</label>
-                      <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+                      <input type="date" value={date} min={new Date().toISOString().split('T')[0]} onChange={e => setDate(e.target.value)} />
                     </div>
                     <div className="ev-field">
                       <label>Количество человек</label>
@@ -96,9 +126,10 @@ export default function EventsForm() {
                 </div>
 
                 <div className="ev-form__submit">
-                  <button type="submit" className="ff-btn ff-btn--primary ff-btn--lg is-pulse"
+                  {error && <p style={{ color: '#ff6b6b', fontSize: 13, marginBottom: 10, textAlign: 'center' }}>{error}</p>}
+                  <button type="submit" disabled={loading} className="ff-btn ff-btn--primary ff-btn--lg is-pulse"
                           style={{ width: '100%' }}>
-                    ОТПРАВИТЬ ЗАЯВКУ <Icon name="arrowRight" size={15} />
+                    {loading ? 'ОТПРАВЛЯЕМ…' : <> ОТПРАВИТЬ ЗАЯВКУ <Icon name="arrowRight" size={15} /></>}
                   </button>
                 </div>
               </form>
@@ -109,7 +140,7 @@ export default function EventsForm() {
                 </span>
                 <h3>ЗАЯВКА ПРИНЯТА!</h3>
                 <p>Свяжемся в течение 15 минут в Telegram.</p>
-                <a className="ff-btn ff-btn--secondary" href="https://t.me/fullfocusclub"
+                <a className="ff-btn ff-btn--secondary" href="https://t.me/fullfocusclubru?direct"
                    target="_blank" rel="noopener noreferrer">
                   НАПИСАТЬ СЕЙЧАС <Icon name="telegram" size={15} />
                 </a>

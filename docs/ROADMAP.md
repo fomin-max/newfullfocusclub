@@ -113,9 +113,16 @@
 
 - [ ] Добавить переменные окружения на VPS (`.env.production` или в PM2 ecosystem):
   ```
-  NEXT_PUBLIC_SUPABASE_URL=https://pdsdpvjaxpyttbtmjhwp.supabase.co
-  NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkc2RwdmpheHB5dHRidG1qaHdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0OTE4ODQsImV4cCI6MjA5MTA2Nzg4NH0.p5zoKeFW1Gsm0T1kzsIs3i3ozQsLWeUo7bT0Igal6a0
+  NEXT_PUBLIC_SUPABASE_URL=...
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+  SUPABASE_SERVICE_ROLE_KEY=...
+  TELEGRAM_BOOKING_BOT_TOKEN=...
+  FRANCHISE_CHAT_ID=...
+  SMTP_USER=franchise@fullfocusclub.ru
+  SMTP_PASS=...  # пароль от ящика franchise@fullfocusclub.ru в reg.ru
   ```
+- [ ] ⚠️ Перед деплоем: убедиться что ящик `franchise@fullfocusclub.ru` создан в панели reg.ru → Почта → Управление почтой
+- [ ] ⚠️ Проверить отправку письма после деплоя: отправить тестовую заявку через форму /franchise и убедиться что письмо пришло на franchise@fullfocusclub.ru (SMTP хост: `smtp.hosting.reg.ru:465`)
 - [ ] `next build` на VPS (swap 2GB настроен)
 - [ ] PM2 ecosystem config, `pm2 start`, `pm2 save`, `pm2 startup`
 - [ ] Nginx конфиг для fullfocusclub.ru (proxy_pass → localhost:3000)

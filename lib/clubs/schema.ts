@@ -62,6 +62,20 @@ export function buildClubSchema(d: ClubData) {
           { '@type': 'ListItem', position: 3, name: d.CLUB.NAME, item: baseUrl },
         ],
       },
+      ...(d.CLUB.VIDEO_URL.startsWith('http') ? [{
+        '@type': 'VideoObject',
+        name: d.CLUB.VIDEO_TITLE ?? `Full Focus ${d.CLUB.NAME} — обзор компьютерного клуба`,
+        description: d.CLUB.VIDEO_DESC ?? `Видеообзор компьютерного клуба Full Focus у м. ${d.CLUB.METRO}. Игровые зоны, оборудование, атмосфера.`,
+        thumbnailUrl: d.CLUB.POSTER_URL,
+        uploadDate: '2025-01-01',
+        contentUrl: d.CLUB.VIDEO_URL,
+        duration: 'PT30S',
+        publisher: {
+          '@type': 'Organization',
+          name: 'Full Focus Club',
+          url: 'https://fullfocusclub.ru',
+        },
+      }] : []),
       {
         '@type': 'FAQPage',
         mainEntity: [
@@ -102,6 +116,9 @@ export function buildClubMetadata(d: ClubData): Metadata {
       siteName: 'Full Focus Club',
       locale: 'ru_RU',
       type: 'website',
+      ...(d.CLUB.POSTER_URL.startsWith('http') && {
+        images: [{ url: d.CLUB.POSTER_URL, width: 1280, height: 720, alt: `${d.CLUB.NAME} — Full Focus Club` }],
+      }),
     },
     robots: { index: true, follow: true },
   }

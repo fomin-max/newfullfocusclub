@@ -30,17 +30,24 @@ export interface ClubMeta {
   NAME: string
   SLUG: string
   ADDRESS: string
+  HAS_METRO?: boolean
   METRO: string
   METRO_COLOR: string
   METRO_TIME: string
   HOURS: string
   TELEGRAM: string
+  VK: string
   PHONE: string
   MAPS_URL: string
   ROUTE_URL: string
   COORDS: string
   VIDEO_URL: string
+  VIDEO_URL_DESKTOP?: string
   POSTER_URL: string
+  ZONES_EXTRA?: number
+  VIDEO_TITLE?: string
+  VIDEO_DESC?: string
+  GALLERY?: string[]
   REVIEWS_COUNT: string
   REVIEWS_COUNT_NUM: number
   GEO: { lat: number; lng: number }
@@ -58,10 +65,12 @@ export interface ClubZone {
   accent: string
   seats: number | string
   priceFrom: number
+  priceUnit?: string
   desc: string
   specShort: string
   image: string
   cta: string
+  ctaHref?: string
   flagship: boolean
   wide: boolean
   badge?: string
@@ -133,10 +142,21 @@ export interface FloorOutline {
   accent?: string
 }
 
+export type FloorPOIIcon = 'wc' | 'bar' | 'admin' | 'entrance' | 'sofa' | 'hanger'
+
+export interface FloorPOI {
+  label: string
+  icon: FloorPOIIcon
+  left: string
+  top: string
+}
+
 export interface FloorPlan {
+  bg?: string
   zones: FloorZone[]
   filters: FloorFilter[]
   outlines: FloorOutline[]
+  poi?: FloorPOI[]
 }
 
 export interface Review {

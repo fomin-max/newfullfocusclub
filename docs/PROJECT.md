@@ -39,6 +39,122 @@ A   fullfocusclub.ru      → [IP Timeweb VPS]
 A   www.fullfocusclub.ru  → [IP Timeweb VPS]
 ```
 
+### Медиа — CDN и файловая структура
+
+#### Как работает
+
+Все медиафайлы клубов управляются через `lib/cdn.ts` и переменную окружения `NEXT_PUBLIC_CDN_BASE`.
+
+| Режим | Значение NEXT_PUBLIC_CDN_BASE | Откуда берутся файлы |
+|-------|------------------------------|----------------------|
+| Локально / сервер без CDN | *(пусто)* | `public/clubs/{slug}/` |
+| Yandex Cloud (прямой) | `https://storage.yandexcloud.net/fullfocusclub-media` | Yandex Object Storage |
+| Yandex CDN (кастомный домен) | `https://cdn.fullfocusclub.ru` | Yandex CDN edge |
+
+#### Структура файлов (одинаковая везде)
+
+```
+clubs/
+  vasilyeostrovsky/
+    hero.mp4            ← hero-видео клуба (720p, ~30 сек, ~30-50 MB)
+    hero-poster.jpg     ← первый кадр / обложка (1280×720, <200 KB)
+    gallery/
+      01.jpg  02.jpg  03.jpg  04.jpg  05.jpg  06.jpg   ← фото клуба (1280×720, <300 KB каждое)
+  elektrosila/          ← та же структура
+  komendantsky/
+  prosvescheniya/
+  sadovaya/
+  tekhnologichesky/
+  makhachkala/
+```
+
+#### Правило — вся статика только в S3
+
+> **Никакие медиафайлы (фото, видео) не хранятся в git-репозитории и не деплоятся на VPS.**
+> `public/clubs/` используется только локально для разработки.
+> На проде все файлы отдаются из Yandex Object Storage.
+
+#### Флоу добавления новых медиафайлов
+
+```
+1. Подготовить файлы локально (конвертация FFmpeg, обрезка, именование)
+2. Положить в public/clubs/{slug}/... для локальной проверки
+3. Убедиться что всё выглядит правильно на localhost
+4. Залить на S3 командой sync (см. ниже)
+5. Проверить на продакшене
+6. Файлы из public/clubs/ можно удалить (они в S3)
+```
+
+#### Загрузка на Yandex Object Storage
+
+Бакет: `fullfocusclub-media` (создан, публичный, 15 ГБ)
+Профиль aws-cli: `yandex`
+
+```bash
+# Загрузить все медиа одной командой
+aws s3 sync public/clubs/ s3://fullfocusclub-media/clubs/ \
+  --profile yandex \
+  --endpoint-url https://storage.yandexcloud.net
+
+# Загрузить только один клуб
+aws s3 sync public/clubs/vasilyeostrovsky/ s3://fullfocusclub-media/clubs/vasilyeostrovsky/ \
+  --profile yandex \
+  --endpoint-url https://storage.yandexcloud.net
+
+# Проверить что загружено
+aws s3 ls s3://fullfocusclub-media/clubs/ \
+  --profile yandex \
+  --endpoint-url https://storage.yandexcloud.net \
+  --recursive
+```
+
+#### Активация S3 на проде (один раз)
+
+1. Прописать в `.env.local` на сервере:
+```
+NEXT_PUBLIC_CDN_BASE=https://storage.yandexcloud.net/fullfocusclub-media
+```
+2. Пересобрать и перезапустить:
+```bash
+npm run build && pm2 restart fullfocusclub
+```
+
+#### Настройка aws-cli (один раз на новой машине)
+
+```bash
+brew install awscli   # macOS
+
+aws configure --profile yandex
+# Access Key ID:     [ID из IAM → Сервисные аккаунты → fullfocusclub-s3 → Статические ключи]
+# Secret Access Key: [Секретный ключ]
+# Region:            ru-central1
+# Output format:     json
+```
+
+#### Требования к файлам
+
+| Файл | Формат | Размер | Параметры |
+|------|--------|--------|-----------|
+| hero.webm | WebM VP9 | < 15 MB | 720p, 30 сек, без звука — основной |
+| hero.mp4 | H.264 MP4 | < 25 MB | 720p, 30 сек, без звука — fallback Safari |
+| hero-poster.jpg | JPEG | < 200 KB | 1280×720, первый кадр видео |
+| gallery/NN.jpg | JPEG | < 300 KB каждое | 1280×720, освещение, интерьер |
+
+#### Конвертация через FFmpeg
+
+```bash
+# Poster (первый кадр)
+ffmpeg -i input.mp4 -ss 00:00:01 -vframes 1 -q:v 3 hero-poster.jpg
+
+# MP4 H.264 — fallback для Safari
+ffmpeg -i input.mp4 -c:v libx264 -crf 23 -preset slow -vf scale=1280:720 -an -movflags +faststart hero.mp4
+
+# WebM VP9 — основной (на 30-50% легче MP4)
+ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 33 -b:v 0 -vf scale=1280:720 -an hero.webm
+```
+
+---
+
 ## Дизайн-система
 
 ### Цвета

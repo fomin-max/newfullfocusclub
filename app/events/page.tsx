@@ -1,4 +1,6 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import ProgressBar from '@/components/ui/ProgressBar'
 import Ticker from '@/components/ui/Ticker'
 import Header from '@/components/ui/Header'
@@ -79,7 +81,7 @@ const VENUES = [
     capacity: 'ДО 80 ЧЕЛОВЕК',
     address: 'Бугский переулок, 3',
     metro: 'Василеостровская',
-    metroColor: '#bf9e4d',
+    metroColor: '#009E40',
     href: '/clubs/vasilyeostrovsky',
     features: [
       'ARENA 5×5 с проектором',
@@ -95,7 +97,7 @@ const VENUES = [
     capacity: 'ДО 60 ЧЕЛОВЕК',
     address: 'Проспект Испытателей, 33',
     metro: 'Комендантский проспект',
-    metroColor: '#8bc34a',
+    metroColor: '#8E479B',
     href: '/clubs/komendantsky',
     features: [
       'Большой зал PRO + MAX',
@@ -107,11 +109,11 @@ const VENUES = [
 ]
 
 const SMALL_CLUBS = [
-  { name: 'Электросила',     color: '#0066b3', href: '/clubs/elektrosila' },
-  { name: 'Просвещения',     color: '#c12a2c', href: '/clubs/prosvescheniya' },
-  { name: 'Садовая',         color: '#b14385', href: '/clubs/sadovaya' },
-  { name: 'Технологический', color: '#0066b3', href: '/clubs/tekhnologichesky' },
-  { name: 'Махачкала',       color: '#6632FA', href: '/clubs/makhachkala' },
+  { name: 'Электросила',     color: '#0062AC', href: '/clubs/elektrosila' },
+  { name: 'Просвещения',     color: '#0062AC', href: '/clubs/prosvescheniya' },
+  { name: 'Садовая',         color: '#8E479B', href: '/clubs/sadovaya' },
+  { name: 'Технологический', color: '#E4171B', href: '/clubs/tekhnologichesky' },
+  { name: 'Махачкала',       color: '#888888', href: '/clubs/makhachkala' },
 ]
 
 const INCLUDED = [
@@ -258,7 +260,7 @@ export default function EventsPage() {
                     <div className="ev-venue__media">
                       {i === 0 ? (
                         <>
-                          <img src="/assets/club-interior.jpg" alt={v.name} />
+                          <Image src="/assets/club-interior.jpg" alt={v.name} fill sizes="(max-width: 768px) 100vw, 50vw" />
                           <div className="ev-venue__media-shade" />
                           <span className="ev-venue__cap">{v.capacity}</span>
                           <span className="ev-venue__flag">{v.tag}</span>
@@ -395,8 +397,7 @@ export default function EventsPage() {
                   className={`ev-gallery__cell ${g.span === 'tall' ? 'ev-gallery__cell--tall' : g.span === 'wide' ? 'ev-gallery__cell--wide' : ''}`}
                 >
                   <div className="ev-gallery__tile">
-                    <img src={g.src} alt={g.label}
-                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <Image src={g.src} alt={g.label} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
                     <div className="ev-gallery__overlay">
                       <span className="ev-gallery__label">{g.label}</span>
                     </div>
@@ -408,7 +409,9 @@ export default function EventsPage() {
         </section>
 
         {/* §8 Form */}
-        <EventsForm />
+        <Suspense fallback={null}>
+          <EventsForm />
+        </Suspense>
 
         {/* §9 FAQ */}
         <EventsFAQ items={FAQ_ITEMS} />

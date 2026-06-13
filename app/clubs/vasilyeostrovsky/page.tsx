@@ -12,6 +12,7 @@ import ClubZones   from '@/components/clubs/ClubZones'
 import Hardware    from '@/components/clubs/Hardware'
 import Tariffs     from '@/components/clubs/Tariffs'
 import Features    from '@/components/clubs/Features'
+import ClubGallery from '@/components/clubs/ClubGallery'
 import ClubEvents  from '@/components/clubs/ClubEvents'
 import ClubReviews from '@/components/clubs/ClubReviews'
 import MapContact  from '@/components/clubs/MapContact'
@@ -39,6 +40,7 @@ export default function VasilyeostrvskyPage() {
           <Hardware />
           <Tariffs />
           <Features />
+          <ClubGallery />
           <ClubEvents />
           <ClubReviews />
           <MapContact />

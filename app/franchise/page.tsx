@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import ProgressBar from '@/components/ui/ProgressBar'
 import Ticker from '@/components/ui/Ticker'
 import Header from '@/components/ui/Header'
@@ -290,7 +291,7 @@ export default function FranchisePage() {
                   </div>
                 </div>
                 <div className="ff-concept__media">
-                  <img src="/assets/club-interior.jpg" alt="Full Focus Club — интерьер" />
+                  <Image src="/assets/club-interior.jpg" alt="Full Focus Club — интерьер" fill sizes="(max-width: 768px) 100vw, 50vw" />
                 </div>
               </div>
             </Reveal>

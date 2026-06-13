@@ -3,12 +3,10 @@
 import Icon from '@/components/ui/Icon'
 import Reveal from '@/components/ui/Reveal'
 import { useClubData } from './ClubDataContext'
-import { useBooking } from './BookingContext'
 import type { IconName } from '@/components/ui/Icon'
 
 export default function ClubEvents() {
-  const { EVENTS }      = useClubData()
-  const { openBooking } = useBooking()
+  const { EVENTS, CLUB } = useClubData()
   return (
     <section id="events" className="ff-section" data-screen-label="07 · МЕРОПРИЯТИЯ">
       <div className="ff-section__inner">
@@ -24,20 +22,22 @@ export default function ClubEvents() {
         <div className="cl-events__grid">
           {EVENTS.map((e, i) => (
             <Reveal key={e.name} delay={80 + i * 150}>
-              <article className="cl-event">
-                <span className="cl-event__icon"><Icon name={e.icon as IconName} size={26} /></span>
-                <h3 className="cl-event__name">{e.name}</h3>
-                <p className="cl-event__desc">{e.desc}</p>
+              <div className={e.badge ? 'cl-event__outer' : undefined}>
                 {e.badge && <span className="cl-event__badge">★ {e.badge}</span>}
-              </article>
+                <article className="cl-event">
+                  <span className="cl-event__icon"><Icon name={e.icon as IconName} size={26} /></span>
+                  <h3 className="cl-event__name">{e.name}</h3>
+                  <p className="cl-event__desc">{e.desc}</p>
+                </article>
+              </div>
             </Reveal>
           ))}
         </div>
         <Reveal delay={400}>
           <div className="cl-events__cta">
-            <button className="ff-btn ff-btn--primary is-pulse" onClick={() => openBooking('event')}>
+            <a className="ff-btn ff-btn--primary is-pulse" href={`/events?club=${CLUB.SLUG}#form`}>
               ОСТАВИТЬ ЗАЯВКУ НА МЕРОПРИЯТИЕ →
-            </button>
+            </a>
           </div>
         </Reveal>
       </div>

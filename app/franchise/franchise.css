@@ -370,7 +370,7 @@
 .ff-format-card__badge {
   position: absolute;
   top: -14px;
-  left: 24px;
+  right: 24px;
   background: var(--ff-neon-bloom);
   color: var(--ff-deep-memory);
   font-family: var(--ff-font-heading);
@@ -819,6 +819,14 @@
   .ff-form__row { grid-template-columns: 1fr; }
   .ff-final { padding: 80px 20px 64px; }
   .ff-concept__values { grid-template-columns: 1fr; }
+  .fr-roadmap__list { grid-template-columns: 1fr !important; gap: 0; padding-left: 44px; }
+  .fr-roadmap .ev-how__line { display: none; }
+  .fr-roadmap .ev-how__step { padding-bottom: 28px; padding-right: 0; }
+  .fr-roadmap .ev-how__step:last-child { padding-bottom: 0; }
+  .fr-roadmap .ev-how__dot { position: absolute; left: -43px; top: 0; margin-bottom: 0; }
+  .fr-roadmap .ev-how__step::after { content: ""; position: absolute; left: -33px; top: 11px; bottom: -11px; width: 2px; background: rgba(0,255,182,0.14); transition: background 300ms, box-shadow 300ms; }
+  .fr-roadmap .ev-how__step:last-child::after { display: none; }
+  .fr-roadmap .ev-how__step.is-reached::after { background: rgba(0,255,182,0.7); box-shadow: 0 0 8px rgba(0,255,182,0.35); }
 }
 @media (prefers-reduced-motion: reduce) {
   .ff-it-card::after { animation: none !important; }

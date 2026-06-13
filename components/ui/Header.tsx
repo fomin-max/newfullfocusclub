@@ -13,8 +13,8 @@ const NAV_LINKS = [
   { id: 'promos',     name: 'Акции',        page: null },
   { id: 'loyalty',    name: 'Уровни',       page: null },
   { id: 'tournament', name: 'Турниры',      page: '/tournaments' },
-  { id: 'events',     name: 'Мероприятия',  page: '/events' },
   { id: 'franchise',  name: 'Франшиза',     page: '/franchise' },
+  { id: 'events',     name: 'Мероприятия',  page: '/events' },
 ]
 
 const ALL_IDS = ['hero', ...NAV_LINKS.map(l => l.id)]

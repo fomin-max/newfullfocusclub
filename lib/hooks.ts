@@ -152,11 +152,17 @@ export function useActiveSection(ids: string[]) {
   const [active, setActive] = useState(ids[0] ?? '')
   useEffect(() => {
     const onScroll = () => {
-      const y = window.scrollY + 200
-      let cur = ids[0]
-      for (const id of ids) {
-        const el = document.getElementById(id)
-        if (el && el.offsetTop <= y) cur = id
+      const y = window.scrollY + 120
+      const sections = ids
+        .map(id => ({ id, top: document.getElementById(id)?.offsetTop ?? Infinity }))
+        .filter(s => s.top !== Infinity)
+        .sort((a, b) => a.top - b.top)
+      let cur = sections[0]?.id ?? ids[0]
+      for (let i = 0; i < sections.length; i++) {
+        if (y >= sections[i].top && (i + 1 >= sections.length || y < sections[i + 1].top)) {
+          cur = sections[i].id
+          break
+        }
       }
       setActive(cur)
     }

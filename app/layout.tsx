@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { Orbitron } from 'next/font/google'
 import './globals.css'
+import 'maplibre-gl/dist/maplibre-gl.css'
+import PageLoader from '@/components/ui/PageLoader'
+import NavigationProgress from '@/components/ui/NavigationProgress'
+import CookieConsent from '@/components/ui/CookieConsent'
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -59,7 +63,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       lang="ru"
       className={`${grandisExtended.variable} ${magistral.variable} ${orbitron.variable}`}
     >
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {/* Runs synchronously before first paint — hides loader for returning visitors */}
+        <script dangerouslySetInnerHTML={{ __html: `try{if(sessionStorage.getItem('ff_loader_seen')==='1'){document.documentElement.setAttribute('data-loader-skip','1')}}catch(e){}` }} />
+        <NavigationProgress />
+        <PageLoader />
+        {children}
+        <CookieConsent />
+      </body>
     </html>
   )
 }

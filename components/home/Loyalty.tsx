@@ -21,8 +21,9 @@ export default function Loyalty() {
         <div className="ff-loyalty__grid">
           {LEVELS.map((l, i) => (
             <Reveal key={l.name} delay={i * 90}>
-              <Card className={`ff-level ${l.name === 'MYSTERY' ? 'is-current' : ''}`} brackets>
+              <div className={l.name === 'MYSTERY' ? 'ff-level__outer' : undefined}>
                 {l.name === 'MYSTERY' && <span className="ff-level__badge">Топ уровень</span>}
+                <Card className={`ff-level ${l.name === 'MYSTERY' ? 'is-current' : ''}`} brackets>
                 <span className="ff-level__rank">УРОВЕНЬ · {l.rank}</span>
                 <h3 className="ff-level__name">{l.name}</h3>
                 <div className="ff-level__pct">{l.pct}<sup>%</sup></div>
@@ -33,7 +34,8 @@ export default function Loyalty() {
                   <div className="ff-level__bar-fill" style={{ '--p': l.p } as React.CSSProperties} />
                 </div>
                 <span className="ff-level__range">{l.range}</span>
-              </Card>
+                </Card>
+              </div>
             </Reveal>
           ))}
         </div>

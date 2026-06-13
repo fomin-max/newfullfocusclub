@@ -5,7 +5,6 @@ import Icon from '@/components/ui/Icon'
 import LogoFull from '@/components/ui/LogoFull'
 import LogoMark from '@/components/ui/LogoMark'
 import { useClubData } from './ClubDataContext'
-import { useBooking } from './BookingContext'
 
 const CLUB_NAV = [
   { id: 'zones',    name: 'Зоны' },
@@ -21,7 +20,8 @@ const ALL_IDS = ['hero', ...CLUB_NAV.map(l => l.id)]
 export function ClubNavbar() {
   const scrolled       = useScrolled(60)
   const active         = useActiveSection(ALL_IDS)
-  const { openBooking } = useBooking()
+  const scrollToLive = () =>
+    document.getElementById('live')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
   return (
     <header className={`ff-header ${scrolled ? 'is-scrolled' : ''}`}>
@@ -37,7 +37,7 @@ export function ClubNavbar() {
             </li>
           ))}
         </ul>
-        <button className="ff-btn ff-btn--primary ff-btn--sm is-pulse" onClick={() => openBooking()}>
+        <button className="ff-btn ff-btn--primary ff-btn--sm is-pulse" onClick={scrollToLive}>
           ЗАБРОНИРОВАТЬ <Icon name="arrowRight" size={14} />
         </button>
       </div>
@@ -50,7 +50,7 @@ export function ClubCrumbs() {
   return (
     <nav className="cl-crumbs" aria-label="breadcrumb">
       <div className="cl-crumbs__inner">
-        <a href="/">← Все клубы</a>
+        <a href="/#find">← Все клубы</a>
         <span className="cl-crumbs__sep">/</span>
         <span>FULL FOCUS</span>
         <span className="cl-crumbs__sep">/</span>

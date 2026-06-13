@@ -1,14 +1,15 @@
 import Icon from './Icon'
 import LogoFull from './LogoFull'
+import CookieSettingsBtn from './CookieSettingsBtn'
 
 const CLUBS = [
-  ['Василеостровская', '#bf9e4d', '/clubs/vasilyeostrovsky'],
-  ['Электросила',      '#0066b3', '/clubs/elektrosila'],
-  ['Комендантский',    '#8bc34a', '/clubs/komendantsky'],
-  ['Просвещения',      '#c12a2c', '/clubs/prosvescheniya'],
-  ['Садовая',          '#b14385', '/clubs/sadovaya'],
-  ['Технологический',  '#0066b3', '/clubs/tekhnologichesky'],
-  ['Махачкала',        '#6632FA', '/clubs/makhachkala'],
+  ['Василеостровская', '#009E40', '/clubs/vasilyeostrovsky'],
+  ['Электросила',      '#0062AC', '/clubs/elektrosila'],
+  ['Комендантский',    '#8E479B', '/clubs/komendantsky'],
+  ['Просвещения',      '#0062AC', '/clubs/prosvescheniya'],
+  ['Садовая',          '#8E479B', '/clubs/sadovaya'],
+  ['Технологический',  '#E4171B', '/clubs/tekhnologichesky'],
+  ['Махачкала',        '#888888', '/clubs/makhachkala'],
 ] as const
 
 export default function Footer() {
@@ -83,6 +84,7 @@ export default function Footer() {
       <div className="ff-footer__legal">
         <div className="ff-footer__legal-top">
           <a href="/privacy" className="ff-footer__policy">Политика обработки персональных данных</a>
+          <CookieSettingsBtn />
           <span className="ff-footer__legal-site">fullfocusclub.ru</span>
         </div>
         <div className="ff-footer__legal-body">

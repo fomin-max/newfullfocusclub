@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 
@@ -12,15 +12,47 @@ const CHECKLIST = [
 ]
 
 export default function FranchiseFinalCTA() {
-  const [messenger, setMessenger] = useState<'telegram' | 'whatsapp'>('telegram')
+  const [messenger, setMessenger] = useState<'telegram' | 'whatsapp' | 'max'>('telegram')
   const [name, setName]     = useState('')
   const [phone, setPhone]   = useState('')
   const [city, setCity]     = useState('')
   const [done, setDone]     = useState(false)
 
-  const submit = (e: React.FormEvent) => {
+  const phoneRef = useRef<HTMLInputElement>(null)
+
+  // Cursor positions right after each digit in "+7 XXX XXX-XX-XX"
+  // Indices:  +  7     d0 d1 d2    d3 d4 d5 -  d6 d7 -  d8 d9
+  //           0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
+  const CURSOR_MAP = [0, 4, 5, 6, 8, 9, 10, 12, 13, 15, 16]
+
+  const handlePhone = (raw: string) => {
+    let digits = raw.replace(/\D/g, '')
+    if (digits.startsWith('7') || digits.startsWith('8')) digits = digits.slice(1)
+    digits = digits.slice(0, 10)
+    if (!digits) { setPhone(''); return }
+    const d = (i: number) => digits[i] ?? '_'
+    setPhone(`+7 ${d(0)}${d(1)}${d(2)} ${d(3)}${d(4)}${d(5)}-${d(6)}${d(7)}-${d(8)}${d(9)}`)
+    const pos = CURSOR_MAP[digits.length] ?? 16
+    requestAnimationFrame(() => {
+      phoneRef.current?.setSelectionRange(pos, pos)
+    })
+  }
+
+  const [loading, setLoading] = useState(false)
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setDone(true)
+    setLoading(true)
+    try {
+      await fetch('/api/franchise', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, city, messenger, source: 'hero' }),
+      })
+    } finally {
+      setLoading(false)
+      setDone(true)
+    }
   }
 
   return (
@@ -60,8 +92,10 @@ export default function FranchiseFinalCTA() {
                   </div>
                   <div className="ff-field">
                     <label htmlFor="fr-phone">Телефон</label>
-                    <input id="fr-phone" className="ff-input" placeholder="+7 ___ ___-__-__"
-                           value={phone} onChange={e => setPhone(e.target.value)} required />
+                    <input id="fr-phone" ref={phoneRef} className="ff-input"
+                           placeholder="+7 ___ ___-__-__"
+                           value={phone} onChange={e => handlePhone(e.target.value)}
+                           inputMode="numeric" required />
                   </div>
                 </div>
                 <div className="ff-field">
@@ -82,12 +116,17 @@ export default function FranchiseFinalCTA() {
                             onClick={() => setMessenger('whatsapp')}>
                       WhatsApp
                     </button>
+                    <button type="button"
+                            className={messenger === 'max' ? 'is-active' : ''}
+                            onClick={() => setMessenger('max')}>
+                      MAX
+                    </button>
                   </div>
                 </div>
                 <div>
-                  <button type="submit"
+                  <button type="submit" disabled={loading}
                           className="ff-btn ff-btn--primary ff-btn--lg ff-btn--block is-pulse">
-                    Получить презентацию и финмодель
+                    {loading ? 'ОТПРАВЛЯЕМ...' : 'Получить презентацию и финмодель'}
                   </button>
                 </div>
                 <p className="ff-finecount">Свяжемся в течение 24 часов · Без спама</p>
@@ -111,7 +150,7 @@ export default function FranchiseFinalCTA() {
                     </div>
                   </div>
                 </div>
-                <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer"
+                <a href="https://t.me/fullfocusclubru?direct" target="_blank" rel="noopener noreferrer"
                    className="ff-btn ff-btn--secondary">
                   НАПИСАТЬ СЕЙЧАС <Icon name="telegram" size={15} />
                 </a>
