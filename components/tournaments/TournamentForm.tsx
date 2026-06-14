@@ -119,7 +119,7 @@ export default function TournamentForm() {
                 </span>
                 <h3>КОМАНДА ЗАРЕГИСТРИРОВАНА!</h3>
                 <p>Свяжемся с капитаном в течение 15 минут в Telegram.</p>
-                <a className="ff-btn ff-btn--secondary" href="https://t.me/fullfocusclub"
+                <a className="ff-btn ff-btn--secondary" href="https://t.me/fullfocusclubru?direct"
                    target="_blank" rel="noopener noreferrer">
                   НАПИСАТЬ В TELEGRAM <Icon name="telegram" size={15} />
                 </a>

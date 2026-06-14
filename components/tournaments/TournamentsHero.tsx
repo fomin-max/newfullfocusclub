@@ -21,16 +21,16 @@ export default function TournamentsHero() {
       .then(({ data }) => setNearest(data))
   }, [])
 
-  const regUrl = nearest ? `/tournaments/${nearest.slug}#registration` : '/tournaments#next'
+  const regUrl = nearest ? `/tournaments/${nearest.slug}#registration` : 'https://t.me/fullfocusclubru?direct'
 
   const facts = nearest ? [
-    { icon: 'trophy'    as const, val: `${nearest.prize_pool?.toLocaleString('ru')} ₽`, lbl: 'Призовой фонд' },
+    { icon: 'trophy'    as const, val: nearest.prize_pool ? `${nearest.prize_pool.toLocaleString('ru')} ₽` : '—', lbl: 'Призовой фонд' },
     { icon: 'users'     as const, val: `до ${nearest.max_participants} участников`,       lbl: 'Слотов' },
-    { icon: 'broadcast' as const, val: 'twitch · fullfocus',                             lbl: 'Прямой эфир' },
+    { icon: 'broadcast' as const, val: 'twitch · fullfocusclub',                          lbl: 'Прямой эфир' },
   ] : [
     { icon: 'trophy'    as const, val: '—', lbl: 'Призовой фонд' },
     { icon: 'users'     as const, val: '—', lbl: 'Слотов' },
-    { icon: 'broadcast' as const, val: 'twitch · fullfocus', lbl: 'Прямой эфир' },
+    { icon: 'broadcast' as const, val: 'twitch · fullfocusclub', lbl: 'Прямой эфир' },
   ]
 
   useEffect(() => {
@@ -98,14 +98,17 @@ export default function TournamentsHero() {
         <Reveal delay={220}>
           <div className="tn-hero__ctas">
             <span className="tn-hero__magnet" ref={magnetRef}>
-              <a className="ff-btn ff-btn--primary is-pulse" href={regUrl}>
+              <a className="ff-btn ff-btn--primary is-pulse" href={regUrl}
+                 {...(!nearest ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
                 ЗАРЕГИСТРИРОВАТЬСЯ <Icon name="arrowRight" size={14} />
               </a>
             </span>
-            <button className="ff-btn ff-btn--secondary"
-                    onClick={() => scrollTo('next')}>
-              БЛИЖАЙШИЙ ТУРНИР <Icon name="arrowDown" size={14} />
-            </button>
+            {nearest && (
+              <button className="ff-btn ff-btn--secondary"
+                      onClick={() => scrollTo('next')}>
+                БЛИЖАЙШИЙ ТУРНИР <Icon name="arrowDown" size={14} />
+              </button>
+            )}
           </div>
         </Reveal>
         <Reveal delay={300}>

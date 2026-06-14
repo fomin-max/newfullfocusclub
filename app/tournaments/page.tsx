@@ -59,12 +59,12 @@ const schemaOrg = {
 const CALENDAR = [
   {
     id: 'jun',
-    status: 'active',
-    badge: 'РЕГИСТРАЦИЯ ОТКРЫТА',
+    status: 'done',
+    badge: 'ТУРНИР ЗАВЕРШЁН',
     date: '13 ИЮНЯ · CAPTAIN\'S DRAFT',
     title: 'Full Focus Captain\'s Draft #1',
     prize: '20 000 ₽',
-    cta: { label: 'ЗАРЕГИСТРИРОВАТЬСЯ', href: '/tournaments/captains-draft-1#registration' },
+    cta: { label: 'РЕЗУЛЬТАТЫ', href: '/tournaments/captains-draft-1' },
   },
   {
     id: 'jul',
@@ -73,7 +73,7 @@ const CALENDAR = [
     date: 'ИЮЛЬ 2026',
     title: 'Дисциплина: объявим позже',
     note: 'Следи за @fullfocusclub в Telegram',
-    cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclub' },
+    cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclubru?direct' },
   },
   {
     id: 'aug',
@@ -82,7 +82,7 @@ const CALENDAR = [
     date: 'АВГУСТ 2026',
     title: 'Дисциплина: объявим позже',
     note: 'Следи за @fullfocusclub в Telegram',
-    cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclub' },
+    cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclubru?direct' },
   },
 ]
 
@@ -157,7 +157,7 @@ export default function TournamentsPage() {
             <div className="tn-cal__grid">
               {CALENDAR.map((c, i) => (
                 <Reveal key={c.id} delay={80 * i}>
-                  <div className={`tn-cal ${c.status === 'active' ? 'is-active' : 'is-soon'}`}>
+                  <div className={`tn-cal ${c.status === 'active' ? 'is-active' : c.status === 'done' ? 'is-done' : 'is-soon'}`}>
                     <span className={`tn-cal__badge ${c.status === 'active' ? '' : 'is-outline'}`}>
                       {c.badge}
                     </span>

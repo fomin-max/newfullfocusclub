@@ -82,7 +82,7 @@ export default async function Tournament() {
                   Сейчас активных турниров нет. Следи за анонсами!
                 </p>
                 <div className="ff-tournament__cta">
-                  <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer"
+                  <a href="https://t.me/fullfocusclubru?direct" target="_blank" rel="noopener noreferrer"
                      className="ff-btn ff-btn--primary">
                     Telegram-канал <Icon name="telegram" size={14} />
                   </a>

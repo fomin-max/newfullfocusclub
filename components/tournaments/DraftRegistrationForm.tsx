@@ -101,7 +101,7 @@ export default function DraftRegistrationForm({ tournament }: Props) {
           <span className="ev-form__success-mark"><Icon name="check" size={36} /></span>
           <h3>ЗАЯВКА ПРИНЯТА!</h3>
           <p>Свяжемся с тобой в Telegram перед турниром.</p>
-          <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer"
+          <a href="https://t.me/fullfocusclubru?direct" target="_blank" rel="noopener noreferrer"
              className="ff-btn ff-btn--secondary">
             НАПИСАТЬ В TELEGRAM <Icon name="telegram" size={14} />
           </a>
@@ -158,7 +158,7 @@ export default function DraftRegistrationForm({ tournament }: Props) {
       ) : (
         <div className="tp-reg__closed">
           <p>{isFull ? 'Все 20 мест заняты. Следи за анонсами следующего турнира.' : 'Регистрация закрыта.'}</p>
-          <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer"
+          <a href="https://t.me/fullfocusclubru?direct" target="_blank" rel="noopener noreferrer"
              className="ff-btn ff-btn--secondary">
             НАПИСАТЬ В TELEGRAM <Icon name="telegram" size={14} />
           </a>

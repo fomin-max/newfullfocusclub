@@ -484,6 +484,11 @@
   border-style: dashed;
   background: rgba(13,6,48,0.4);
 }
+.tn-cal.is-done {
+  opacity: 0.45;
+  filter: grayscale(0.4);
+  background: rgba(13,6,48,0.4);
+}
 .tn-cal__badge {
   align-self: flex-start;
   font-family: var(--ff-font-heading);
