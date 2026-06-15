@@ -35,13 +35,16 @@ export default function ClubsMapInner({
   const mapRef       = useRef<MapLibreMap | null>(null)
   const markersRef   = useRef<Map<string, { marker: Marker; el: HTMLButtonElement }>>(new Map())
   const [mapLoaded, setMapLoaded] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
+  const MAX_RETRIES = 4
 
-  // init map once
+  // init map once (re-runs on retryCount bump)
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return
+    if (!containerRef.current || retryCount > MAX_RETRIES) return
 
     let cancelled = false
     let map: MapLibreMap
+    let loadTimeout: ReturnType<typeof setTimeout>
 
     import('maplibre-gl').then((ml) => {
       if (cancelled || !containerRef.current) return
@@ -60,8 +63,27 @@ export default function ClubsMapInner({
       map.addControl(new ml.NavigationControl({ showCompass: false }), 'top-right')
       mapRef.current = map
 
+      const triggerRetry = () => {
+        if (cancelled) return
+        clearTimeout(loadTimeout)
+        map.remove()
+        mapRef.current = null
+        markersRef.current.clear()
+        setMapLoaded(false)
+        setRetryCount(n => n + 1)
+      }
+
+      // auto-retry if style/tiles fail to load within 8s
+      loadTimeout = setTimeout(() => {
+        if (mapLoaded) return
+        triggerRetry()
+      }, 8000)
+
+      map.on('error', triggerRetry)
+
       map.on('load', () => {
         if (cancelled) return
+        clearTimeout(loadTimeout)
         setMapLoaded(true)
 
         let leaveTimer: ReturnType<typeof setTimeout> | null = null
@@ -107,12 +129,13 @@ export default function ClubsMapInner({
 
     return () => {
       cancelled = true
+      clearTimeout(loadTimeout)
       map?.remove()
       mapRef.current = null
       markersRef.current.clear()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [retryCount])
 
   // fit to city clubs on filter change
   useEffect(() => {
