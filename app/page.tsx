@@ -1,3 +1,5 @@
+export const revalidate = 300
+
 import ProgressBar from '@/components/ui/ProgressBar'
 import Ticker from '@/components/ui/Ticker'
 import Header from '@/components/ui/Header'
