@@ -417,7 +417,7 @@ export default function EventsPage() {
         <EventsFAQ items={FAQ_ITEMS} />
       </main>
       <Footer />
-      <MobileStickyBar />
+      <MobileStickyBar label="ЗАБРОНИРОВАТЬ МЕРОПРИЯТИЕ" href="#form" />
     </>
   )
 }

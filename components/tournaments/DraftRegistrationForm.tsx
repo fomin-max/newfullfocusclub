@@ -70,7 +70,7 @@ export default function DraftRegistrationForm({ tournament }: Props) {
     )
 
     if (err) {
-      setError('Ошибка отправки. Попробуй ещё раз или напиши в Telegram.')
+      setError(`Ошибка: ${err}. Попробуй ещё раз или напиши в Telegram.`)
       setSubmitting(false)
     } else {
       setDone(true)

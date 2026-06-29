@@ -481,7 +481,7 @@ export default function FranchisePage() {
 
       </main>
       <Footer />
-      <MobileStickyBar />
+      <MobileStickyBar label="ОСТАВИТЬ ЗАЯВКУ" href="#contacts" />
     </>
   )
 }

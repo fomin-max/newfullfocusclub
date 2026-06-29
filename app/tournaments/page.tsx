@@ -113,12 +113,24 @@ function formatDate(dateStr: string): string {
 }
 
 export default async function TournamentsPage() {
-  const { data: pastTournaments } = await supabase
-    .from('tournaments')
-    .select('id, slug, title, date, prize_pool, format')
-    .in('status', ['completed', 'cancelled'])
-    .order('date', { ascending: false })
-    .limit(2)
+  const [{ data: pastTournaments }, { data: nextTournament }] = await Promise.all([
+    supabase
+      .from('tournaments')
+      .select('id, slug, title, date, prize_pool, format')
+      .in('status', ['completed', 'cancelled'])
+      .order('date', { ascending: false })
+      .limit(2),
+    supabase
+      .from('tournaments')
+      .select('slug')
+      .in('status', ['registration_open', 'upcoming'])
+      .order('date', { ascending: true })
+      .limit(1)
+      .single(),
+  ])
+
+  const stickyLabel = nextTournament ? 'ЗАРЕГИСТРИРОВАТЬСЯ' : 'СМОТРЕТЬ РАСПИСАНИЕ'
+  const stickyHref  = nextTournament ? `/tournaments/${nextTournament.slug}#tp-form` : '#calendar'
 
   const calendarDone = (pastTournaments ?? []).map(t => ({
     id: t.slug,
@@ -226,7 +238,7 @@ export default async function TournamentsPage() {
         <TournamentsFAQ items={FAQ_ITEMS} />
       </main>
       <Footer />
-      <MobileStickyBar />
+      <MobileStickyBar label={stickyLabel} href={stickyHref} />
     </>
   )
 }

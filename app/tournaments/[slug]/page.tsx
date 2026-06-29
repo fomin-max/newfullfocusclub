@@ -191,7 +191,7 @@ export default async function TournamentPage({ params }: Props) {
           </div>
 
           {/* Right column — sticky registration form */}
-          <div className="tp-aside">
+          <div className="tp-aside" id="tp-form">
             <DraftRegistrationForm tournament={tournament} />
           </div>
 
@@ -269,7 +269,7 @@ export default async function TournamentPage({ params }: Props) {
 
       </main>
       <Footer />
-      <MobileStickyBar />
+      <MobileStickyBar label="ЗАРЕГИСТРИРОВАТЬСЯ" href="#tp-form" />
     </>
   )
 }

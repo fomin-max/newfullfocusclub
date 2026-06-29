@@ -92,7 +92,7 @@ export default function ClubsPage() {
       </main>
 
       <Footer />
-      <MobileStickyBar />
+      <MobileStickyBar label="НАЙТИ КЛУБ НА КАРТЕ" href="#explorer" />
     </>
   )
 }

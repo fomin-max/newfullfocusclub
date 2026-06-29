@@ -26,6 +26,14 @@ export default function Header() {
   const isHome = pathname === '/'
   const logoHref = isHome ? '#hero' : '/'
 
+  const ctaConfig = (() => {
+    if (/^\/tournaments\/.+/.test(pathname)) return { label: 'ЗАРЕГИСТРИРОВАТЬСЯ', href: '#tp-form' }
+    if (pathname === '/tournaments') return { label: 'ЗАРЕГИСТРИРОВАТЬСЯ', href: '#next' }
+    if (pathname === '/franchise') return { label: 'ОСТАВИТЬ ЗАЯВКУ', href: '#contacts' }
+    if (pathname === '/events') return { label: 'ЗАБРОНИРОВАТЬ', href: '#form' }
+    return { label: 'ЗАБРОНИРОВАТЬ', href: isHome ? '#find' : '/clubs' }
+  })()
+
   return (
     <header className={`ff-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="ff-header__inner">
@@ -50,8 +58,8 @@ export default function Header() {
             )
           })}
         </ul>
-        <a href={isHome ? '#find' : '/clubs'} className="ff-btn ff-btn--primary ff-btn--sm is-pulse">
-          ЗАБРОНИРОВАТЬ <Icon name="arrowRight" size={14} />
+        <a href={ctaConfig.href} className="ff-btn ff-btn--primary ff-btn--sm is-pulse">
+          {ctaConfig.label} <Icon name="arrowRight" size={14} />
         </a>
       </div>
     </header>
