@@ -93,6 +93,8 @@ export async function submitRegistration(
       participant_name: participantName,
       contact_telegram: contactTelegram,
       registration_data: registrationData,
+      status: 'pending',
     })
+  if (error) console.error('[submitRegistration]', error)
   return { error: error?.message ?? null }
 }

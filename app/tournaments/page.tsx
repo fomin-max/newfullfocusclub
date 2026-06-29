@@ -10,6 +10,7 @@ import TournamentsHero from '@/components/tournaments/TournamentsHero'
 import NextTournament from '@/components/tournaments/NextTournament'
 import TournamentsFAQ from '@/components/tournaments/TournamentsFAQ'
 import TournamentHowSection from '@/components/tournaments/TournamentHowSection'
+import { supabase } from '@/lib/supabase'
 import './tournaments.css'
 
 export const metadata: Metadata = {
@@ -56,35 +57,17 @@ const schemaOrg = {
   ],
 }
 
-const CALENDAR = [
-  {
-    id: 'jun',
-    status: 'done',
-    badge: 'ТУРНИР ЗАВЕРШЁН',
-    date: '13 ИЮНЯ · CAPTAIN\'S DRAFT',
-    title: 'Full Focus Captain\'s Draft #1',
-    prize: '20 000 ₽',
-    cta: { label: 'РЕЗУЛЬТАТЫ', href: '/tournaments/captains-draft-1' },
-  },
-  {
-    id: 'jul',
-    status: 'soon',
-    badge: 'АНОНС СКОРО',
-    date: 'ИЮЛЬ 2026',
-    title: 'Дисциплина: объявим позже',
-    note: 'Следи за @fullfocusclub в Telegram',
-    cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclubru?direct' },
-  },
-  {
-    id: 'aug',
-    status: 'soon',
-    badge: 'АНОНС СКОРО',
-    date: 'АВГУСТ 2026',
-    title: 'Дисциплина: объявим позже',
-    note: 'Следи за @fullfocusclub в Telegram',
-    cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclubru?direct' },
-  },
-]
+const UPCOMING_TILE = {
+  id: 'upcoming',
+  status: 'soon',
+  badge: 'АНОНС СКОРО',
+  date: 'СЛЕДУЮЩИЙ ТУРНИР',
+  title: 'Дисциплина: объявим позже',
+  note: 'Следи за @fullfocusclub в Telegram',
+  cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclubru?direct' },
+  prize: null as string | null,
+  href: null as string | null,
+}
 
 const GALLERY = [
   { span: 'tall', label: 'ARENA 5×5 · Василеостровская' },
@@ -124,7 +107,33 @@ const FAQ_ITEMS = [
   },
 ]
 
-export default function TournamentsPage() {
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr)
+  return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase()
+}
+
+export default async function TournamentsPage() {
+  const { data: pastTournaments } = await supabase
+    .from('tournaments')
+    .select('id, slug, title, date, prize_pool, format')
+    .in('status', ['completed', 'cancelled'])
+    .order('date', { ascending: false })
+    .limit(2)
+
+  const calendarDone = (pastTournaments ?? []).map(t => ({
+    id: t.slug,
+    status: 'done',
+    badge: 'ТУРНИР ЗАВЕРШЁН',
+    date: `${formatDate(t.date)} · ${(t.format as string ?? '').toUpperCase()}`,
+    title: t.title as string,
+    prize: t.prize_pool ? `${(t.prize_pool as number).toLocaleString('ru')} ₽` : null,
+    note: null as string | null,
+    href: `/tournaments/${t.slug as string}`,
+    cta: { label: 'РЕЗУЛЬТАТЫ', href: `/tournaments/${t.slug as string}` },
+  }))
+
+  const CALENDAR = [...calendarDone, UPCOMING_TILE]
+
   return (
     <>
       <script
