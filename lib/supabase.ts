@@ -71,12 +71,13 @@ export async function getTournaments(): Promise<Tournament[]> {
 }
 
 export async function getRegistrations(tournamentId: string): Promise<TournamentRegistration[]> {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('tournament_registrations')
     .select('id, tournament_id, status, participant_name, contact_telegram, registration_data, created_at')
     .eq('tournament_id', tournamentId)
     .in('status', ['confirmed', 'pending'])
     .order('created_at', { ascending: true })
+  if (error) console.error('[getRegistrations]', error)
   return data ?? []
 }
 
@@ -86,15 +87,27 @@ export async function submitRegistration(
   contactTelegram: string,
   registrationData: Record<string, unknown>,
 ): Promise<{ error: string | null }> {
-  const { error } = await supabase
-    .from('tournament_registrations')
-    .insert({
-      tournament_id: tournamentId,
-      participant_name: participantName,
-      contact_telegram: contactTelegram,
-      registration_data: registrationData,
-      status: 'pending',
-    })
-  if (error) console.error('[submitRegistration]', error)
-  return { error: error?.message ?? null }
+  try {
+    const { error } = await supabase
+      .from('tournament_registrations')
+      .insert({
+        tournament_id: tournamentId,
+        participant_name: participantName,
+        contact_telegram: contactTelegram,
+        registration_data: registrationData,
+        status: 'pending',
+      })
+    if (error) {
+      console.error('[submitRegistration]', error)
+      return { error: error.message }
+    }
+    return { error: null }
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[submitRegistration] network error', msg)
+    if (msg.includes('Load failed') || msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+      return { error: 'Нет соединения с сервером. Проверь интернет и попробуй ещё раз.' }
+    }
+    return { error: msg }
+  }
 }

@@ -10,14 +10,14 @@ export default function ParticipantsList({ tournament }: Props) {
   const [registrations, setRegistrations] = useState<TournamentRegistration[]>([])
   const [loading, setLoading] = useState(true)
 
-  const fetch = useCallback(async () => {
+  const load = useCallback(async () => {
     const data = await getRegistrations(tournament.id)
     setRegistrations(data)
     setLoading(false)
   }, [tournament.id])
 
   useEffect(() => {
-    fetch()
+    load()
     const channel = supabase
       .channel(`participants:${tournament.id}`)
       .on('postgres_changes', {
@@ -25,10 +25,10 @@ export default function ParticipantsList({ tournament }: Props) {
         schema: 'public',
         table: 'tournament_registrations',
         filter: `tournament_id=eq.${tournament.id}`,
-      }, fetch)
+      }, load)
       .subscribe()
     return () => { supabase.removeChannel(channel) }
-  }, [tournament.id, fetch])
+  }, [tournament.id, load])
 
   if (!tournament.show_participants) return null
 
@@ -36,26 +36,59 @@ export default function ParticipantsList({ tournament }: Props) {
     <p className="cd-players__empty">Загрузка участников...</p>
   )
 
+  const confirmed = registrations.filter(r => r.status === 'confirmed')
+  const pending = registrations.filter(r => r.status === 'pending')
   const remaining = tournament.max_participants - registrations.length
+
+  if (registrations.length === 0) return (
+    <p className="cd-players__empty">Пока никто не зарегистрировался. Будь первым!</p>
+  )
 
   return (
     <>
-      {registrations.length > 0 ? (
-        <div className="cd-players">
-          {registrations.map((r, i) => {
-            const rank = (r.registration_data as Record<string, string>)?.rating
-            return (
-              <Reveal key={r.id} className={`cd-player${r.status === 'pending' ? ' cd-player--pending' : ''}`} delay={30 * i}>
-                <span className="cd-player__idx">{String(i + 1).padStart(2, '0')}</span>
-                <span className="cd-player__name">{r.participant_name}</span>
-                {rank && <span className="cd-player__elo">{rank}</span>}
-              </Reveal>
-            )
-          })}
-        </div>
-      ) : (
-        <p className="cd-players__empty">Пока никто не зарегистрировался. Будь первым!</p>
+      {confirmed.length > 0 && (
+        <>
+          <div className="cd-players__group-head">
+            <span className="cd-players__group-label">Подтверждены</span>
+            <span className="cd-players__group-count">· {confirmed.length}</span>
+          </div>
+          <div className="cd-players">
+            {confirmed.map((r, i) => {
+              const rank = (r.registration_data as Record<string, string>)?.rating
+              return (
+                <Reveal key={r.id} className="cd-player cd-player--confirmed" delay={30 * i}>
+                  <span className="cd-player__idx">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="cd-player__name">{r.participant_name}</span>
+                  {rank && <span className="cd-player__elo">{rank}</span>}
+                </Reveal>
+              )
+            })}
+          </div>
+        </>
       )}
+
+      {pending.length > 0 && (
+        <>
+          <div className="cd-players__sep">
+            <span className="cd-players__sep-label">
+              Ожидают подтверждения · {pending.length}
+            </span>
+          </div>
+          <div className="cd-players">
+            {pending.map((r, i) => {
+              const rank = (r.registration_data as Record<string, string>)?.rating
+              return (
+                <Reveal key={r.id} className="cd-player cd-player--pending" delay={30 * i}>
+                  <span className="cd-player__idx">{String(confirmed.length + i + 1).padStart(2, '0')}</span>
+                  <span className="cd-player__name">{r.participant_name}</span>
+                  {rank && <span className="cd-player__elo">{rank}</span>}
+                </Reveal>
+              )
+            })}
+          </div>
+        </>
+      )}
+
       {remaining > 0 && (
         <p className="cd-players__empty">
           Осталось {remaining} {remaining === 1 ? 'место' : remaining < 5 ? 'места' : 'мест'} — присоединяйся к драфту.

@@ -19,7 +19,7 @@ export default function FFPay() {
               Пополняй Steam и зарубежные игровые сервисы — быстро, безопасно, без лишних шагов. Курсы рынка, поддержка 24/7.
             </p>
             <div>
-              <a href="#" className="ff-btn ff-btn--secondary ff-btn--sm">
+              <a href="https://fullfocuspay.ru" target="_blank" rel="noopener noreferrer" className="ff-btn ff-btn--secondary ff-btn--sm">
                 Перейти в FFPay <Icon name="arrowRight" size={14} />
               </a>
             </div>

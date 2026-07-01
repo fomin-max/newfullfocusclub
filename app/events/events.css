@@ -278,7 +278,7 @@
 .ev-venues__grid > .ff-reveal > .ev-venue {
   flex: 1;
 }
-.ev-venue { padding: 0 !important; gap: 0 !important; overflow: hidden; }
+.ev-venue { padding: 0 !important; gap: 0 !important; overflow: hidden; display: flex; flex-direction: column; }
 .ev-venue > span:last-child { gap: 0 !important; }
 .ev-venue__media {
   position: relative;
@@ -379,6 +379,7 @@
 .ev-venue__features {
   list-style: none; margin: 0; padding: 0 28px 8px;
   display: flex; flex-direction: column; gap: 11px;
+  flex: 1;
 }
 .ev-venue__features li {
   display: flex; align-items: flex-start; gap: 11px;
@@ -395,7 +396,7 @@
   margin-top: 1px;
 }
 .ev-venue__more {
-  margin: auto 28px 0;
+  margin: 0 28px 0;
   padding: 18px 0 26px;
   border-top: 1px solid rgba(255,255,255,0.07);
   display: flex; align-items: center; justify-content: space-between;
@@ -405,7 +406,6 @@
   letter-spacing: var(--ff-track-button);
   text-transform: uppercase;
   color: var(--ff-softlight);
-  margin-top: 12px;
 }
 .ev-venue__more svg { color: var(--ff-neon-bloom); transition: transform 200ms var(--ff-ease-out); }
 .ev-venue:hover .ev-venue__more svg { transform: translateX(4px); }

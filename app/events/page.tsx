@@ -83,6 +83,7 @@ const VENUES = [
     metro: 'Василеостровская',
     metroColor: '#009E40',
     href: '/clubs/vasilyeostrovsky',
+    photo: '/clubs/vasilyeostrovsky/gallery/01.jpg',
     features: [
       'ARENA 5×5 с проектором',
       'Своя кухня — кейтеринг без подрядчиков',
@@ -99,6 +100,7 @@ const VENUES = [
     metro: 'Комендантский проспект',
     metroColor: '#8E479B',
     href: '/clubs/komendantsky',
+    photo: '/clubs/komendantsky/gallery/01.jpg',
     features: [
       'Большой зал PRO + MAX',
       'PS5 VIP LOUNGE',
@@ -130,18 +132,21 @@ const PROOF = [
     type: 'КИБЕРСПОРТИВНЫЙ МЕДИАТУРНИР',
     name: 'QUANTUM DOTA 2 MEDIA CUP',
     badge: 'ПРИЗОВОЙ ФОНД 550 000 ₽',
+    photo: '/clubs/vasilyeostrovsky/gallery/01.jpg',
     desc: 'Студия аналитики турнира работала прямо из Full Focus Василеостровская. В эфире — Андрей Pyrokinesis, Фёдор Букер, Даниил Бальцер, Святослав Драгунов.',
   },
   {
     type: 'ЛОКАЦИЯ ДЛЯ СЪЁМОК',
     name: 'СЪЁМКИ КИНО',
     badge: 'ЛОКАЦИЯ ДЛЯ КИНО',
+    photo: '/clubs/vasilyeostrovsky/gallery/03.jpg',
     desc: 'Клуб на Василеостровской становился площадкой для съёмок российских сериалов.',
   },
   {
     type: 'ПРОМО-СЪЁМКА',
     name: 'БК ЗЕНИТ САНКТ-ПЕТЕРБУРГ',
     badge: 'БК ЗЕНИТ · ОФИЦИАЛЬНОЕ ПРОМО',
+    photo: '/clubs/vasilyeostrovsky/gallery/05.jpg',
     desc: 'Баскетбольный клуб Зенит снял промо-ролик к новому сезону в Full Focus Василеостровская.',
     cta: { label: 'СМОТРЕТЬ РОЛИК', embedSrc: 'https://rutube.ru/play/embed/8bdcb8ea9b03bc51028e0689b8e9b91f' },
   },
@@ -149,14 +154,14 @@ const PROOF = [
 
 
 const GALLERY = [
-  { span: 'tall', src: '/assets/club-interior.jpg',  label: 'Интерьер · Василеостровская' },
-  { span: 'wide', src: '/assets/club-background.jpg', label: 'Главный зал' },
-  { span: 'std',  src: '/assets/club-interior.jpg',   label: 'ARENA 5×5' },
-  { span: 'std',  src: '/assets/club-background.jpg', label: 'Турнир' },
-  { span: 'tall', src: '/assets/club-interior.jpg',   label: 'PS5 VIP Lounge' },
-  { span: 'std',  src: '/assets/club-background.jpg', label: 'Кейтеринг' },
-  { span: 'wide', src: '/assets/club-interior.jpg',   label: 'Награждение' },
-  { span: 'std',  src: '/assets/club-background.jpg', label: 'Атмосфера' },
+  { span: 'tall', src: '/clubs/vasilyeostrovsky/gallery/01.jpg',    label: 'Интерьер · Василеостровская' },
+  { span: 'wide', src: '/clubs/vasilyeostrovsky/gallery/02.jpg',    label: 'Главный зал' },
+  { span: 'std',  src: '/clubs/vasilyeostrovsky/features/arena.jpg', label: 'ARENA 5×5' },
+  { span: 'std',  src: '/clubs/vasilyeostrovsky/gallery/03.jpg',    label: 'Турнир' },
+  { span: 'tall', src: '/clubs/vasilyeostrovsky/features/ps5vip.jpg', label: 'PS5 VIP Lounge' },
+  { span: 'std',  src: '/clubs/vasilyeostrovsky/features/kitchen.jpg', label: 'Кейтеринг' },
+  { span: 'wide', src: '/clubs/vasilyeostrovsky/gallery/04.jpg',    label: 'Награждение' },
+  { span: 'std',  src: '/clubs/vasilyeostrovsky/gallery/06.jpg',    label: 'Атмосфера' },
 ]
 
 const FAQ_ITEMS = [
@@ -258,19 +263,10 @@ export default function EventsPage() {
                   <article className="ff-card ff-card--brackets ev-venue">
                     <div className="ff-card__glow" />
                     <div className="ev-venue__media">
-                      {i === 0 ? (
-                        <>
-                          <Image src="/assets/club-interior.jpg" alt={v.name} fill sizes="(max-width: 768px) 100vw, 50vw" />
-                          <div className="ev-venue__media-shade" />
-                          <span className="ev-venue__cap">{v.capacity}</span>
-                          <span className="ev-venue__flag">{v.tag}</span>
-                        </>
-                      ) : (
-                        <div className="ev-venue__soon">
-                          <span className="ev-venue__soon-mark"><Icon name="calendar" size={22} /></span>
-                          <span className="ev-venue__soon-txt">{v.capacity}</span>
-                        </div>
-                      )}
+                      <Image src={v.photo} alt={v.name} fill sizes="(max-width: 768px) 100vw, 50vw" />
+                      <div className="ev-venue__media-shade" />
+                      <span className="ev-venue__cap">{v.capacity}</span>
+                      {v.tag && <span className="ev-venue__flag">{v.tag}</span>}
                     </div>
                     <div className="ev-venue__head">
                       <h3 className="ev-venue__name">{v.name}</h3>
@@ -358,7 +354,7 @@ export default function EventsPage() {
                   <article className="ev-proof">
                     <div className="ev-proof__media">
                       <img
-                        src={i === 1 ? '/assets/club-background.jpg' : '/assets/club-interior.jpg'}
+                        src={p.photo}
                         alt={p.name}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />

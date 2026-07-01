@@ -155,10 +155,10 @@ const FORMATS = [
 ]
 
 const GALLERY = [
-  { kind: 'photo', src: '/assets/club-interior.jpg',  city: 'Санкт-Петербург', name: 'FF · Василеостровская', pos: 'center' },
-  { kind: 'photo', src: '/assets/club-interior.jpg',  city: 'Махачкала',       name: 'FF · Арена',            pos: '70% center' },
-  { kind: 'photo', src: '/assets/club-background.jpg', city: 'Санкт-Петербург', name: 'FF · Электросила',     pos: '20% 60%' },
-  { kind: 'placeholder', city: 'Санкт-Петербург',                               name: 'FF · Комендантский' },
+  { kind: 'photo', src: '/clubs/vasilyeostrovsky/gallery/01.jpg', city: 'Санкт-Петербург', name: 'FF · Василеостровская', pos: 'center' },
+  { kind: 'photo', src: '/clubs/makhachkala/gallery/01.jpg',      city: 'Махачкала',       name: 'FF · Арена',            pos: '70% center' },
+  { kind: 'photo', src: '/clubs/elektrosila/gallery/01.jpg',      city: 'Санкт-Петербург', name: 'FF · Электросила',      pos: 'center' },
+  { kind: 'photo', src: '/clubs/komendantsky/gallery/01.jpg',     city: 'Санкт-Петербург', name: 'FF · Комендантский',    pos: 'center' },
 ]
 
 const STEPS = [
