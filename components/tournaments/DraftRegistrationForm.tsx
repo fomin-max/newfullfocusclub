@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import Icon from '@/components/ui/Icon'
-import { supabase, submitRegistration, getRegistrations, type Tournament, type TournamentRegistration } from '@/lib/supabase'
+import { supabase, submitRegistration, getRegistrations, REGISTRATION_ADDED_EVENT, type Tournament, type TournamentRegistration } from '@/lib/supabase'
 
 interface Props {
   tournament: Tournament
@@ -74,6 +74,8 @@ export default function DraftRegistrationForm({ tournament }: Props) {
       setSubmitting(false)
     } else {
       setDone(true)
+      fetchRegistrations()
+      window.dispatchEvent(new CustomEvent(REGISTRATION_ADDED_EVENT, { detail: { tournamentId: tournament.id } }))
     }
   }
 
@@ -152,7 +154,7 @@ export default function DraftRegistrationForm({ tournament }: Props) {
           </button>
 
           <p style={{ margin: 0, fontSize: 12, color: 'var(--ff-system-fog)', fontFamily: 'var(--ff-font-body)', lineHeight: 1.5 }}>
-            Взнос {tournament.entry_fee.toLocaleString('ru')} ₽ оплачивается на месте в день турнира.
+            Взнос {tournament.entry_fee.toLocaleString('ru')} ₽ оплачивается до турнира.
           </p>
         </form>
       ) : (

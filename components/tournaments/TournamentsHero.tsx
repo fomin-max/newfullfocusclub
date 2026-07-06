@@ -21,6 +21,9 @@ export default function TournamentsHero() {
       .then(({ data }) => setNearest(data))
   }, [])
 
+  const canRegister = nearest
+    ? nearest.status === 'registration_open' && new Date(nearest.date).getTime() > Date.now()
+    : false
   const regUrl = nearest ? `/tournaments/${nearest.slug}#registration` : 'https://t.me/fullfocusclubru?direct'
 
   const facts = nearest ? [
@@ -97,12 +100,14 @@ export default function TournamentsHero() {
         </Reveal>
         <Reveal delay={220}>
           <div className="tn-hero__ctas">
-            <span className="tn-hero__magnet" ref={magnetRef}>
-              <a className="ff-btn ff-btn--primary is-pulse" href={regUrl}
-                 {...(!nearest ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-                ЗАРЕГИСТРИРОВАТЬСЯ <Icon name="arrowRight" size={14} />
-              </a>
-            </span>
+            {canRegister && (
+              <span className="tn-hero__magnet" ref={magnetRef}>
+                <a className="ff-btn ff-btn--primary is-pulse" href={regUrl}
+                   {...(!nearest ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                  ЗАРЕГИСТРИРОВАТЬСЯ <Icon name="arrowRight" size={14} />
+                </a>
+              </span>
+            )}
             {nearest && (
               <button className="ff-btn ff-btn--secondary"
                       onClick={() => scrollTo('next')}>

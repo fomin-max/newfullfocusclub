@@ -5,6 +5,10 @@ const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export const supabase = createClient(url, key)
 
+// Диспатчится после успешной отправки заявки — ParticipantsList слушает это
+// событие, чтобы обновиться сразу, не дожидаясь realtime-подписки.
+export const REGISTRATION_ADDED_EVENT = 'tournament:registration-added'
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 // format — свободный текст: 'captain_draft', 'CS2 5×5', 'Dota 2 2×2', etc.

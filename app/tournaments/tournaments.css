@@ -321,7 +321,7 @@
 .tn-spec.is-accent { padding: 18px 0; }
 
 .tn-next__note {
-  display: flex; align-items: flex-start; gap: 10px;
+  display: flex; align-items: flex-start; justify-content: center; gap: 10px;
   margin: 22px auto 0; max-width: 920px;
   font-family: var(--ff-font-body); font-size: 13px; line-height: 1.55;
   color: var(--ff-system-fog);

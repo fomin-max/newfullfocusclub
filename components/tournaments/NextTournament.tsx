@@ -49,12 +49,14 @@ function FlipUnit({ value, label }: { value: number; label: string }) {
   )
 }
 
-function Countdown({ target }: { target: string }) {
+function Countdown({ target, onOver }: { target: string; onOver: () => void }) {
   const [t, setT] = useState(() => calcTime(target))
   useEffect(() => {
     const id = setInterval(() => setT(calcTime(target)), 1000)
     return () => clearInterval(id)
   }, [target])
+
+  useEffect(() => { if (t.over) onOver() }, [t.over, onOver])
 
   if (t.over) return <div className="tn-count tn-count--over">ТУРНИР НАЧАЛСЯ · УДАЧИ ВСЕМ!</div>
   return (
@@ -73,6 +75,7 @@ function Countdown({ target }: { target: string }) {
 export default function NextTournament() {
   const [tournament, setTournament] = useState<Tournament | null>(null)
   const [loading, setLoading]       = useState(true)
+  const [started, setStarted]       = useState(false)
 
   const fetch = useCallback(async () => {
     const { data } = await supabase
@@ -91,13 +94,15 @@ export default function NextTournament() {
   if (loading) return null
   if (!tournament) return null
 
+  const isTeam = tournament.participant_type === 'team'
+
   const details = [
-    { icon: 'swords'  as const, lbl: 'Формат',     val: tournament.format.replace(/_/g, ' '),        accent: false },
-    { icon: 'users'   as const, lbl: 'Участников',  val: `до ${tournament.max_participants}`,          accent: false },
-    { icon: 'gamepad' as const, lbl: 'Дисциплина',  val: 'Counter-Strike 2',                          accent: false },
-    { icon: 'trophy'  as const, lbl: 'Призовой',    val: `${tournament.prize_pool?.toLocaleString('ru')} ₽`, accent: true },
-    { icon: 'ruble'   as const, lbl: 'Взнос',       val: `${tournament.entry_fee.toLocaleString('ru')} ₽ / игрок`, accent: false },
-    { icon: 'pin'     as const, lbl: 'Место',       val: tournament.location_name ?? '',               accent: false },
+    { icon: 'swords'  as const, lbl: 'Формат',                         val: tournament.format.replace(/_/g, ' '),        accent: false },
+    { icon: 'users'   as const, lbl: isTeam ? 'Команд' : 'Участников',  val: `до ${tournament.max_participants}`,          accent: false },
+    { icon: 'gamepad' as const, lbl: 'Дисциплина',                     val: 'Counter-Strike 2',                          accent: false },
+    { icon: 'trophy'  as const, lbl: 'Призовой',                       val: `${tournament.prize_pool?.toLocaleString('ru')} ₽`, accent: true },
+    { icon: 'ruble'   as const, lbl: 'Взнос',                          val: `${tournament.entry_fee.toLocaleString('ru')} ₽ / ${isTeam ? 'команда' : 'участник'}`, accent: false },
+    { icon: 'pin'     as const, lbl: 'Место',                          val: tournament.location_name ?? '',               accent: false },
   ]
 
   return (
@@ -120,22 +125,26 @@ export default function NextTournament() {
 
             <div className="tn-next__main">
               <span className="tn-next__date">{formatDate(tournament.date)}</span>
-              <h3 className="tn-next__title">{tournament.title}</h3>
+              <h3 className="tn-next__title">
+                <a href={`/tournaments/${tournament.slug}`} className="ff-tournament__title-link">{tournament.title}</a>
+              </h3>
               {tournament.location_name && (
                 <div className="tn-next__venue">
                   <Icon name="pin" size={16} />
                   <span>{tournament.location_name}</span>
                 </div>
               )}
-              <Countdown target={tournament.date} />
+              <Countdown target={tournament.date} onOver={() => setStarted(true)} />
               <div className="tn-next__ctas">
-                <a className="ff-btn ff-btn--primary is-pulse"
-                   href={`/tournaments/${tournament.slug}#registration`}>
-                  ЗАРЕГИСТРИРОВАТЬСЯ <Icon name="arrowRight" size={14} />
-                </a>
+                {!started && tournament.status === 'registration_open' && (
+                  <a className="ff-btn ff-btn--primary is-pulse"
+                     href={`/tournaments/${tournament.slug}#registration`}>
+                    ЗАРЕГИСТРИРОВАТЬСЯ <Icon name="arrowRight" size={14} />
+                  </a>
+                )}
                 <a className="ff-btn ff-btn--secondary"
                    href={`/tournaments/${tournament.slug}#participants`}>
-                  СПИСОК УЧАСТНИКОВ <Icon name="users" size={14} />
+                  {isTeam ? 'СПИСОК КОМАНД' : 'СПИСОК УЧАСТНИКОВ'} <Icon name="users" size={14} />
                 </a>
               </div>
             </div>
@@ -157,9 +166,9 @@ export default function NextTournament() {
         <Reveal delay={120}>
           <p className="tn-next__note">
             <Icon name="info" size={15} />
-            {tournament.participant_type === 'individual'
-              ? 'Регистрируйся индивидуально. Команды формируются в день турнира.'
-              : `Регистрация команды. Взнос ${tournament.entry_fee.toLocaleString('ru')} ₽ с игрока, оплачивается на месте.`
+            {isTeam
+              ? `Регистрация команды. Взнос ${tournament.entry_fee.toLocaleString('ru')} ₽ с команды, оплачивается до турнира.`
+              : 'Регистрируйся индивидуально. Команды формируются в день турнира.'
             }
           </p>
         </Reveal>

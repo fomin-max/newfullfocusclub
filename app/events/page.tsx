@@ -10,7 +10,12 @@ import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 import EventsHero from '@/components/events/EventsHero'
 import EventsForm from '@/components/events/EventsForm'
+import { clubMedia, eventsProofMedia } from '@/lib/cdn'
 import './events.css'
+
+const vasilyeostrovsky = clubMedia('vasilyeostrovsky')
+const komendantsky     = clubMedia('komendantsky')
+const eventsProof      = eventsProofMedia()
 
 export const metadata: Metadata = {
   title: 'Мероприятия в Full Focus — Корпоративы, дни рождения, турниры',
@@ -83,7 +88,7 @@ const VENUES = [
     metro: 'Василеостровская',
     metroColor: '#009E40',
     href: '/clubs/vasilyeostrovsky',
-    photo: '/clubs/vasilyeostrovsky/gallery/01.jpg',
+    photo: vasilyeostrovsky.gallery(1),
     features: [
       'ARENA 5×5 с проектором',
       'Своя кухня — кейтеринг без подрядчиков',
@@ -100,7 +105,7 @@ const VENUES = [
     metro: 'Комендантский проспект',
     metroColor: '#8E479B',
     href: '/clubs/komendantsky',
-    photo: '/clubs/komendantsky/gallery/01.jpg',
+    photo: komendantsky.gallery(1),
     features: [
       'Большой зал PRO + MAX',
       'PS5 VIP LOUNGE',
@@ -132,21 +137,21 @@ const PROOF = [
     type: 'КИБЕРСПОРТИВНЫЙ МЕДИАТУРНИР',
     name: 'QUANTUM DOTA 2 MEDIA CUP',
     badge: 'ПРИЗОВОЙ ФОНД 550 000 ₽',
-    photo: '/clubs/vasilyeostrovsky/gallery/01.jpg',
+    photo: eventsProof.photo(1),
     desc: 'Студия аналитики турнира работала прямо из Full Focus Василеостровская. В эфире — Андрей Pyrokinesis, Фёдор Букер, Даниил Бальцер, Святослав Драгунов.',
   },
   {
     type: 'ЛОКАЦИЯ ДЛЯ СЪЁМОК',
     name: 'СЪЁМКИ КИНО',
     badge: 'ЛОКАЦИЯ ДЛЯ КИНО',
-    photo: '/clubs/vasilyeostrovsky/gallery/03.jpg',
+    photo: eventsProof.photo(2),
     desc: 'Клуб на Василеостровской становился площадкой для съёмок российских сериалов.',
   },
   {
     type: 'ПРОМО-СЪЁМКА',
     name: 'БК ЗЕНИТ САНКТ-ПЕТЕРБУРГ',
     badge: 'БК ЗЕНИТ · ОФИЦИАЛЬНОЕ ПРОМО',
-    photo: '/clubs/vasilyeostrovsky/gallery/05.jpg',
+    photo: eventsProof.photo(3),
     desc: 'Баскетбольный клуб Зенит снял промо-ролик к новому сезону в Full Focus Василеостровская.',
     cta: { label: 'СМОТРЕТЬ РОЛИК', embedSrc: 'https://rutube.ru/play/embed/8bdcb8ea9b03bc51028e0689b8e9b91f' },
   },
@@ -154,14 +159,14 @@ const PROOF = [
 
 
 const GALLERY = [
-  { span: 'tall', src: '/clubs/vasilyeostrovsky/gallery/01.jpg',    label: 'Интерьер · Василеостровская' },
-  { span: 'wide', src: '/clubs/vasilyeostrovsky/gallery/02.jpg',    label: 'Главный зал' },
-  { span: 'std',  src: '/clubs/vasilyeostrovsky/features/arena.jpg', label: 'ARENA 5×5' },
-  { span: 'std',  src: '/clubs/vasilyeostrovsky/gallery/03.jpg',    label: 'Турнир' },
-  { span: 'tall', src: '/clubs/vasilyeostrovsky/features/ps5vip.jpg', label: 'PS5 VIP Lounge' },
-  { span: 'std',  src: '/clubs/vasilyeostrovsky/features/kitchen.jpg', label: 'Кейтеринг' },
-  { span: 'wide', src: '/clubs/vasilyeostrovsky/gallery/04.jpg',    label: 'Награждение' },
-  { span: 'std',  src: '/clubs/vasilyeostrovsky/gallery/06.jpg',    label: 'Атмосфера' },
+  { span: 'tall', src: vasilyeostrovsky.gallery(1),               label: 'Интерьер · Василеостровская' },
+  { span: 'wide', src: vasilyeostrovsky.gallery(2),               label: 'Главный зал' },
+  { span: 'std',  src: vasilyeostrovsky.path('features/arena.jpg'),  label: 'ARENA 5×5' },
+  { span: 'std',  src: vasilyeostrovsky.gallery(3),               label: 'Турнир' },
+  { span: 'tall', src: vasilyeostrovsky.path('features/ps5vip.jpg'), label: 'PS5 VIP Lounge' },
+  { span: 'std',  src: vasilyeostrovsky.path('features/kitchen.jpg'), label: 'Кейтеринг' },
+  { span: 'wide', src: vasilyeostrovsky.gallery(4),               label: 'Награждение' },
+  { span: 'std',  src: vasilyeostrovsky.gallery(6),               label: 'Атмосфера' },
 ]
 
 const FAQ_ITEMS = [

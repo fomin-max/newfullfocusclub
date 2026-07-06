@@ -10,5 +10,20 @@ export function clubMedia(slug: string) {
     videoDesktop:   `${prefix}/hero-desktop.mp4`,
     poster:         `${prefix}/hero-poster.jpg`,
     gallery: (i: number) => `${prefix}/gallery/${String(i).padStart(2, '0')}.jpg`,
+    path: (rel: string) => `${prefix}/${rel}`,
+  }
+}
+
+export function tournamentMedia() {
+  const prefix = BASE ? `${BASE}/tournaments` : '/tournaments'
+  return {
+    gallery: (i: number) => `${prefix}/gallery/${String(i).padStart(2, '0')}.jpg`,
+  }
+}
+
+export function eventsProofMedia() {
+  const prefix = BASE ? `${BASE}/events/proof` : '/events/proof'
+  return {
+    photo: (i: number) => `${prefix}/${String(i).padStart(2, '0')}.jpg`,
   }
 }

@@ -8,6 +8,7 @@ import MobileStickyBar from '@/components/ui/MobileStickyBar'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 import DraftRegistrationForm from '@/components/tournaments/DraftRegistrationForm'
+import TeamRegistrationForm from '@/components/tournaments/TeamRegistrationForm'
 import ParticipantsList from '@/components/tournaments/ParticipantsList'
 import { getTournament } from '@/lib/supabase'
 import './tournament-page.css'
@@ -44,6 +45,7 @@ export default async function TournamentPage({ params }: Props) {
   if (!tournament) notFound()
 
   const isOpen  = tournament.status === 'registration_open'
+  const isTeam  = tournament.participant_type === 'team'
   const prizes  = tournament.prize_breakdown as Record<string, string | number> | null
   const partners = tournament.partners
 
@@ -109,11 +111,11 @@ export default async function TournamentPage({ params }: Props) {
               </span>
             </div>
             <div className="tp-stat">
-              <span className="tp-stat__lbl">Участников</span>
+              <span className="tp-stat__lbl">{isTeam ? 'Команд' : 'Участников'}</span>
               <span className="tp-stat__val">до {tournament.max_participants}</span>
             </div>
             <div className="tp-stat">
-              <span className="tp-stat__lbl">Взнос</span>
+              <span className="tp-stat__lbl">Взнос {isTeam ? 'с команды' : 'с участника'}</span>
               <span className="tp-stat__val">{tournament.entry_fee.toLocaleString('ru')} ₽</span>
             </div>
             <div className="tp-stat">
@@ -192,7 +194,9 @@ export default async function TournamentPage({ params }: Props) {
 
           {/* Right column — sticky registration form */}
           <div className="tp-aside" id="tp-form">
-            <DraftRegistrationForm tournament={tournament} />
+            {isTeam
+              ? <TeamRegistrationForm tournament={tournament} />
+              : <DraftRegistrationForm tournament={tournament} />}
           </div>
 
         </div>
@@ -206,8 +210,10 @@ export default async function TournamentPage({ params }: Props) {
             <div className="cd-wide">
               <section className="cd-section">
                 <div className="cd-block__head">
-                  <Reveal><span className="ff-tag">Участники</span></Reveal>
-                  <Reveal delay={70}><h2 className="cd-block__title">СПИСОК<br />УЧАСТНИКОВ</h2></Reveal>
+                  <Reveal><span className="ff-tag">{isTeam ? 'Команды' : 'Участники'}</span></Reveal>
+                  <Reveal delay={70}>
+                    <h2 className="cd-block__title">{isTeam ? <>СПИСОК<br />КОМАНД</> : <>СПИСОК<br />УЧАСТНИКОВ</>}</h2>
+                  </Reveal>
                 </div>
                 <ParticipantsList tournament={tournament} />
               </section>

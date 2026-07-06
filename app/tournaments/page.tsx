@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import ProgressBar from '@/components/ui/ProgressBar'
 import Ticker from '@/components/ui/Ticker'
 import Header from '@/components/ui/Header'
@@ -11,7 +12,10 @@ import NextTournament from '@/components/tournaments/NextTournament'
 import TournamentsFAQ from '@/components/tournaments/TournamentsFAQ'
 import TournamentHowSection from '@/components/tournaments/TournamentHowSection'
 import { supabase } from '@/lib/supabase'
+import { tournamentMedia } from '@/lib/cdn'
 import './tournaments.css'
+
+const media = tournamentMedia()
 
 export const metadata: Metadata = {
   title: 'Турниры Full Focus — CS2, Dota 2, Valorant в СПб',
@@ -70,24 +74,24 @@ const UPCOMING_TILE = {
 }
 
 const GALLERY = [
-  { span: 'tall', label: 'ARENA 5×5 · Василеостровская' },
-  { span: 'wide', label: 'Финал турнира' },
-  { span: 'std',  label: 'Чек-ин команд' },
-  { span: 'std',  label: 'Игровая зона' },
-  { span: 'tall', label: 'Студия трансляции' },
-  { span: 'std',  label: 'Награждение' },
-  { span: 'wide', label: 'Зрительская зона' },
-  { span: 'std',  label: 'Кубок чемпиона' },
+  { span: 'tall', src: media.gallery(1), label: 'ARENA 5×5 · Василеостровская' },
+  { span: 'wide', src: media.gallery(2), label: 'Финал турнира' },
+  { span: 'std',  src: media.gallery(3), label: 'Чек-ин команд' },
+  { span: 'std',  src: media.gallery(4), label: 'Игровая зона' },
+  { span: 'tall', src: media.gallery(5), label: 'Студия трансляции' },
+  { span: 'std',  src: media.gallery(6), label: 'Награждение' },
+  { span: 'wide', src: media.gallery(7), label: 'Зрительская зона' },
+  { span: 'std',  src: media.gallery(8), label: 'Кубок чемпиона' },
 ]
 
 const FAQ_ITEMS = [
   {
     q: 'Можно ли участвовать командой меньше 5 человек?',
-    a: 'Нет — формат турнира 5×5, нужна полная команда. Можно найти игроков в нашем Telegram-чате @fullfocusclub.',
+    a: 'Нет — формат турнира 5×5, нужна полная команда. Можно найти игроков в нашем Telegram-чате @fullfocusclubru',
   },
   {
     q: 'Когда нужно приехать в день турнира?',
-    a: 'Чек-ин начинается в 13:30, старт в 14:00. Опоздавшие команды могут быть сняты с турнира.',
+    a: 'Чек-ин начинается в указанное время, как правило 10 или 11 часов утра. Опоздавшие команды могут быть сняты с турнира.',
   },
   {
     q: 'Как распределяется призовой фонд?',
@@ -95,7 +99,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Будет ли трансляция турнира?',
-    a: 'Да, прямой эфир на twitch.tv/fullfocus. Студия аналитики — прямо из клуба.',
+    a: 'Да, прямой эфир на twitch.tv/fullfocusclub',
   },
   {
     q: 'Можно ли заменить игрока после регистрации?',
@@ -103,7 +107,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Какие дисциплины будут в следующих турнирах?',
-    a: 'Планируем CS2, Dota 2, Valorant и другие. Следи за анонсами в @fullfocusclub.',
+    a: 'Планируем CS2, Dota 2, Valorant и другие. Следи за анонсами в @fullfocusclubru.',
   },
 ]
 
@@ -223,8 +227,9 @@ export default async function TournamentsPage() {
                   key={i}
                   className={`ev-gallery__cell ${g.span === 'tall' ? 'ev-gallery__cell--tall' : g.span === 'wide' ? 'ev-gallery__cell--wide' : ''}`}
                 >
-                  <div className="ev-gallery__tile tn-gallery__tile tn-gallery__placeholder">
-                    <div className="ev-gallery__overlay" style={{ opacity: 1 }}>
+                  <div className="ev-gallery__tile">
+                    <Image src={g.src} alt={g.label} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+                    <div className="ev-gallery__overlay">
                       <span className="ev-gallery__label">{g.label}</span>
                     </div>
                   </div>

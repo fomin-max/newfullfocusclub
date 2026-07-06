@@ -20,13 +20,17 @@ export default async function Tournament() {
     t.status === 'registration_open' || t.status === 'upcoming'
   ) ?? null
 
+  const canRegister = t
+    ? t.status === 'registration_open' && new Date(t.date).getTime() > Date.now()
+    : false
+
   const title = t ? (t.title_accent ?? t.title) : null
 
   const meta = t ? [
-    { label: 'Формат',     value: t.format.replace(/_/g, ' ') },
-    { label: 'Призовой',   value: `${t.prize_pool?.toLocaleString('ru')} ₽`, accent: true },
-    { label: 'Участников', value: `до ${t.max_participants}` },
-    { label: 'Взнос',      value: `${t.entry_fee.toLocaleString('ru')} ₽ / ${t.participant_type === 'team' ? 'игрок' : 'участник'}` },
+    { label: 'Формат',                              value: t.format.replace(/_/g, ' ') },
+    { label: 'Призовой',                            value: `${t.prize_pool?.toLocaleString('ru')} ₽`, accent: true },
+    { label: t.participant_type === 'team' ? 'Команд' : 'Участников', value: `до ${t.max_participants}` },
+    { label: 'Взнос',                                value: `${t.entry_fee.toLocaleString('ru')} ₽ / ${t.participant_type === 'team' ? 'команда' : 'участник'}` },
   ] : []
 
   return (
@@ -36,7 +40,7 @@ export default async function Tournament() {
           <span className="ff-tag">Турниры</span>
           <h2 className="ff-section-head__title">Докажи, что ты лучший</h2>
           <p className="ff-section-head__sub">
-            Регулярные турниры по CS2, Dota 2, Valorant и Tekken. Призовые, мерч и эфиры на твиче.
+            Регулярные турниры по CS2, Dota 2, Valorant. Призовые, мерч и эфиры на твиче.
           </p>
         </Reveal>
 
@@ -48,7 +52,9 @@ export default async function Tournament() {
                   <strong>{formatDay(t.date)}</strong>
                   <span>· {formatWeekdayTime(t.date)}</span>
                 </div>
-                <h3 className="ff-tournament__title">{title}</h3>
+                <h3 className="ff-tournament__title">
+                  <a href={`/tournaments/${t.slug}`} className="ff-tournament__title-link">{title}</a>
+                </h3>
                 {t.location_name && (
                   <p className="ff-tournament__loc">
                     <Icon name="pin" size={16} />
@@ -56,9 +62,15 @@ export default async function Tournament() {
                   </p>
                 )}
                 <div className="ff-tournament__cta">
-                  <a href={`/tournaments/${t.slug}#registration`} className="ff-btn ff-btn--primary is-pulse">
-                    Зарегистрироваться <Icon name="arrowRight" size={14} />
-                  </a>
+                  {canRegister ? (
+                    <a href={`/tournaments/${t.slug}#registration`} className="ff-btn ff-btn--primary is-pulse">
+                      Зарегистрироваться <Icon name="arrowRight" size={14} />
+                    </a>
+                  ) : (
+                    <a href={`/tournaments/${t.slug}`} className="ff-btn ff-btn--secondary">
+                      Подробнее о турнире <Icon name="arrowRight" size={14} />
+                    </a>
+                  )}
                   <a href="/tournaments" className="ff-btn ff-btn--secondary">
                     Все турниры <Icon name="arrowRight" size={14} />
                   </a>
