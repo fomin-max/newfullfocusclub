@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useScrolled, useActiveSection } from '@/lib/hooks'
 import Icon from './Icon'
@@ -25,6 +26,17 @@ export default function Header() {
   const pathname = usePathname()
   const isHome = pathname === '/'
   const logoHref = isHome ? '#hero' : '/'
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    if (!menuOpen) return
+    document.body.classList.add('ff-no-scroll')
+    return () => document.body.classList.remove('ff-no-scroll')
+  }, [menuOpen])
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [pathname])
 
   const ctaConfig = (() => {
     if (/^\/tournaments\/.+/.test(pathname)) return { label: 'ЗАРЕГИСТРИРОВАТЬСЯ', href: '#tp-form' }
@@ -58,7 +70,43 @@ export default function Header() {
             )
           })}
         </ul>
-        <a href={ctaConfig.href} className="ff-btn ff-btn--primary ff-btn--sm is-pulse">
+        <a href={ctaConfig.href} className="ff-btn ff-btn--primary ff-btn--sm is-pulse ff-header__cta">
+          {ctaConfig.label} <Icon name="arrowRight" size={14} />
+        </a>
+        <button
+          type="button"
+          className={`ff-burger ${menuOpen ? 'is-open' : ''}`}
+          aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(v => !v)}
+        >
+          <span /><span /><span />
+        </button>
+      </div>
+
+      <div className={`ff-mobile-menu ${menuOpen ? 'is-open' : ''}`}>
+        <ul className="ff-mobile-menu__list">
+          {NAV_LINKS.map(l => {
+            const href = isHome
+              ? `#${l.id}`
+              : l.page ? l.page : `/#${l.id}`
+            const isActive = isHome
+              ? active === l.id
+              : l.page ? pathname.startsWith(l.page) : false
+            return (
+              <li key={l.id}>
+                <a href={href} className={isActive ? 'is-active' : ''} onClick={() => setMenuOpen(false)}>
+                  {l.name}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+        <a
+          href={ctaConfig.href}
+          className="ff-btn ff-btn--primary is-pulse ff-mobile-menu__cta"
+          onClick={() => setMenuOpen(false)}
+        >
           {ctaConfig.label} <Icon name="arrowRight" size={14} />
         </a>
       </div>

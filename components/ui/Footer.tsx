@@ -19,7 +19,7 @@ export default function Footer() {
         <span className="ff-footer__promo-text">
           Промокод <span className="ff-footer__promo-code">SITE500</span> — 500₽ новым гостям при первом пополнении
         </span>
-        <a href="#find" className="ff-btn ff-btn--accent ff-btn--sm">
+        <a href="/#find" className="ff-btn ff-btn--accent ff-btn--sm">
           ЗАБРАТЬ БОНУС <Icon name="arrowRight" size={12} />
         </a>
       </div>
@@ -58,9 +58,9 @@ export default function Footer() {
           <h4>Разделы</h4>
           <ul>
             <li><a href="/clubs">Все клубы</a></li>
-            <li><a href="#zones">Зоны и форматы</a></li>
+            <li><a href="/#zones">Зоны и форматы</a></li>
             <li><a href="/promo">Акции</a></li>
-            <li><a href="#loyalty">Программа лояльности</a></li>
+            <li><a href="/#loyalty">Программа лояльности</a></li>
             <li><a href="/tournaments">Турниры</a></li>
             <li><a href="/events">Мероприятия</a></li>
             <li><a href="/franchise">Франшиза</a></li>
