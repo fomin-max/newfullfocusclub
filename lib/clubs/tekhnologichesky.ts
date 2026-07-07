@@ -14,7 +14,7 @@ const CLUB: ClubMeta = {
   HOURS: 'Круглосуточно · 24/7',
   TELEGRAM: '@fullfocustehno',
   VK: 'https://vk.com/fullfocusclub_tehno',
-  PHONE: '+7 (812) 660-55-96',
+  PHONE: '+7 (812) 507-24-18',
   MAPS_URL: 'https://yandex.com/maps/-/CPDlzCZK',
   ROUTE_URL: 'https://yandex.ru/maps/?rtext=~59.914358,30.313694&rtt=auto&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D75809353269',
   COORDS: '59.914° N · 30.314° E',

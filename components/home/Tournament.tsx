@@ -17,7 +17,8 @@ function formatWeekdayTime(iso: string) {
 export default async function Tournament() {
   const tournaments = await getTournaments()
   const t = tournaments.find(t =>
-    t.status === 'registration_open' || t.status === 'upcoming'
+    (t.status === 'registration_open' || t.status === 'upcoming') &&
+    new Date(t.date).getTime() > Date.now()
   ) ?? null
 
   const canRegister = t

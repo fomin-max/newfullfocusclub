@@ -304,14 +304,16 @@ certbot renew --dry-run
 
 ```bash
 cd /var/www/fullfocusclub
+./deploy.sh
+```
 
-# Получить новый код
+Делает то же самое, что раньше руками: `git pull` → `npm ci` → `NODE_ENV=production npm run build` → `pm2 reload fullfocusclub` (без даунтайма). Если нужно вручную:
+
+```bash
+cd /var/www/fullfocusclub
 git pull origin main
-
-# Пересобрать
+npm ci --production=false
 NODE_ENV=production npm run build
-
-# Перезапустить без даунтайма
 pm2 reload fullfocusclub
 ```
 

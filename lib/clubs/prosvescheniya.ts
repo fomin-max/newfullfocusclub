@@ -14,7 +14,7 @@ const CLUB: ClubMeta = {
   HOURS: 'Круглосуточно · 24/7',
   TELEGRAM: '@fullfocusprosvet',
   VK: 'https://vk.com/fullfocusprosvet',
-  PHONE: '+7 (812) 660-55-96',
+  PHONE: '+7 (812) 507-24-36',
   MAPS_URL: 'https://yandex.com/maps/-/CPDl7G8E',
   ROUTE_URL: 'https://yandex.ru/maps/?rtext=~60.045799,30.365117&rtt=auto&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D90561655807',
   COORDS: '60.046° N · 30.365° E',

@@ -14,7 +14,7 @@ const CLUB: ClubMeta = {
   HOURS: 'Круглосуточно · 24/7',
   TELEGRAM: '@fullfocusclub',
   VK: 'https://vk.com/fullfocusclub_electrosila',
-  PHONE: '+7 (812) 660-55-96',
+  PHONE: '+7 (812) 507-24-35',
   MAPS_URL: 'https://yandex.com/maps/-/CPDl7Z7l',
   ROUTE_URL: 'https://yandex.ru/maps/?rtext=~59.874116,30.317797&rtt=auto&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D86603849489',
   COORDS: '59.874° N · 30.318° E',

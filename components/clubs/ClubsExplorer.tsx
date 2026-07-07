@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Reveal from '@/components/ui/Reveal'
 import Card from '@/components/ui/Card'
@@ -19,18 +20,26 @@ function ClubCard({
   onEnter: () => void
   onLeave: () => void
 }) {
+  const router = useRouter()
   const href     = c.slug ? `/clubs/${c.slug}` : TELEGRAM
   const bookHref = c.slug ? `/clubs/${c.slug}#live` : TELEGRAM
   const isExternal = !c.slug
 
+  const goToClub = (e: React.MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest('a')) return
+    if (isExternal) window.open(href, '_blank', 'noopener,noreferrer')
+    else router.push(href)
+  }
+
   return (
     <Card
-      className={`cla-card ${isActive ? 'is-active' : ''}`}
+      className={`cla-card ${isActive ? 'is-active' : ''} cla-card--clickable`}
       brackets
       id={`club-${c.id}`}
       role="listitem"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
+      onClick={goToClub}
     >
       <div className="cla-card__head">
         <span className="cla-card__name">{c.name}</span>
@@ -57,8 +66,8 @@ function ClubCard({
 
       <div className="cla-card__feats">
         <span><Icon name="bolt" size={14} /> 24/7</span>
-        <span><Icon name="cpu" size={14} /> RTX 4090</span>
-        <span><Icon name="gamepad" size={14} /> PS5</span>
+        <span><Icon name="cpu" size={14} /> {c.topGpu}</span>
+        <span><Icon name="gamepad" size={14} /> {c.console}</span>
       </div>
 
       <div className="cla-card__actions">

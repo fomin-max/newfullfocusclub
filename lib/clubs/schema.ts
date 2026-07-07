@@ -12,7 +12,7 @@ export function buildClubSchema(d: ClubData) {
         '@type': ['GameStore', 'EntertainmentBusiness', 'LocalBusiness'],
         '@id': `${baseUrl}#business`,
         name: `Full Focus · ${d.CLUB.NAME}`,
-        description: `Компьютерный клуб и киберспортивная арена Full Focus у м. ${d.CLUB.METRO}. ${d.CLUB_ZONES.length} игровых зон: от PRO ZONE с RTX 4090 до PS5 Lounge. Работаем круглосуточно.`,
+        description: `Компьютерный клуб и киберспортивная арена Full Focus у м. ${d.CLUB.METRO}. ${d.CLUB_ZONES.length} игровых зон: от PRO ZONE с RTX 5080 до PS5 Lounge. Работаем круглосуточно.`,
         keywords: `компьютерный клуб, киберспортивный клуб, игровой клуб, компьютерный клуб ${d.CLUB.METRO}, киберспортивный клуб ${d.CLUB.METRO}, компьютерный клуб Санкт-Петербург`,
         url: baseUrl,
         telephone: d.CLUB.PHONE.replace(/[^+\d]/g, ''),
@@ -101,7 +101,7 @@ export function buildClubSchema(d: ClubData) {
 export function buildClubMetadata(d: ClubData): Metadata {
   const minPrice = Math.min(...d.CLUB_ZONES.map(z => z.priceFrom))
   const title       = `Full Focus · ${d.CLUB.NAME} — Компьютерный клуб 24/7 у м. ${d.CLUB.METRO}`
-  const description = `Компьютерный клуб Full Focus у м. ${d.CLUB.METRO}: ${d.CLUB_ZONES.length} игровых зон, RTX 4090, PS5, своя кухня. Киберспортивные турниры и корпоративы. От ${minPrice}₽/час. ${d.CLUB.ADDRESS}, СПб.`
+  const description = `Компьютерный клуб Full Focus у м. ${d.CLUB.METRO}: ${d.CLUB_ZONES.length} игровых зон, RTX 5080, PS5, своя кухня. Киберспортивные турниры и корпоративы. От ${minPrice}₽/час. ${d.CLUB.ADDRESS}, СПб.`
 
   return {
     title,

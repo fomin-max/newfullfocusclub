@@ -14,7 +14,7 @@ const CLUB: ClubMeta = {
   HOURS: 'Круглосуточно · 24/7',
   TELEGRAM: '@fullfocussadovaya',
   VK: 'https://vk.com/fullfocusclub_sadovaya',
-  PHONE: '+7 (812) 660-55-96',
+  PHONE: '+7 (812) 507-24-19',
   MAPS_URL: 'https://yandex.com/maps/-/CPDlzV2T',
   ROUTE_URL: 'https://yandex.ru/maps/?rtext=~59.929723,30.311556&rtt=auto&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D220409247019',
   COORDS: '59.930° N · 30.312° E',

@@ -11,9 +11,24 @@
 
 ---
 
+## [Unreleased] — 2026-07-07
+
+### Fixed
+- Клик по свободному месту в зоне «БИЛЬЯРД» открывал обычную форму бронирования вместо инструкции — теперь показывает модалку с Telegram/телефоном клуба, т.к. бильярдный стол бронируется только напрямую (`components/clubs/LiveMap.tsx`)
+- У всех клубов кроме Электросилы в карточке был захардкожен один и тот же телефон (`+7 (812) 660-55-96`) — прописаны реальные номера каждого клуба (`lib/clubs/*.ts`)
+- `Tournament.tsx` / `NextTournament.tsx` / `TournamentsHero.tsx` могли показать турнир с прошедшей датой, если статус в Supabase не обновили вручную — добавлена проверка `date > now()` на клиенте и `.gte('date', ...)` в запросе
+- Сайт указывал везде «RTX 4090» как стандарт сети, хотя по факту у клубов разные топовые видеокарты — заменено на реальные модели по каждому клубу (`topGpu`/`console` в `AggClub`, `lib/clubs/aggregatorData.ts`)
+
+### Optimized
+- Фон карты клуба (`floorBg`) грузился напрямую с Supabase Storage и на части устройств из РФ занимал несколько минут — добавлен прокси-роут `app/api/floor-bg/[slug]/route.ts`, который кэширует картинку на нашем VPS (Next fetch-cache, revalidate раз в час) и отдаёт её с нашего домена вместо Supabase
+
+### Added
+- `deploy.sh` — обёртка над `git pull && npm ci && next build && pm2 reload`, `DEPLOY.md` обновлён на использование скрипта
+- Карточки клубов в `/clubs` (`ClubsExplorer.tsx`) теперь кликабельны целиком, а не только по кнопкам/ссылкам внутри
+
 ## [0.2.0] — 2026-05-30
 
-### Added — Все 8 страниц клубов (Фаза 3)
+### Added — Все 7 страниц клубов (Фаза 3)
 
 **Архитектура клубных страниц:**
 - `lib/clubs/types.ts` — единый тип `ClubData` (ClubMeta, ClubZone, Tariffs, Hardware, Feature, FloorPlan, Review, FAQItem, EventItem, MapConfig)
@@ -39,12 +54,11 @@
 - `Booking.tsx` — 3-шаговый modal + sticky CTA (без Telegram пока)
 - `components/ui/Icon.tsx` — добавлены 16 новых иконок для клубных страниц
 
-**8 страниц клубов** (каждая = `lib/clubs/[slug].ts` + `app/clubs/[slug]/page.tsx`):
+**7 страниц клубов** (каждая = `lib/clubs/[slug].ts` + `app/clubs/[slug]/page.tsx`):
 - `/clubs/vasilyeostrovsky` — флагман, 7 зон, ARENA 5×5, кухня, бильярд, покер, Yamaguchi
 - `/clubs/elektrosila` — 5 зон, GREEN/SPACE ROOM PS5 с играми, MAX ZONE
 - `/clubs/komendantsky` — 5 зон, PRO 15 мест (крупнейший), PS5 + VIP
 - `/clubs/prosvescheniya` — 7 зон, самые доступные цены, PS4 Pro (уникально в сети)
-- `/clubs/begovaya` — 6 зон, 4× TRIO ROOM, ночь 12ч, утро с 08:00
 - `/clubs/sadovaya` — 5 зон, центр СПб, рядом с Невским
 - `/clubs/tekhnologichesky` — 4 зоны, студенческий район, рядом с вузами
 - `/clubs/makhachkala` — 7 зон, единственный вне СПб, QUADRO ROOM (уникален в сети)
@@ -69,7 +83,7 @@
 - Уникальные EVENTS (например, на Василеостровской — "ТОЛЬКО ЗДЕСЬ" у ARENA)
 - SVG-карта (MAP config) с улицами для каждого района
 - 6–8 отзывов на клуб
-- 8 AEO-FAQ на клуб с SEO-ключами из контент-базы
+- 7 AEO-FAQ на клуб с SEO-ключами из контент-базы
 
 ---
 

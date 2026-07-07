@@ -44,6 +44,7 @@ export default function LiveMap() {
   const [loading, setLoading] = useState(true)
   const [filter,  setFilter]  = useState('all')
   const [floorBg, setFloorBg] = useState<string | null>(FLOOR.bg ?? null)
+  const [billiardNotice, setBilliardNotice] = useState(false)
 
   const fetchSeats = useCallback(async () => {
     try {
@@ -92,6 +93,10 @@ export default function LiveMap() {
 
   function handleSeatClick(seat: LiveSeat) {
     if (seat.status !== 'free') return
+    if (seat.zoneName.toUpperCase().includes('БИЛЬЯРД')) {
+      setBilliardNotice(true)
+      return
+    }
     openBooking({ seatId: seat.uuid, seatLabel: `${seat.number} · ${seat.zoneName}` })
   }
 
@@ -238,6 +243,30 @@ export default function LiveMap() {
           </div>
         </Reveal>
       </div>
+
+      {billiardNotice && (
+        <div className="cl-modal is-open" role="dialog" aria-modal="true" aria-label="Бронирование бильярда">
+          <div className="cl-modal__inner">
+            <button className="cl-modal__close" onClick={() => setBilliardNotice(false)} aria-label="Закрыть">✕</button>
+            <h3 className="cl-modal__title">БРОНЬ БИЛЬЯРДА</h3>
+            <p style={{ color: 'var(--ff-system-fog)', margin: '4px 0 20px', lineHeight: 1.5 }}>
+              Стол бронируется напрямую в клубе. Напишите в Telegram или позвоните — администратор подтвердит свободное время.
+            </p>
+            <div className="cl-modal__success__actions">
+              <a className="ff-btn ff-btn--ghost"
+                 href={`https://t.me/${CLUB.TELEGRAM.replace('@', '')}`}
+                 target="_blank" rel="noopener">
+                НАПИСАТЬ В TELEGRAM →
+              </a>
+              <a className="ff-btn ff-btn--ghost"
+                 href={`tel:${CLUB.PHONE.replace(/\s|\(|\)|-/g, '')}`}>
+                📞 {CLUB.PHONE}
+              </a>
+              <button className="ff-btn ff-btn--primary" onClick={() => setBilliardNotice(false)}>ХОРОШО →</button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

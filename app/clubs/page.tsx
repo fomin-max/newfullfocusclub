@@ -14,13 +14,13 @@ import './clubs-agg.css'
 
 export const metadata: Metadata = {
   title: 'Клубы Full Focus — 7 киберспортивных клубов в СПб и Махачкале',
-  description: 'Все клубы сети Full Focus: 7 локаций в Санкт-Петербурге и Махачкале. RTX 4090, PS5, круглосуточно. Карта, метро, зоны и онлайн-бронирование.',
+  description: 'Все клубы сети Full Focus: 7 локаций в Санкт-Петербурге и Махачкале. RTX 5080, PS5, круглосуточно. Карта, метро, зоны и онлайн-бронирование.',
   keywords: 'компьютерный клуб Санкт-Петербург, киберспортивный клуб СПб, игровой клуб рядом с метро',
   metadataBase: new URL('https://fullfocusclub.ru'),
   alternates: { canonical: '/clubs' },
   openGraph: {
     title: 'Клубы Full Focus — 7 локаций в СПб и Махачкале',
-    description: 'Full Focus — компьютерные клубы и киберспортивные арены в СПб и Махачкале. RTX 4090, PS5, 24/7.',
+    description: 'Full Focus — компьютерные клубы и киберспортивные арены в СПб и Махачкале. RTX 5080, PS5, 24/7.',
     url: 'https://fullfocusclub.ru/clubs',
     siteName: 'Full Focus Club',
     locale: 'ru_RU',

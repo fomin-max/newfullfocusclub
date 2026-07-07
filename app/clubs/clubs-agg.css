@@ -255,6 +255,7 @@
 .cla-grid > * { min-width: 0; display: flex; flex-direction: column; }
 .cla-card { width: 100%; flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 24px; }
 .cla-card.is-hidden { display: none; }
+.cla-card--clickable { cursor: pointer; }
 .cla-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .cla-card__name {
   font-family: var(--ff-font-heading); font-weight: 700;

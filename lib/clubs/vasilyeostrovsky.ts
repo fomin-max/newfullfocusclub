@@ -14,7 +14,7 @@ const CLUB: ClubMeta = {
   HOURS: 'Круглосуточно · 24/7',
   TELEGRAM: '@fullfocusvo',
   VK: 'https://vk.com/fullfocusvo',
-  PHONE: '+7 (812) 660-55-96',
+  PHONE: '+7 (812) 507-24-52',
   MAPS_URL: 'https://yandex.com/maps/-/CPDlzUKP',
   ROUTE_URL: 'https://yandex.ru/maps/?rtext=~59.938389,30.285601&rtt=auto&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D118770594495',
   COORDS: '59.938° N · 30.286° E',

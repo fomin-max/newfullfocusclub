@@ -38,12 +38,12 @@ const magistral = localFont({
 export const metadata: Metadata = {
   title: 'Full Focus — Сеть киберспортивных клубов СПб | 7 клубов 24/7',
   description:
-    'Full Focus — компьютерный клуб нового поколения в Санкт-Петербурге и Махачкале. 7 киберспортивных клубов: мощные ПК RTX 4090, PlayStation 5, турниры, корпоративы. 24/7. Первый визит — 500₽ в подарок.',
+    'Full Focus — компьютерный клуб нового поколения в Санкт-Петербурге и Махачкале. 7 киберспортивных клубов: мощные ПК RTX 5080, PlayStation 5, турниры, корпоративы. 24/7. Первый визит — 500₽ в подарок.',
   metadataBase: new URL('https://fullfocusclub.ru'),
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Full Focus — Сеть киберспортивных клубов СПб | 7 клубов 24/7',
-    description: 'Компьютерный клуб нового поколения в СПб и Махачкале: мощные ПК RTX 4090, PS5, турниры, корпоративы. 7 клубов, 24/7.',
+    description: 'Компьютерный клуб нового поколения в СПб и Махачкале: мощные ПК RTX 5080, PS5, турниры, корпоративы. 7 клубов, 24/7.',
     url: 'https://fullfocusclub.ru',
     siteName: 'Full Focus Club',
     locale: 'ru_RU',

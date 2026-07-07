@@ -87,5 +87,5 @@ export async function GET(
     return acc
   }, [])
 
-  return NextResponse.json({ seats, floorBg: bgRes.data?.floor_bg_url ?? null })
+  return NextResponse.json({ seats, floorBg: bgRes.data?.floor_bg_url ? `/api/floor-bg/${slug}` : null })
 }

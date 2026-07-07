@@ -82,6 +82,7 @@ export default function NextTournament() {
       .from('tournaments')
       .select('*')
       .in('status', ['registration_open', 'upcoming'])
+      .gte('date', new Date().toISOString())
       .order('date', { ascending: true })
       .limit(1)
       .single()

@@ -60,7 +60,7 @@ export default function ClubsHero() {
         </Reveal>
         <Reveal delay={150}>
           <p className="cla-hero__sub">
-            Санкт-Петербург и&nbsp;Махачкала. RTX&nbsp;4090 и&nbsp;PS5
+            Санкт-Петербург и&nbsp;Махачкала. RTX&nbsp;5080 и&nbsp;PS5
             в&nbsp;шаге от&nbsp;метро. Открыто круглосуточно.
           </p>
         </Reveal>
