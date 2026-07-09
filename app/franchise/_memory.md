@@ -3,8 +3,8 @@
 ## Статус
 - [ ] Дизайн перенесён из Claude Design
 - [ ] Шрифты исправлены (Orbitron→Magistral, Inter→Grandis Extended)
-- [ ] SEO мета-теги добавлены
-- [ ] Schema.org добавлена
+- [x] SEO мета-теги добавлены
+- [x] Schema.org добавлена (BreadcrumbList + Offer + FAQPage, синхронизирована с видимым FAQ 2026-07-09)
 - [ ] Telegram Bot (форма заявки) подключён
 - [ ] Цифры верифицированы с клиентом
 - [ ] Мобайл проверен на 375px

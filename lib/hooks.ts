@@ -132,7 +132,11 @@ export function useReveal(delay = 0) {
       }
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
     io.observe(el)
-    return () => io.disconnect()
+    // Fail-safe: if the observer never fires (e.g. blocked by an extension,
+    // or a headless crawler that doesn't dispatch intersection events),
+    // reveal the content anyway so it isn't stuck at opacity:0 forever.
+    const failSafe = setTimeout(() => setShown(true), 2000 + delay)
+    return () => { io.disconnect(); clearTimeout(failSafe) }
   }, [delay])
   return [ref, shown] as const
 }

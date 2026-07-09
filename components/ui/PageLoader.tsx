@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
+const BOT_UA = /bot|crawl|spider|slurp|yandex|duckduck|baiduspider|facebookexternalhit|linkedinbot|twitterbot|telegrambot|whatsapp|semrush|ahrefs|mj12bot|petalbot|lighthouse|pagespeed/i
 const SESSION_KEY = 'ff_loader_seen'
 const MSG = 'FULL_FOCUS://LOADING...'
 const TYPE_INTERVAL = 55   // ms per character
@@ -19,10 +20,11 @@ export default function PageLoader() {
     if (!loader) return
 
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const isBot = BOT_UA.test(navigator.userAgent)
     let seen = false
     try { seen = sessionStorage.getItem(SESSION_KEY) === '1' } catch {}
 
-    if (reduce || seen) {
+    if (reduce || seen || isBot) {
       loader.style.display = 'none'
       return
     }
