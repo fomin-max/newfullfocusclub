@@ -12,7 +12,7 @@ const CLUBS = [
   ['Махачкала',        '#888888', '/clubs/makhachkala'],
 ] as const
 
-export default function Footer() {
+export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: string }) {
   return (
     <footer className="ff-footer" id="contacts">
       <div className="ff-footer__promo">
@@ -71,7 +71,7 @@ export default function Footer() {
           <h4>Контакты</h4>
           <ul>
             <li><a href="tel:+78126605596">+7 (812) 660-55-96</a></li>
-            <li><a href="mailto:hello@fullfocusclub.ru">hello@fullfocusclub.ru</a></li>
+            <li><a href={`mailto:${email}`}>{email}</a></li>
             <li>Telegram · <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer">@fullfocusclub</a></li>
             <li>VK · <a href="https://vk.com/fullfocusclub" target="_blank" rel="noopener noreferrer">vk.com/fullfocusclub</a></li>
             <li style={{ color: 'var(--ff-system-fog)', marginTop: 8, fontSize: 12 }}>

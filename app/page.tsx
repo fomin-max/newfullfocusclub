@@ -30,7 +30,7 @@ const schemaOrg = {
       url: 'https://fullfocusclub.ru',
       logo: 'https://fullfocusclub.ru/assets/full-focus-wordmark.svg',
       telephone: '+78126605596',
-      email: 'hello@fullfocusclub.ru',
+      email: 'info@fullfocusclub.ru',
       sameAs: ['https://vk.com/fullfocusclub', 'https://t.me/fullfocusclub'],
     },
     {

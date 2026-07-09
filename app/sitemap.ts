@@ -4,11 +4,22 @@ import { getTournaments } from '@/lib/supabase'
 const BASE     = 'https://fullfocusclub.ru'
 const LAST_MOD = '2026-05-30'
 
+const CLUB_SLUGS = [
+  'vasilyeostrovsky',
+  'tekhnologichesky',
+  'komendantsky',
+  'elektrosila',
+  'prosvescheniya',
+  'sadovaya',
+  'makhachkala',
+]
+
 const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: BASE,                        lastModified: LAST_MOD, changeFrequency: 'weekly',  priority: 1.0  },
   { url: `${BASE}/clubs`,             lastModified: LAST_MOD, changeFrequency: 'weekly',  priority: 0.9  },
-  { url: `${BASE}/clubs/vasilyeostrovsky`, lastModified: LAST_MOD, changeFrequency: 'monthly', priority: 0.85 },
-  { url: `${BASE}/clubs/elektrosila`, lastModified: LAST_MOD, changeFrequency: 'monthly', priority: 0.85 },
+  ...CLUB_SLUGS.map(slug => ({
+    url: `${BASE}/clubs/${slug}`, lastModified: LAST_MOD, changeFrequency: 'monthly' as const, priority: 0.85,
+  })),
   { url: `${BASE}/events`,            lastModified: LAST_MOD, changeFrequency: 'weekly',  priority: 0.85 },
   { url: `${BASE}/tournaments`,       lastModified: LAST_MOD, changeFrequency: 'weekly',  priority: 0.85 },
   { url: `${BASE}/franchise`,         lastModified: LAST_MOD, changeFrequency: 'monthly', priority: 0.80 },
