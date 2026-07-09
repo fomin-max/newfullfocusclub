@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
 import { useClubData } from './ClubDataContext'
+import { buildMetroFaqItem } from '@/lib/clubs/schema'
 
 export default function ClubFAQ() {
-  const { FAQ } = useClubData()
+  const clubData = useClubData()
+  const FAQ = [buildMetroFaqItem(clubData), ...clubData.FAQ]
   const [open, setOpen] = useState<number | null>(null)
 
   return (

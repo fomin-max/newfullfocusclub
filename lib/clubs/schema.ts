@@ -1,6 +1,14 @@
 import type { Metadata } from 'next'
 import type { ClubData } from './types'
 
+export function buildMetroFaqItem(d: ClubData) {
+  const minPrice = Math.min(...d.CLUB_ZONES.map(z => z.priceFrom))
+  return {
+    q: `Есть ли компьютерный клуб рядом с метро ${d.CLUB.METRO}?`,
+    a: `Да, Full Focus — компьютерный клуб и киберспортивная арена у м. ${d.CLUB.METRO} (${d.CLUB.METRO_TIME}). Адрес: ${d.CLUB.ADDRESS}, Санкт-Петербург. Работаем круглосуточно, от ${minPrice}₽/час.`,
+  }
+}
+
 export function buildClubSchema(d: ClubData) {
   const minPrice = Math.min(...d.CLUB_ZONES.map(z => z.priceFrom))
   const baseUrl  = `https://fullfocusclub.ru/clubs/${d.CLUB.SLUG}`
@@ -78,21 +86,11 @@ export function buildClubSchema(d: ClubData) {
       }] : []),
       {
         '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: `Есть ли компьютерный клуб рядом с метро ${d.CLUB.METRO}?`,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: `Да, Full Focus — компьютерный клуб и киберспортивная арена у м. ${d.CLUB.METRO} (${d.CLUB.METRO_TIME}). Адрес: ${d.CLUB.ADDRESS}, Санкт-Петербург. Работаем круглосуточно, от ${minPrice}₽/час.`,
-            },
-          },
-          ...d.FAQ.map(item => ({
-            '@type': 'Question',
-            name: item.q,
-            acceptedAnswer: { '@type': 'Answer', text: item.a },
-          })),
-        ],
+        mainEntity: [buildMetroFaqItem(d), ...d.FAQ].map(item => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
       },
     ],
   }

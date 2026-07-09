@@ -20,6 +20,23 @@ import FFPay from '@/components/home/FFPay'
 import EventsBanner from '@/components/home/EventsBanner'
 import FAQ from '@/components/home/FAQ'
 
+const FAQS = [
+  { q: 'Full Focus — это компьютерный клуб или киберспортивный?',
+    a: 'Full Focus — это сеть современных компьютерных клубов нового поколения (киберспортивных клубов) в Санкт-Петербурге и Махачкале. 7 клубов с мощными ПК RTX 5080, зонами PS5, своей кухней и профессиональными турнирами.' },
+  { q: 'Сколько стоит час игры?',
+    a: 'От 120₽/час для школьников и студентов в будние дни. Стандартный тариф — от 170₽/час. Подробные тарифы — на странице каждого клуба.' },
+  { q: 'Как забронировать место?',
+    a: 'Оставьте заявку на сайте через форму бронирования или напишите в Telegram-чат клуба. Администратор подтвердит свободные слоты за минуту.' },
+  { q: 'Работаете ли вы круглосуточно?',
+    a: 'Да, все клубы сети работают круглосуточно, без выходных. На ночной пакет действуют отдельные тарифы.' },
+  { q: 'Есть ли PlayStation в клубах?',
+    a: 'Да, во всех клубах есть зоны Lounge с PS5 — диваны, большие экраны, файтинги и кооперативные игры.' },
+  { q: 'Какие игры установлены?',
+    a: 'CS2, Dota 2, Valorant, Apex, PUBG, Fortnite, Genshin, GTA V, Cyberpunk и ещё 200+. Аккаунты Steam / Epic / Battle.net уже залогинены — садись и играй.' },
+  { q: 'Можно ли прийти со своей периферией?',
+    a: 'Да, на каждом месте есть USB-хаб и удобные точки подключения. Можешь принести свою мышь, наушники и клавиатуру.' },
+]
+
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -42,18 +59,11 @@ const schemaOrg = {
     },
     {
       '@type': 'FAQPage',
-      mainEntity: [
-        { '@type': 'Question', name: 'Full Focus — это компьютерный клуб или киберспортивный?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Full Focus — это сеть современных компьютерных клубов нового поколения (киберспортивных клубов) в Санкт-Петербурге и Махачкале. 7 клубов с мощными ПК RTX 5080, зонами PS5, своей кухней и профессиональными турнирами.' } },
-        { '@type': 'Question', name: 'Сколько стоит час игры в Full Focus?',
-          acceptedAnswer: { '@type': 'Answer', text: 'От 120₽/час для школьников и студентов в будние дни пн-пт 10:00–16:00. Стандартный тариф — от 170₽/час.' } },
-        { '@type': 'Question', name: 'Как забронировать место в компьютерном клубе Full Focus?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Оставьте заявку на сайте или напишите в Telegram @fullfocusclub. Бронь подтверждается в течение 15 минут.' } },
-        { '@type': 'Question', name: 'Работаете ли вы круглосуточно?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Да, все клубы работают круглосуточно без выходных.' } },
-        { '@type': 'Question', name: 'Есть ли PlayStation в клубах?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Да, во всех клубах есть зоны с PS5. На Василеостровской — также PS5 VIP Lounge.' } },
-      ],
+      mainEntity: FAQS.map(item => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
     },
   ],
 }
@@ -82,7 +92,7 @@ export default function Home() {
         <FranchiseSection />
         <FFPay />
         <EventsBanner />
-        <FAQ />
+        <FAQ items={FAQS} />
       </main>
       <Footer />
       <MobileStickyBar />

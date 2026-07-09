@@ -3,20 +3,7 @@
 import { useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
 
-const FAQS = [
-  { q: 'Сколько стоит час игры?',
-    a: 'От 120₽/час для школьников и студентов в будние дни. Стандартный тариф — от 170₽/час. Подробные тарифы — на странице каждого клуба.' },
-  { q: 'Как забронировать место?',
-    a: 'Оставьте заявку на сайте через форму бронирования или напишите в Telegram-чат клуба. Администратор подтвердит свободные слоты за минуту.' },
-  { q: 'Работаете ли вы круглосуточно?',
-    a: 'Да, все клубы сети работают круглосуточно, без выходных. На ночной пакет действуют отдельные тарифы.' },
-  { q: 'Есть ли PlayStation в клубах?',
-    a: 'Да, во всех клубах есть зоны Lounge с PS5 — диваны, большие экраны, файтинги и кооперативные игры.' },
-  { q: 'Какие игры установлены?',
-    a: 'CS2, Dota 2, Valorant, Apex, PUBG, Fortnite, Genshin, GTA V, Cyberpunk и ещё 200+. Аккаунты Steam / Epic / Battle.net уже залогинены — садись и играй.' },
-  { q: 'Можно ли прийти со своей периферией?',
-    a: 'Да, на каждом месте есть USB-хаб и удобные точки подключения. Можешь принести свою мышь, наушники и клавиатуру.' },
-]
+export interface FaqEntry { q: string; a: string }
 
 function FaqItem({ q, a, defaultOpen }: { q: string; a: string; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(!!defaultOpen)
@@ -31,7 +18,7 @@ function FaqItem({ q, a, defaultOpen }: { q: string; a: string; defaultOpen?: bo
   )
 }
 
-export default function FAQ() {
+export default function FAQ({ items }: { items: FaqEntry[] }) {
   return (
     <section id="faq" className="ff-section">
       <div className="ff-section__inner">
@@ -41,7 +28,7 @@ export default function FAQ() {
           <p className="ff-section-head__sub">Если ответа нет — напишите в Telegram, ответим за минуту.</p>
         </Reveal>
         <div className="ff-faq__grid">
-          {FAQS.map((f, i) => (
+          {items.map((f, i) => (
             <Reveal key={i} delay={i * 60}>
               <FaqItem q={f.q} a={f.a} defaultOpen={i === 0} />
             </Reveal>
