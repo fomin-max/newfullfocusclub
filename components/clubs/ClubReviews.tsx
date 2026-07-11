@@ -22,11 +22,17 @@ function ReviewRow({ items }: { items: Review[] }) {
   )
 }
 
+function yandexReviewUrl(routeUrl: string): string | null {
+  const oid = routeUrl.match(/oid%3D(\d+)/)?.[1]
+  return oid ? `https://yandex.ru/maps/org/${oid}/reviews/?add-review=true` : null
+}
+
 export default function ClubReviews() {
   const { REVIEWS, CLUB } = useClubData()
   const half   = Math.ceil(REVIEWS.length / 2)
   const top    = REVIEWS.slice(0, half)
   const bottom = REVIEWS.slice(half)
+  const reviewUrl = yandexReviewUrl(CLUB.ROUTE_URL)
 
   return (
     <section id="reviews" className="ff-section" data-screen-label="08 · ОТЗЫВЫ">
@@ -46,6 +52,15 @@ export default function ClubReviews() {
             </div>
           </div>
         </Reveal>
+        {reviewUrl && (
+          <Reveal delay={40}>
+            <div style={{ marginTop: 16 }}>
+              <a href={reviewUrl} target="_blank" rel="noopener noreferrer" className="ff-btn ff-btn--secondary ff-btn--sm">
+                ОСТАВИТЬ ОТЗЫВ В ЯНДЕКС КАРТАХ →
+              </a>
+            </div>
+          </Reveal>
+        )}
         <Reveal delay={80}>
           <div className="cl-marquee">
             <div className="cl-marquee__track"><ReviewRow items={top} /></div>
