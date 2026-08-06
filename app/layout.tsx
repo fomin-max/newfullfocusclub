@@ -6,6 +6,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import PageLoader from '@/components/ui/PageLoader'
 import NavigationProgress from '@/components/ui/NavigationProgress'
 import CookieConsent from '@/components/ui/CookieConsent'
+import YandexMetrika from '@/components/ui/YandexMetrika'
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <NavigationProgress />
         <PageLoader />
         {children}
+        <YandexMetrika />
         <CookieConsent />
       </body>
     </html>

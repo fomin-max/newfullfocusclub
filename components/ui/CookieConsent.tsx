@@ -62,12 +62,14 @@ export default function CookieConsent() {
     setAnalytics(true)
     setMarketing(true)
     setVisible(false)
+    window.dispatchEvent(new Event('ff:consent-changed'))
   }
 
   function saveSettings() {
     const state = { analytics, marketing, settled: true }
     saveConsent(state)
     setVisible(false)
+    window.dispatchEvent(new Event('ff:consent-changed'))
   }
 
   return (
