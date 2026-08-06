@@ -13,10 +13,13 @@ const CHECKLIST = [
 
 export default function FranchiseFinalCTA() {
   const [messenger, setMessenger] = useState<'telegram' | 'whatsapp' | 'max'>('telegram')
-  const [name, setName]     = useState('')
-  const [phone, setPhone]   = useState('')
-  const [city, setCity]     = useState('')
-  const [done, setDone]     = useState(false)
+  const [name, setName]         = useState('')
+  const [phone, setPhone]       = useState('')
+  const [city, setCity]         = useState('')
+  const [username, setUsername] = useState('')
+  const [done, setDone]         = useState(false)
+
+  const needsUsername = messenger === 'telegram' || messenger === 'max'
 
   const phoneRef = useRef<HTMLInputElement>(null)
 
@@ -47,7 +50,7 @@ export default function FranchiseFinalCTA() {
       await fetch('/api/franchise', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, city, messenger, source: 'hero' }),
+        body: JSON.stringify({ name, phone, city, messenger, username: needsUsername ? username : '', source: 'hero' }),
       })
     } finally {
       setLoading(false)
@@ -123,6 +126,15 @@ export default function FranchiseFinalCTA() {
                     </button>
                   </div>
                 </div>
+                {needsUsername && (
+                  <div className="ff-field">
+                    <label htmlFor="fr-username">
+                      {messenger === 'max' ? 'Логин в MAX' : 'Username в Telegram'}
+                    </label>
+                    <input id="fr-username" className="ff-input" placeholder="@username"
+                           value={username} onChange={e => setUsername(e.target.value)} required />
+                  </div>
+                )}
                 <div>
                   <button type="submit" disabled={loading}
                           className="ff-btn ff-btn--primary ff-btn--lg ff-btn--block is-pulse">

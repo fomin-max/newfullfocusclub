@@ -32,7 +32,7 @@ export default function FranchiseFAQ({ items }: { items: FAQItem[] }) {
           ))}
         </div>
         <div className="ev-faq__cta">
-          <a href="#zayavka" className="ff-btn ff-btn--primary">
+          <a href="#contacts" className="ff-btn ff-btn--primary">
             Оставить заявку на франшизу
           </a>
         </div>

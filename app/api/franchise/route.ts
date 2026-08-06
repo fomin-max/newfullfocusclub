@@ -13,7 +13,8 @@ interface FranchisePayload {
   name:      string
   phone:     string
   city?:     string
-  messenger: string
+  messenger?: string
+  username?: string
   budget?:   string
   comment?:  string
   source?:   string
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { name, phone, city, messenger, budget, comment, source = 'hero' } = body
+  const { name, phone, city, messenger, username, budget, comment, source = 'hero' } = body
 
   if (!name || !phone) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -71,7 +72,7 @@ export async function POST(req: Request) {
 
   const { data, error } = await supabaseAdmin
     .from('franchise_leads')
-    .insert({ name, phone, city: city || null, messenger, budget: budget || null, comment: comment || null, source })
+    .insert({ name, phone, city: city || null, messenger: messenger || null, username: username || null, budget: budget || null, comment: comment || null, source })
     .select('id')
     .single()
 
@@ -80,17 +81,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'DB error' }, { status: 500 })
   }
 
-  const cityLine    = city    ? `\n🏙 Город: <b>${city}</b>`          : ''
-  const budgetLine  = budget  ? `\n💰 Бюджет: <b>${budget}</b>`       : ''
-  const commentLine = comment ? `\n💬 Комментарий: <i>${comment}</i>` : ''
-  const sourceLine  = source !== 'hero' ? `\n📋 Форма: <b>${source}</b>` : ''
+  const cityLine     = city     ? `\n🏙 Город: <b>${city}</b>`              : ''
+  const budgetLine   = budget   ? `\n💰 Бюджет: <b>${budget}</b>`           : ''
+  const usernameLine = username ? `\n✉️ Username: <b>${username}</b>`      : ''
+  const commentLine  = comment  ? `\n💬 Комментарий: <i>${comment}</i>`    : ''
+  const sourceLine   = source !== 'hero' ? `\n📋 Форма: <b>${source}</b>` : ''
+  const messengerLine = messenger ? `\n${messenger === 'whatsapp' ? '📱' : '✈️'} Мессенджер: <b>${messenger}</b>` : ''
 
   const tgMsg = [
     `🚀 <b>Новая заявка на франшизу</b>`,
     ``,
     `👤 Имя: <b>${name}</b>`,
-    `📞 Телефон: <b>${phone}</b>${cityLine}${budgetLine}`,
-    `${messenger === 'whatsapp' ? '📱' : '✈️'} Мессенджер: <b>${messenger}</b>${commentLine}${sourceLine}`,
+    `📞 Телефон: <b>${phone}</b>${cityLine}${budgetLine}${messengerLine}${usernameLine}${commentLine}${sourceLine}`,
     ``,
     `#франшиза`,
   ].join('\n')
@@ -105,7 +107,8 @@ export async function POST(req: Request) {
         <tr><td style="padding:8px 0;color:#666">Телефон</td><td style="padding:8px 0;font-weight:600">${phone}</td></tr>
         ${city    ? `<tr><td style="padding:8px 0;color:#666">Город</td><td style="padding:8px 0">${city}</td></tr>` : ''}
         ${budget  ? `<tr><td style="padding:8px 0;color:#666">Бюджет</td><td style="padding:8px 0">${budget}</td></tr>` : ''}
-        <tr><td style="padding:8px 0;color:#666">Мессенджер</td><td style="padding:8px 0">${messenger}</td></tr>
+        ${messenger ? `<tr><td style="padding:8px 0;color:#666">Мессенджер</td><td style="padding:8px 0">${messenger}</td></tr>` : ''}
+        ${username ? `<tr><td style="padding:8px 0;color:#666">Username</td><td style="padding:8px 0">${username}</td></tr>` : ''}
         ${comment ? `<tr><td style="padding:8px 0;color:#666;vertical-align:top">Комментарий</td><td style="padding:8px 0">${comment}</td></tr>` : ''}
       </table>
       <p style="margin-top:24px;font-size:12px;color:#999">

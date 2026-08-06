@@ -777,6 +777,73 @@
   flex-shrink: 0;
 }
 
+/* ─── Application form (#zayavka) ────────────────────────────  */
+.ff-appform-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ff-glitch-core-line);
+  border-radius: var(--ff-radius-xl);
+  backdrop-filter: var(--ff-blur-glass);
+  padding: 40px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.ff-appform {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.ff-appform__col { display: flex; flex-direction: column; gap: 16px; }
+.ff-appform__grow { flex: 1; }
+.ff-appform__grow textarea.ff-input { flex: 1; resize: vertical; min-height: 96px; font-family: var(--ff-font-body); }
+.ff-select { position: relative; }
+.ff-select select {
+  appearance: none;
+  width: 100%;
+  padding: 14px 40px 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ff-glitch-core-line);
+  color: var(--ff-softlight);
+  font-family: var(--ff-font-body);
+  font-size: 14px;
+  border-radius: var(--ff-radius-md);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 160ms var(--ff-ease-out), box-shadow 160ms var(--ff-ease-out);
+}
+.ff-select select:focus {
+  border-color: var(--ff-neon-bloom);
+  box-shadow: 0 0 0 3px rgba(0, 255, 182, 0.12);
+}
+.ff-select__arr {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ff-neon-bloom);
+  pointer-events: none;
+  font-size: 12px;
+}
+.ff-appform__submit { grid-column: 1 / -1; margin-top: 8px; }
+.ff-appform__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 40px 20px;
+}
+.ff-appform__success-mark { color: var(--ff-neon-bloom); }
+.ff-appform__success h3 {
+  font-family: var(--ff-font-heading);
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ff-softlight);
+  margin: 0;
+}
+.ff-appform__success p { color: var(--ff-system-fog); margin: 0; }
+
 /* ─── FAQ CTA ────────────────────────────────────────────────── */
 .ev-faq__cta { display: flex; justify-content: center; margin-top: 32px; }
 
@@ -818,6 +885,8 @@
   .ff-format-card.is-featured { transform: none; }
   .ff-form__row { grid-template-columns: 1fr; }
   .ff-final { padding: 80px 20px 64px; }
+  .ff-appform { grid-template-columns: 1fr; }
+  .ff-appform-card { padding: 24px; }
   .ff-concept__values { grid-template-columns: 1fr; }
   .fr-roadmap__list { grid-template-columns: 1fr !important; gap: 0; padding-left: 44px; }
   .fr-roadmap .ev-how__line { display: none; }

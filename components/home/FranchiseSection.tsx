@@ -53,7 +53,7 @@ export default function FranchiseSection() {
               <a href="/franchise" className="ff-btn ff-btn--primary is-pulse">
                 Условия франшизы <Icon name="arrowRight" size={14} />
               </a>
-              <a href="/franchise#zayavka" className="ff-btn ff-btn--secondary ff-btn--on-purple">
+              <a href="/franchise#contacts" className="ff-btn ff-btn--secondary ff-btn--on-purple">
                 Оставить заявку
               </a>
             </div>
