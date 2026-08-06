@@ -15,6 +15,7 @@ export interface AggClub {
   zones: string[]
   topGpu: string
   console: string
+  comingSoon?: boolean
 }
 
 export const AGG_CLUBS: AggClub[] = [
@@ -25,6 +26,7 @@ export const AGG_CLUBS: AggClub[] = [
   { id: 'tech',    slug: 'tekhnologichesky',  name: 'Технологический',         city: 'spb', cityLabel: 'СПб',       metro: 'м. Технологический институт',  address: '3-я Красноармейская, 10',      color: '#E4171B', x: 50, y: 64, lng: 30.313694, lat: 59.914358, zones: ['PRO','MAX','BOOTCAMP','LOUNGE'], topGpu: 'RTX 4070', console: 'PS5' },
   { id: 'sadov',   slug: 'sadovaya',          name: 'Садовая',                 city: 'spb', cityLabel: 'СПб',       metro: 'м. Садовая',                   address: 'Улица Казанская, 33',          color: '#8E479B', x: 52, y: 52, lng: 30.311556, lat: 59.929723, zones: ['PRO','MAX','BOOTCAMP','DUO','LOUNGE'], topGpu: 'RTX 4070', console: 'PS5' },
   { id: 'makha',   slug: 'makhachkala',       name: 'Махачкала',               city: 'mkh', cityLabel: 'Махачкала', metro: 'Центр города', hasMetro: false,  address: 'Улица Манташева, 107Б',        color: '#888888', x: 84, y: 56, lng: 47.519765, lat: 42.976510, zones: ['BOOTCAMP','DUO','SOLO','LOUNGE'], topGpu: 'RTX 5070', console: 'PS5' },
+  { id: 'shushary', slug: null,               name: 'Шушары',                  city: 'spb', cityLabel: 'СПб',       metro: '', hasMetro: false, address: 'Вилеровский переулок, 6',       color: '#000000', x: 60, y: 96, lng: 30.364321, lat: 59.811180, zones: [], topGpu: '', console: '', comingSoon: true },
 ]
 
 export const CITY_META = {

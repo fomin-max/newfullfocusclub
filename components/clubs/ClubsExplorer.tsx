@@ -21,9 +21,10 @@ function ClubCard({
   onLeave: () => void
 }) {
   const router = useRouter()
-  const href     = c.slug ? `/clubs/${c.slug}` : TELEGRAM
-  const bookHref = c.slug ? `/clubs/${c.slug}#live` : TELEGRAM
-  const isExternal = !c.slug
+  const soonHref = 'https://t.me/fullfocusclubru?direct'
+  const href     = c.comingSoon ? soonHref : (c.slug ? `/clubs/${c.slug}` : TELEGRAM)
+  const bookHref = c.comingSoon ? soonHref : (c.slug ? `/clubs/${c.slug}#live` : TELEGRAM)
+  const isExternal = c.comingSoon || !c.slug
 
   const goToClub = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('a')) return
@@ -41,6 +42,8 @@ function ClubCard({
       onMouseLeave={onLeave}
       onClick={goToClub}
     >
+      {c.comingSoon && <span className="cla-card__badge">Скоро открытие</span>}
+
       <div className="cla-card__head">
         <span className="cla-card__name">{c.name}</span>
         <span className="cla-card__city">{c.cityLabel}</span>
@@ -58,22 +61,26 @@ function ClubCard({
 
       <div className="cla-card__address">{c.address}</div>
 
-      <div className="cla-card__zones">
-        {c.zones.map(z => (
-          <span key={z} className={`cla-card__zone ${activeZone === z ? 'is-match' : ''}`}>{z}</span>
-        ))}
-      </div>
+      {c.zones.length > 0 && (
+        <div className="cla-card__zones">
+          {c.zones.map(z => (
+            <span key={z} className={`cla-card__zone ${activeZone === z ? 'is-match' : ''}`}>{z}</span>
+          ))}
+        </div>
+      )}
 
-      <div className="cla-card__feats">
-        <span><Icon name="bolt" size={14} /> 24/7</span>
-        <span><Icon name="cpu" size={14} /> {c.topGpu}</span>
-        <span><Icon name="gamepad" size={14} /> {c.console}</span>
-      </div>
+      {!c.comingSoon && (
+        <div className="cla-card__feats">
+          <span><Icon name="bolt" size={14} /> 24/7</span>
+          <span><Icon name="cpu" size={14} /> {c.topGpu}</span>
+          <span><Icon name="gamepad" size={14} /> {c.console}</span>
+        </div>
+      )}
 
       <div className="cla-card__actions">
         {isExternal ? (
           <a className="ff-btn ff-btn--primary ff-btn--sm" href={bookHref} target="_blank" rel="noopener noreferrer">
-            ЗАБРОНИРОВАТЬ <Icon name="arrowRight" size={13} />
+            {c.comingSoon ? 'Узнать первым' : 'ЗАБРОНИРОВАТЬ'} <Icon name="arrowRight" size={13} />
           </a>
         ) : (
           <a className="ff-btn ff-btn--primary ff-btn--sm" href={bookHref}>
@@ -106,7 +113,7 @@ export default function ClubsExplorer() {
     }
   }, [])
 
-  const counts = AGG_CLUBS.reduce<Record<string, number>>((acc, c) => {
+  const counts = AGG_CLUBS.filter(c => !c.comingSoon).reduce<Record<string, number>>((acc, c) => {
     acc[c.city] = (acc[c.city] || 0) + 1
     return acc
   }, {})
@@ -126,7 +133,7 @@ export default function ClubsExplorer() {
   }
 
   const cities = [
-    { key: 'all', label: 'Все',             cnt: AGG_CLUBS.length },
+    { key: 'all', label: 'Все',             cnt: (counts.spb || 0) + (counts.mkh || 0) },
     { key: 'spb', label: 'Санкт-Петербург', cnt: counts.spb || 0 },
     { key: 'mkh', label: 'Махачкала',       cnt: counts.mkh || 0 },
   ]

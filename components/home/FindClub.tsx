@@ -16,7 +16,8 @@ const CLUBS = AGG_CLUBS.map(c => ({
   address: c.address,
   color: c.color,
   zones: c.zones,
-  href: c.slug ? `/clubs/${c.slug}` : 'https://t.me/fullfocusclub',
+  comingSoon: c.comingSoon,
+  href: c.comingSoon ? 'https://t.me/fullfocusclubru?direct' : (c.slug ? `/clubs/${c.slug}` : 'https://t.me/fullfocusclub'),
 }))
 
 function ClubCard({ c, setActive }: { c: typeof CLUBS[0]; setActive: (id: string | null) => void }) {
@@ -29,9 +30,10 @@ function ClubCard({ c, setActive }: { c: typeof CLUBS[0]; setActive: (id: string
       id={`club-${c.id}`}
       role="listitem"
       onMouseEnter={() => setActive(c.id)}
-      onClick={() => window.location.href = c.href}
+      onClick={() => c.comingSoon ? window.open(c.href, '_blank', 'noopener,noreferrer') : window.location.href = c.href}
       style={{ cursor: 'pointer' }}
     >
+      {c.comingSoon && <span className="ff-club__badge">Скоро открытие</span>}
       <div className="ff-club__name">{c.name}</div>
       {c.hasMetro !== false && (
         <div className="ff-club__metro">
@@ -40,17 +42,24 @@ function ClubCard({ c, setActive }: { c: typeof CLUBS[0]; setActive: (id: string
         </div>
       )}
       <div className="ff-club__address">{c.address}</div>
-      <div className="ff-club__zones">
-        {c.zones.map(z => <span key={z} className="ff-club__zone">{z}</span>)}
-      </div>
-      <a href={c.href} className="ff-club__more" role="button" onClick={e => e.stopPropagation()}>Подробнее</a>
+      {c.zones.length > 0 && (
+        <div className="ff-club__zones">
+          {c.zones.map(z => <span key={z} className="ff-club__zone">{z}</span>)}
+        </div>
+      )}
+      <a
+        href={c.href} className="ff-club__more" role="button" onClick={e => e.stopPropagation()}
+        target={c.comingSoon ? '_blank' : undefined} rel={c.comingSoon ? 'noopener noreferrer' : undefined}
+      >
+        {c.comingSoon ? 'Узнать первым' : 'Подробнее'}
+      </a>
     </Card>
   )
 }
 
 const CITIES = [
-  { key: 'spb', label: 'Санкт-Петербург', cnt: AGG_CLUBS.filter(c => c.city === 'spb').length },
-  { key: 'mkh', label: 'Махачкала',       cnt: AGG_CLUBS.filter(c => c.city === 'mkh').length },
+  { key: 'spb', label: 'Санкт-Петербург', cnt: AGG_CLUBS.filter(c => c.city === 'spb' && !c.comingSoon).length },
+  { key: 'mkh', label: 'Махачкала',       cnt: AGG_CLUBS.filter(c => c.city === 'mkh' && !c.comingSoon).length },
 ]
 
 export default function FindClub() {

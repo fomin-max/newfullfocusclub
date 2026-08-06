@@ -66,7 +66,7 @@ export default function ClubsMapInner({
       const triggerRetry = () => {
         if (cancelled) return
         clearTimeout(loadTimeout)
-        map.remove()
+        try { map.remove() } catch { /* maplibre can throw if torn down before its style finished loading */ }
         mapRef.current = null
         markersRef.current.clear()
         setMapLoaded(false)
@@ -92,7 +92,7 @@ export default function ClubsMapInner({
 
         clubs.forEach(c => {
           const el = document.createElement('button') as HTMLButtonElement
-          el.className = 'cla-map-pin'
+          el.className = `cla-map-pin${c.comingSoon ? ' is-soon' : ''}`
           el.setAttribute('aria-label', `Клуб ${c.name}`)
           el.innerHTML = `<span class="cla-map-pin__pulse"></span><span class="cla-map-pin__dot"></span>`
 
@@ -100,13 +100,14 @@ export default function ClubsMapInner({
           el.addEventListener('mouseleave', scheduleLeave)
           el.addEventListener('click', () => onMarkerClick(c.id))
 
-          const bookUrl = c.slug ? `/clubs/${c.slug}#live` : 'https://t.me/fullfocusclub'
+          const bookUrl = c.comingSoon ? 'https://t.me/fullfocusclubru?direct' : (c.slug ? `/clubs/${c.slug}#live` : 'https://t.me/fullfocusclub')
+          const btnLabel = c.comingSoon ? 'СКОРО ОТКРЫТИЕ →' : 'ЗАБРОНИРОВАТЬ →'
           const popup = new ml.Popup({ offset: 18, closeButton: false, className: 'cla-map-popup', focusAfterOpen: false })
             .setHTML(`
               <div class="cla-map-popup__inner">
                 <strong>${c.name}</strong>
                 <span>${c.address}</span>
-                <a href="${bookUrl}" class="cla-map-popup__btn">ЗАБРОНИРОВАТЬ →</a>
+                <a href="${bookUrl}" class="cla-map-popup__btn">${btnLabel}</a>
               </div>
             `)
 
@@ -130,7 +131,7 @@ export default function ClubsMapInner({
     return () => {
       cancelled = true
       clearTimeout(loadTimeout)
-      map?.remove()
+      try { map?.remove() } catch { /* maplibre can throw if torn down before its style finished loading */ }
       mapRef.current = null
       markersRef.current.clear()
     }

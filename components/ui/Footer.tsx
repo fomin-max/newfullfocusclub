@@ -10,6 +10,7 @@ const CLUBS = [
   ['Садовая',          '#8E479B', '/clubs/sadovaya'],
   ['Технологический',  '#E4171B', '/clubs/tekhnologichesky'],
   ['Махачкала',        '#888888', '/clubs/makhachkala'],
+  ['Шушары',           '#000000', 'https://t.me/fullfocusclubru?direct', true],
 ] as const
 
 export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: string }) {
@@ -43,11 +44,12 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
         <div className="ff-footer__col">
           <h4>Клубы</h4>
           <ul>
-            {CLUBS.map(([name, color, href]) => (
+            {CLUBS.map(([name, color, href, comingSoon]) => (
               <li key={name}>
-                <a href={href}>
-                  <span className="metro" style={{ '--metro-color': color } as React.CSSProperties} />
+                <a href={href} target={comingSoon ? '_blank' : undefined} rel={comingSoon ? 'noopener noreferrer' : undefined}>
+                  <span className={`metro${comingSoon ? ' is-soon' : ''}`} style={{ '--metro-color': color } as React.CSSProperties} />
                   {name}
+                  {comingSoon && <span style={{ color: 'var(--ff-system-fog)', fontSize: 11, marginLeft: 4 }}>· скоро</span>}
                 </a>
               </li>
             ))}

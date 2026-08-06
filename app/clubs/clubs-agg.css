@@ -269,6 +269,14 @@
   border: 1px solid var(--ff-neon-bloom-line);
   border-radius: 4px; padding: 3px 7px; white-space: nowrap; flex: none;
 }
+.cla-card__badge {
+  align-self: flex-start;
+  font-family: var(--ff-font-heading); font-weight: 700;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ff-softlight);
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 5px 10px;
+}
 .cla-card__metro {
   display: flex; align-items: center; gap: 8px;
   font-family: var(--ff-font-body); font-size: 14px;

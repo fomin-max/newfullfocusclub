@@ -21,7 +21,7 @@ export default function ClubsHero() {
     return () => el.removeEventListener('mousemove', onMove)
   }, [])
 
-  const counts = AGG_CLUBS.reduce<Record<string, number>>((acc, c) => {
+  const counts = AGG_CLUBS.filter(c => !c.comingSoon).reduce<Record<string, number>>((acc, c) => {
     acc[c.city] = (acc[c.city] || 0) + 1
     return acc
   }, {})
