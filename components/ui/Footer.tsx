@@ -66,6 +66,7 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
             <li><a href="/tournaments">Турниры</a></li>
             <li><a href="/events">Мероприятия</a></li>
             <li><a href="/franchise">Франшиза</a></li>
+            <li><a href="/rules">Правила посещения</a></li>
           </ul>
         </div>
 

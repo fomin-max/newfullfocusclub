@@ -177,6 +177,8 @@ export interface ClubRef {
 export interface FAQItem {
   q: string
   a: string
+  /** Substrings of `a` to render as links (schema stays plain text). */
+  links?: { text: string; href: string }[]
 }
 
 export interface EventItem {

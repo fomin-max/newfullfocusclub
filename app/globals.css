@@ -630,6 +630,8 @@ body.ff-no-scroll { overflow: hidden; }
 .ff-faq__a { max-height: 0; overflow: hidden; transition: max-height 320ms var(--ff-ease-out); padding: 0 28px; }
 .ff-faq__item.is-open .ff-faq__a { max-height: 240px; padding-bottom: 24px; }
 .ff-faq__a p { margin: 0; font-family: var(--ff-font-body); font-size: 15px; line-height: 1.6; color: var(--ff-system-fog); }
+.ff-faq__a p a { color: var(--ff-neon-bloom); text-decoration: underline; text-underline-offset: 2px; }
+.ff-faq__a p a:hover { opacity: 0.8; }
 
 /* ─── Footer ─────────────────────────────────────────────────── */
 .ff-footer { padding: 80px 40px 32px; border-top: 1px solid rgba(102,50,250,0.18); background: var(--ff-deep-memory); position: relative; }

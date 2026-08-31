@@ -208,6 +208,8 @@ function BookingModal() {
   const [done,     setDone]    = useState(false)
   const [loading,  setLoading] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [agree,      setAgree]      = useState(false)
+  const [agreeError, setAgreeError] = useState(false)
   type ZonePricing = { hourly: number; perMin: number; packages: Record<number, number> }
   type ByZone = Record<string, { weekday: ZonePricing; weekend: ZonePricing }>
   const [tariffs, setTariffs] = useState<ByZone>({})
@@ -227,6 +229,8 @@ function BookingModal() {
       setDone(false)
       setLoading(false)
       setSubmitError(null)
+      setAgree(false)
+      setAgreeError(false)
       const today = todayStr()
       if (!date) setDate(today)
       const firstSlot = availableSlots(date || today)[0] ?? null
@@ -383,6 +387,22 @@ function BookingModal() {
                 <span className="cl-field__error">Введи номер телефона (+7...) или Telegram (@username)</span>
               )}
             </div>
+            <label className={`cl-agree${agreeError ? ' is-error' : ''}`}>
+              <input
+                type="checkbox"
+                checked={agree}
+                onChange={e => { setAgree(e.target.checked); if (e.target.checked) setAgreeError(false) }}
+              />
+              <span>
+                Я ознакомлен и согласен с{' '}
+                <a href="/rules" target="_blank" rel="noopener">правилами посещения</a>,
+                прайс-листом и{' '}
+                <a href="/privacy" target="_blank" rel="noopener">политикой обработки персональных данных</a>
+              </span>
+            </label>
+            {agreeError && (
+              <span className="cl-field__error">Отметьте согласие, чтобы продолжить</span>
+            )}
             {submitError && (
               <p className="cl-modal__error">{submitError}</p>
             )}
@@ -392,6 +412,7 @@ function BookingModal() {
                 className="ff-btn ff-btn--primary is-pulse"
                 disabled={loading || !name || !contact || !/^[\+\d\s\-\(\)@a-zA-Z0-9_\.]+$/.test(contact)}
                 onClick={async () => {
+                  if (!agree) { setAgreeError(true); return }
                   setLoading(true)
                   setSubmitError(null)
                   try {

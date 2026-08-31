@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
+import FaqAnswer from '@/components/ui/FaqAnswer'
 import { useClubData } from './ClubDataContext'
 import { buildMetroFaqItem } from '@/lib/clubs/schema'
 
@@ -35,7 +36,7 @@ export default function ClubFAQ() {
                   </button>
                 </dt>
                 <dd className="cl-faq__a">
-                  <p>{item.a}</p>
+                  <p><FaqAnswer text={item.a} links={item.links} /></p>
                 </dd>
               </div>
             ))}

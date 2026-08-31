@@ -1943,6 +1943,40 @@
   margin-top: 4px;
   display: block;
 }
+.cl-agree {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin: 4px 0 2px;
+  padding: 12px 14px;
+  border: 1px solid var(--ff-glitch-core-line);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 200ms var(--ff-ease-out), background-color 200ms var(--ff-ease-out);
+}
+.cl-agree input {
+  flex: 0 0 auto;
+  width: 18px; height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--ff-neon-bloom);
+  cursor: pointer;
+}
+.cl-agree span {
+  font-family: var(--ff-font-body);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ff-system-fog);
+}
+.cl-agree a { color: var(--ff-neon-bloom); text-decoration: none; }
+.cl-agree a:hover { text-decoration: underline; }
+.cl-agree.is-error {
+  border-color: var(--ff-danger);
+  background: rgba(255, 77, 79, 0.06);
+  animation: cl-agree-shake 240ms var(--ff-ease-out);
+}
+@keyframes cl-agree-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
 .cl-modal__nav {
   display: flex; gap: 12px; justify-content: space-between;
   margin-top: 28px;
@@ -2162,6 +2196,12 @@
   color: var(--ff-white-80);
   margin: 0;
 }
+.cl-faq__a p a {
+  color: var(--ff-neon-bloom);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cl-faq__a p a:hover { opacity: 0.8; }
 @media (max-width: 640px) {
   .cl-faq__q { padding: 18px 20px; font-size: 13px; }
   .cl-faq__a p { padding: 0 20px 20px; }

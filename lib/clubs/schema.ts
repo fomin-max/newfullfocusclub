@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import type { ClubData } from './types'
+import type { ClubData, FAQItem } from './types'
 
-export function buildMetroFaqItem(d: ClubData) {
+export function buildMetroFaqItem(d: ClubData): FAQItem {
   const minPrice = Math.min(...d.CLUB_ZONES.map(z => z.priceFrom))
   return {
     q: `Есть ли компьютерный клуб рядом с метро ${d.CLUB.METRO}?`,

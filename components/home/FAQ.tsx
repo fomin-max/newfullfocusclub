@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
+import FaqAnswer, { type FaqLink } from '@/components/ui/FaqAnswer'
 
-export interface FaqEntry { q: string; a: string }
+export interface FaqEntry { q: string; a: string; links?: FaqLink[] }
 
-function FaqItem({ q, a, defaultOpen }: { q: string; a: string; defaultOpen?: boolean }) {
+function FaqItem({ q, a, links, defaultOpen }: FaqEntry & { defaultOpen?: boolean }) {
   const [open, setOpen] = useState(!!defaultOpen)
   return (
     <div className={`ff-faq__item ${open ? 'is-open' : ''}`}>
@@ -13,7 +14,7 @@ function FaqItem({ q, a, defaultOpen }: { q: string; a: string; defaultOpen?: bo
         <span>{q}</span>
         <span className="ff-faq__plus" aria-hidden="true">+</span>
       </button>
-      <div className="ff-faq__a"><p>{a}</p></div>
+      <div className="ff-faq__a"><p><FaqAnswer text={a} links={links} /></p></div>
     </div>
   )
 }
@@ -30,7 +31,7 @@ export default function FAQ({ items }: { items: FaqEntry[] }) {
         <div className="ff-faq__grid">
           {items.map((f, i) => (
             <Reveal key={i} delay={i * 60}>
-              <FaqItem q={f.q} a={f.a} defaultOpen={i === 0} />
+              <FaqItem q={f.q} a={f.a} links={f.links} defaultOpen={i === 0} />
             </Reveal>
           ))}
         </div>
