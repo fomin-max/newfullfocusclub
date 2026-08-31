@@ -18,6 +18,7 @@ interface FranchisePayload {
   budget?:   string
   comment?:  string
   source?:   string
+  consent?:  boolean
 }
 
 async function sendTelegram(text: string) {
@@ -64,15 +65,25 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { name, phone, city, messenger, username, budget, comment, source = 'hero' } = body
+  const { name, phone, city, messenger, username, budget, comment, source = 'hero', consent } = body
 
   if (!name || !phone) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
+  if (!consent) {
+    return NextResponse.json({ error: 'Consent required' }, { status: 400 })
+  }
+
   const { data, error } = await supabaseAdmin
     .from('franchise_leads')
-    .insert({ name, phone, city: city || null, messenger: messenger || null, username: username || null, budget: budget || null, comment: comment || null, source })
+    .insert({
+      name, phone, city: city || null, messenger: messenger || null, username: username || null,
+      budget: budget || null, comment: comment || null, source,
+      consent: true,
+      consent_at: new Date().toISOString(),
+      consent_source: `franchise:${source}`,
+    })
     .select('id')
     .single()
 

@@ -430,6 +430,7 @@ function BookingModal() {
                         duration_min: duration,
                         name,
                         contact,
+                        consent: true,
                       }),
                     })
                     if (!res.ok) throw new Error('server')

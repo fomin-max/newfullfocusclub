@@ -48,6 +48,7 @@ interface BookingPayload {
   duration_min: number
   name:         string
   contact:      string
+  consent?:     boolean
 }
 
 async function sendTelegram(chatId: string, text: string) {
@@ -68,15 +69,24 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { club_slug, seat_id, seat_label, zone, date, time_start, time_end, duration_min, name, contact } = body
+  const { club_slug, seat_id, seat_label, zone, date, time_start, time_end, duration_min, name, contact, consent } = body
 
   if (!club_slug || !date || !time_start || !time_end || !duration_min || !name || !contact) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
+  if (!consent) {
+    return NextResponse.json({ error: 'Consent required' }, { status: 400 })
+  }
+
   const { data, error } = await supabaseAdmin
     .from('bookings')
-    .insert({ club_slug, seat_id, seat_label, zone, date, time_start, time_end, duration_min, name, contact })
+    .insert({
+      club_slug, seat_id, seat_label, zone, date, time_start, time_end, duration_min, name, contact,
+      consent: true,
+      consent_at: new Date().toISOString(),
+      consent_source: 'booking',
+    })
     .select('id')
     .single()
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import Icon from '@/components/ui/Icon'
+import ConsentCheckbox from '@/components/ui/ConsentCheckbox'
 import { supabase, submitRegistration, getRegistrations, REGISTRATION_ADDED_EVENT, type Tournament, type TournamentRegistration } from '@/lib/supabase'
 
 interface Props {
@@ -41,6 +42,8 @@ export default function TeamRegistrationForm({ tournament }: Props) {
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone]             = useState(false)
   const [error, setError]           = useState<string | null>(null)
+  const [consent, setConsent]       = useState(false)
+  const [consentError, setConsentError] = useState(false)
 
   const updatePlayer = (i: number, field: keyof PlayerField, v: string) =>
     setPlayers(prev => prev.map((p, idx) => idx === i ? { ...p, [field]: v } : p))
@@ -77,6 +80,8 @@ export default function TeamRegistrationForm({ tournament }: Props) {
     e.preventDefault()
     setError(null)
 
+    if (!consent) { setConsentError(true); return }
+
     const captainFaceit = normalizeUrl(captain.faceit_url)
     const normalizedPlayers = players.map(p => ({ nickname: p.nickname.trim(), faceit_url: normalizeUrl(p.faceit_url) }))
 
@@ -98,6 +103,7 @@ export default function TeamRegistrationForm({ tournament }: Props) {
         players: normalizedPlayers,
         source: 'site',
       },
+      true,
     )
 
     if (err) {
@@ -191,6 +197,13 @@ export default function TeamRegistrationForm({ tournament }: Props) {
               {error}
             </p>
           )}
+
+          <ConsentCheckbox
+            id="tp-team-consent"
+            checked={consent}
+            error={consentError}
+            onChange={v => { setConsent(v); if (v) setConsentError(false) }}
+          />
 
           <button type="submit" disabled={submitting}
                   className="ff-btn ff-btn--primary ff-btn--lg is-pulse"

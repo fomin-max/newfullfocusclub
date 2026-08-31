@@ -16,6 +16,7 @@ interface EventPayload {
   name:       string
   contact:    string
   comment?:   string
+  consent?:   boolean
 }
 
 async function sendTelegram(text: string) {
@@ -36,10 +37,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { event_type, club, date, people, name, contact, comment } = body
+  const { event_type, club, date, people, name, contact, comment, consent } = body
 
   if (!event_type || !club || !name || !contact) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+  }
+
+  if (!consent) {
+    return NextResponse.json({ error: 'Consent required' }, { status: 400 })
   }
 
   const { data, error } = await supabaseAdmin
@@ -52,6 +57,9 @@ export async function POST(req: Request) {
       name,
       contact,
       comment: comment || null,
+      consent: true,
+      consent_at: new Date().toISOString(),
+      consent_source: 'events',
     })
     .select('id')
     .single()

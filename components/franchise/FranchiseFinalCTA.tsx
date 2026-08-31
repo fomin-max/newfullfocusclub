@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
+import ConsentCheckbox from '@/components/ui/ConsentCheckbox'
 
 const CHECKLIST = [
   'Финансовая модель',
@@ -42,15 +43,18 @@ export default function FranchiseFinalCTA() {
   }
 
   const [loading, setLoading] = useState(false)
+  const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState(false)
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!consent) { setConsentError(true); return }
     setLoading(true)
     try {
       await fetch('/api/franchise', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, city, messenger, username: needsUsername ? username : '', source: 'hero' }),
+        body: JSON.stringify({ name, phone, city, messenger, username: needsUsername ? username : '', source: 'hero', consent: true }),
       })
     } finally {
       setLoading(false)
@@ -135,6 +139,12 @@ export default function FranchiseFinalCTA() {
                            value={username} onChange={e => setUsername(e.target.value)} required />
                   </div>
                 )}
+                <ConsentCheckbox
+                  id="fr-cta-consent"
+                  checked={consent}
+                  error={consentError}
+                  onChange={v => { setConsent(v); if (v) setConsentError(false) }}
+                />
                 <div>
                   <button type="submit" disabled={loading}
                           className="ff-btn ff-btn--primary ff-btn--lg ff-btn--block is-pulse">

@@ -90,6 +90,7 @@ export async function submitRegistration(
   participantName: string,
   contactTelegram: string,
   registrationData: Record<string, unknown>,
+  consent = false,
 ): Promise<{ error: string | null }> {
   try {
     const { error } = await supabase
@@ -100,6 +101,9 @@ export async function submitRegistration(
         contact_telegram: contactTelegram,
         registration_data: registrationData,
         status: 'pending',
+        consent,
+        consent_at: consent ? new Date().toISOString() : null,
+        consent_source: 'tournament',
       })
     if (error) {
       console.error('[submitRegistration]', error)

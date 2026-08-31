@@ -87,6 +87,7 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
       <div className="ff-footer__legal">
         <div className="ff-footer__legal-top">
           <a href="/privacy" className="ff-footer__policy">Политика обработки персональных данных</a>
+          <a href="/privacy#cookie" className="ff-footer__policy">Использование файлов cookie</a>
           <CookieSettingsBtn />
           <span className="ff-footer__legal-site">fullfocusclub.ru</span>
         </div>
@@ -98,6 +99,7 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
           <p>ИНН / КПП 7810943662 / 781001001</p>
           <p>ОГРН 1227800036860</p>
           <p>196128, г. Санкт-Петербург, вн.тер.г. муниципальный округ Московская застава, пр-кт Московский, д. 149А, литера А, помещ. 1-Н, раб.м. 1-Ф</p>
+          <p>Реестр операторов ПДн (Роскомнадзор): рег. № 78-25-109259</p>
         </div>
       </div>
     </footer>

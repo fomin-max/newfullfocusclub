@@ -77,7 +77,8 @@ export default function CookieConsent() {
       <p className="ff-cookie__text">
         Мы используем cookies для аналитики и персонализации. Вы можете принять все или настроить
         параметры. Подробнее —&nbsp;
-        <a href="/privacy" className="ff-cookie__link">Политика конфиденциальности</a>.
+        <a href="/privacy" className="ff-cookie__link">Политика конфиденциальности</a> и&nbsp;
+        <a href="/privacy#cookie" className="ff-cookie__link">условия использования файлов cookie</a>.
       </p>
 
       {expanded && (

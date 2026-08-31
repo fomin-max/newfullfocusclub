@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import Icon from '@/components/ui/Icon'
+import ConsentCheckbox from '@/components/ui/ConsentCheckbox'
 import { supabase, submitRegistration, getRegistrations, REGISTRATION_ADDED_EVENT, type Tournament, type TournamentRegistration } from '@/lib/supabase'
 
 interface Props {
@@ -21,6 +22,8 @@ export default function DraftRegistrationForm({ tournament }: Props) {
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone]           = useState(false)
   const [error, setError]         = useState<string | null>(null)
+  const [consent, setConsent]     = useState(false)
+  const [consentError, setConsentError] = useState(false)
 
   const fetchRegistrations = useCallback(async () => {
     const data = await getRegistrations(tournament.id)
@@ -53,6 +56,7 @@ export default function DraftRegistrationForm({ tournament }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!consent) { setConsentError(true); return }
     setSubmitting(true)
     setError(null)
 
@@ -67,6 +71,7 @@ export default function DraftRegistrationForm({ tournament }: Props) {
         faceit: faceit.trim(),
         steam:  steam.trim(),
       },
+      true,
     )
 
     if (err) {
@@ -146,6 +151,13 @@ export default function DraftRegistrationForm({ tournament }: Props) {
               {error}
             </p>
           )}
+
+          <ConsentCheckbox
+            id="tp-draft-consent"
+            checked={consent}
+            error={consentError}
+            onChange={v => { setConsent(v); if (v) setConsentError(false) }}
+          />
 
           <button type="submit" disabled={submitting}
                   className="ff-btn ff-btn--primary ff-btn--lg is-pulse"

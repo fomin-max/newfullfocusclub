@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
+import ConsentCheckbox from '@/components/ui/ConsentCheckbox'
 
 const FORM_TYPES = ['Корпоратив', 'День рождения', 'Закрытый турнир', 'Другое']
 const FORM_CLUBS = [
@@ -41,16 +42,19 @@ export default function EventsForm() {
   const [done,    setDone]    = useState(false)
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState<string | null>(null)
+  const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState(false)
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!consent) { setConsentError(true); return }
     setLoading(true)
     setError(null)
     try {
       const res = await fetch('/api/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event_type: type, club, date, people, name, contact, comment }),
+        body: JSON.stringify({ event_type: type, club, date, people, name, contact, comment, consent: true }),
       })
       if (!res.ok) throw new Error('server')
       setDone(true)
@@ -126,7 +130,13 @@ export default function EventsForm() {
                 </div>
 
                 <div className="ev-form__submit">
-                  {error && <p style={{ color: '#ff6b6b', fontSize: 13, marginBottom: 10, textAlign: 'center' }}>{error}</p>}
+                  <ConsentCheckbox
+                    id="ev-consent"
+                    checked={consent}
+                    error={consentError}
+                    onChange={v => { setConsent(v); if (v) setConsentError(false) }}
+                  />
+                  {error && <p style={{ color: '#ff6b6b', fontSize: 13, margin: '10px 0', textAlign: 'center' }}>{error}</p>}
                   <button type="submit" disabled={loading} className="ff-btn ff-btn--primary ff-btn--lg is-pulse"
                           style={{ width: '100%' }}>
                     {loading ? 'ОТПРАВЛЯЕМ…' : <> ОТПРАВИТЬ ЗАЯВКУ <Icon name="arrowRight" size={15} /></>}
