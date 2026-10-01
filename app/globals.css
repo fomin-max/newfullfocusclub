@@ -509,7 +509,7 @@ body.ff-no-scroll { overflow: hidden; }
 .ff-partners__grid > * { display: flex; }
 .ff-partners__grid > * > .ff-partner { width: 100%; }
 .ff-partner { padding: 28px; display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; }
-.ff-partner__logo { width: 100%; display: flex; align-items: center; justify-content: center; min-height: 80px; border-radius: 10px; overflow: hidden; padding: 12px 16px; background: rgba(8,2,35,0.4); }
+.ff-partner__logo { width: 100%; display: flex; align-items: center; justify-content: center; height: 104px; box-sizing: border-box; border-radius: 10px; overflow: hidden; padding: 12px 16px; background: rgba(8,2,35,0.4); }
 .ff-partner__logo-placeholder { font-family: var(--ff-font-heading); font-size: 14px; font-weight: 700; color: #999; letter-spacing: 0.05em; }
 .ff-partner__name { font-family: var(--ff-font-heading); font-weight: 700; font-size: 18px; letter-spacing: var(--ff-track-heading); text-transform: uppercase; color: var(--ff-softlight); }
 .ff-partner__note { font-family: var(--ff-font-body); font-size: 13px; line-height: 1.5; color: var(--ff-system-fog); margin: 0; max-width: 28ch; }

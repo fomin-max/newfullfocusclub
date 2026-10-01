@@ -5,7 +5,8 @@ import Card from '@/components/ui/Card'
 import Reveal from '@/components/ui/Reveal'
 
 const PARTNERS = [
-  { slug: 'dodo',        name: 'Dodo Pizza', note: 'Пицца с доставкой прямо к игровому месту' },
+  { slug: 'csmoney',     name: 'CS.MONEY',   note: 'Скины CS2 — покупка, продажа и обмен' },
+  { slug: 'dodo',       name: 'Dodo Pizza', note: 'Пицца с доставкой прямо к игровому месту' },
   { slug: 'ketchup',     name: 'Ketchup',    note: 'Рестораны-партнёры — еда и напитки для гостей' },
   { slug: 'gorilla',     name: 'Gorilla',    note: 'Энергетики — топливо для долгой катки' },
   { slug: 'dobry_red',   name: 'Добрый',     note: 'Натуральные соки и нектары для гостей клуба' },
