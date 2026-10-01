@@ -17,6 +17,8 @@ import './tournaments.css'
 
 const media = tournamentMedia()
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'Турниры Full Focus — CS2, Dota 2, Valorant в СПб',
   description:
