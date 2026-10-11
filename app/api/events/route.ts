@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { sendTelegram } from '@/lib/telegram'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -17,16 +18,6 @@ interface EventPayload {
   contact:    string
   comment?:   string
   consent?:   boolean
-}
-
-async function sendTelegram(text: string) {
-  const token = process.env.TELEGRAM_BOOKING_BOT_TOKEN
-  if (!token) return
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: EVENTS_CHAT_ID, text, parse_mode: 'HTML' }),
-  })
 }
 
 export async function POST(req: Request) {
@@ -85,7 +76,7 @@ export async function POST(req: Request) {
     `#мероприятие`,
   ].join('\n')
 
-  await sendTelegram(msg)
+  await sendTelegram(EVENTS_CHAT_ID, msg)
 
   return NextResponse.json({ ok: true, id: data.id })
 }

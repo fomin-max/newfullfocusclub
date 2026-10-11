@@ -11,9 +11,13 @@
                                     ↓
                             Supabase (DB + Storage)
                             Langame API (live seats)
-                            Telegram Bot API
+                            Supabase Edge Function tg-send → Telegram Bot API
                             SMTP reg.ru (franchise leads)
 ```
+
+> С VPS `api.telegram.org` заблокирован на маршруте (с 2026-10-11) — сайт и мониторинг шлют
+> уведомления через Edge Function `tg-send` (Франкфурт), исходник `supabase/functions/tg-send/`.
+> Деплой функции: `supabase functions deploy tg-send` (verify_jwt включён, принимает только service_role).
 
 ---
 
@@ -33,7 +37,7 @@ Server Components, динамические страницы турниров.
 | `NEXT_PUBLIC_SUPABASE_URL` | публичная | клиент + сервер |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | публичная | клиент + сервер |
 | `SUPABASE_SERVICE_ROLE_KEY` | **секрет** | API routes (обход RLS) |
-| `TELEGRAM_BOOKING_BOT_TOKEN` | **секрет** | /api/booking, /api/events, /api/franchise |
+| `TELEGRAM_BOOKING_BOT_TOKEN` | **секрет** | секрет Edge Function `tg-send` в Supabase Dashboard (сайт его больше не использует; в .env остаётся для справки) |
 | `FRANCHISE_CHAT_ID` | **секрет** | /api/franchise |
 | `SMTP_USER` | **секрет** | /api/franchise (nodemailer → reg.ru) |
 | `SMTP_PASS` | **секрет** | /api/franchise (nodemailer → reg.ru) |

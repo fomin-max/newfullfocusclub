@@ -11,6 +11,16 @@
 
 ---
 
+## [Unreleased] — 2026-10-11
+
+### Fixed
+- Форма бронирования отвечала 500 «Ошибка отправки», хотя заявка уже сохранялась в Supabase — с VPS `api.telegram.org` заблокирован, `fetch` к нему падал с исключением без try/catch. Клиенты повторно жали «Отправить» → дубли заявок. То же было в `/api/events`.
+
+### Changed
+- Все Telegram-уведомления (бронь, мероприятия, франшиза) идут через Supabase Edge Function `tg-send` (Франкфурт): общий хелпер `lib/telegram.ts`, функция в `supabase/functions/tg-send/index.ts` (verify_jwt + только role=service_role, токен бота — секрет в Supabase). Сбой уведомления больше не ломает ответ клиенту, таймаут 8 с.
+- `tsconfig.json` — папка `supabase` исключена (Deno-код ломал type-check Next.js).
+- На VPS `/root/monitor_site.sh` — алерты тоже через `tg-send` (бэкап `monitor_site.sh.bak-20261011`).
+
 ## [Unreleased] — 2026-07-07
 
 ### Fixed

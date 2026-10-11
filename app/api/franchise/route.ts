@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import nodemailer from 'nodemailer'
+import { sendTelegram } from '@/lib/telegram'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -19,20 +20,6 @@ interface FranchisePayload {
   comment?:  string
   source?:   string
   consent?:  boolean
-}
-
-async function sendTelegram(text: string) {
-  const token = process.env.TELEGRAM_BOOKING_BOT_TOKEN
-  if (!token || !FRANCHISE_CHAT_ID) return
-  try {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: FRANCHISE_CHAT_ID, text, parse_mode: 'HTML' }),
-    })
-  } catch (err) {
-    console.error('Telegram send error:', err)
-  }
 }
 
 async function sendEmail(subject: string, html: string) {
@@ -129,7 +116,7 @@ export async function POST(req: Request) {
   `
 
   await Promise.all([
-    sendTelegram(tgMsg),
+    sendTelegram(FRANCHISE_CHAT_ID, tgMsg),
     sendEmail(`Заявка на франшизу — ${name}`, emailHtml),
   ])
 
