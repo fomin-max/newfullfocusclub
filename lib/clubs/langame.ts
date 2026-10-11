@@ -8,6 +8,7 @@ export const SLUG_TO_DOMAIN: Record<string, string> = {
   vasilyeostrovsky: 'ff52',
   komendantsky:     '46',
   makhachkala:      'ff52manta',
+  shushary:         'ff52shush',
 }
 
 // slug → Langame club_id (numeric, used in tariff filtering)

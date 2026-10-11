@@ -16,6 +16,7 @@ const CLUB_TG_CHATS: Record<string, string> = {
   sadovaya:         '-1003877995836',
   tekhnologichesky: '-1003345840480',
   makhachkala:      '-1003805879958',
+  shushary:         '-1004363249801',
 }
 
 const CLUB_NAMES: Record<string, string> = {
@@ -26,6 +27,7 @@ const CLUB_NAMES: Record<string, string> = {
   tekhnologichesky: 'Технологический',
   sadovaya:         'Садовая',
   makhachkala:      'Махачкала',
+  shushary:         'Шушары',
 }
 
 const CLUB_TG_ACCOUNTS: Record<string, string> = {
@@ -36,6 +38,7 @@ const CLUB_TG_ACCOUNTS: Record<string, string> = {
   tekhnologichesky: '@fullfocustehno',
   sadovaya:         '@fullfocussadovaya',
   makhachkala:      '@fullfocusmhk',
+  shushary:         '@FullFocusShushary',
 }
 
 interface BookingPayload {

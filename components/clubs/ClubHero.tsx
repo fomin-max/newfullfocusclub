@@ -49,15 +49,17 @@ export default function ClubHero() {
     <section id="hero" className="cl-hero" data-screen-label="01 · HERO">
       <div className="cl-hero__media" ref={mediaRef}>
         {/* Poster as prioritized Image — preloaded by Next.js for fast LCP */}
-        <Image
-          src={CLUB.POSTER_URL}
-          alt={`${CLUB.NAME} — интерьер компьютерного клуба Full Focus`}
-          fill
-          priority
-          sizes="60vw"
-          className="cl-hero__poster"
-        />
-        <video ref={videoRef} className="cl-hero__video" muted loop playsInline preload="none"
+        {CLUB.POSTER_URL && (
+          <Image
+            src={CLUB.POSTER_URL}
+            alt={`${CLUB.NAME} — интерьер компьютерного клуба Full Focus`}
+            fill
+            priority
+            sizes="60vw"
+            className="cl-hero__poster"
+          />
+        )}
+        {CLUB.VIDEO_URL && <video ref={videoRef} className="cl-hero__video" muted loop playsInline preload="none"
                {...(CLUB.VIDEO_URL_DESKTOP ? { 'data-has-desktop': '' } : {})}>
           {CLUB.VIDEO_URL_DESKTOP ? (<>
             <source media="(min-width: 1024px)" src={CLUB.VIDEO_URL_DESKTOP.replace(/\.mp4$/, '.webm')} type="video/webm" />
@@ -65,7 +67,7 @@ export default function ClubHero() {
           </>) : null}
           <source src={CLUB.VIDEO_URL.replace(/\.mp4$/, '.webm')} type="video/webm" />
           <source src={CLUB.VIDEO_URL} type="video/mp4" />
-        </video>
+        </video>}
         <span className="cl-hero__cursor" />
         <div className="cl-hero__media-coord">{mediaStat}</div>
         <div className="cl-hero__media-meta">

@@ -1,11 +1,23 @@
 import type { Metadata } from 'next'
 import type { ClubData, FAQItem } from './types'
 
+const cityOf = (d: ClubData) => d.CLUB.CITY ?? 'Санкт-Петербург'
+
+// «у м. Электросила» или «в посёлке Шушары» для клубов без метро
+const whereOf = (d: ClubData) =>
+  d.CLUB.HAS_METRO === false ? (d.CLUB.LOCATION ?? `в г. ${cityOf(d)}`) : `у м. ${d.CLUB.METRO}`
+
 export function buildMetroFaqItem(d: ClubData): FAQItem {
   const minPrice = Math.min(...d.CLUB_ZONES.map(z => z.priceFrom))
+  if (d.CLUB.HAS_METRO === false) {
+    return {
+      q: `Где находится компьютерный клуб Full Focus ${d.CLUB.NAME}?`,
+      a: `Full Focus — компьютерный клуб и киберспортивная арена ${whereOf(d)}. Адрес: ${d.CLUB.ADDRESS}, ${cityOf(d)}. Работаем круглосуточно, от ${minPrice}₽/час.`,
+    }
+  }
   return {
     q: `Есть ли компьютерный клуб рядом с метро ${d.CLUB.METRO}?`,
-    a: `Да, Full Focus — компьютерный клуб и киберспортивная арена у м. ${d.CLUB.METRO} (${d.CLUB.METRO_TIME}). Адрес: ${d.CLUB.ADDRESS}, Санкт-Петербург. Работаем круглосуточно, от ${minPrice}₽/час.`,
+    a: `Да, Full Focus — компьютерный клуб и киберспортивная арена у м. ${d.CLUB.METRO} (${d.CLUB.METRO_TIME}). Адрес: ${d.CLUB.ADDRESS}, ${cityOf(d)}. Работаем круглосуточно, от ${minPrice}₽/час.`,
   }
 }
 
@@ -20,15 +32,15 @@ export function buildClubSchema(d: ClubData) {
         '@type': ['GameStore', 'EntertainmentBusiness', 'LocalBusiness'],
         '@id': `${baseUrl}#business`,
         name: `Full Focus · ${d.CLUB.NAME}`,
-        description: `Компьютерный клуб и киберспортивная арена Full Focus у м. ${d.CLUB.METRO}. ${d.CLUB_ZONES.length} игровых зон: от PRO ZONE с RTX 5080 до PS5 Lounge. Работаем круглосуточно.`,
-        keywords: `компьютерный клуб, киберспортивный клуб, игровой клуб, компьютерный клуб ${d.CLUB.METRO}, киберспортивный клуб ${d.CLUB.METRO}, компьютерный клуб Санкт-Петербург`,
+        description: `Компьютерный клуб и киберспортивная арена Full Focus ${whereOf(d)}. ${d.CLUB_ZONES.length} игровых зон: от PRO ZONE с RTX 5080 до PS5 Lounge. Работаем круглосуточно.`,
+        keywords: `компьютерный клуб, киберспортивный клуб, игровой клуб, компьютерный клуб ${d.CLUB.METRO}, киберспортивный клуб ${d.CLUB.METRO}, компьютерный клуб ${cityOf(d)}`,
         url: baseUrl,
         telephone: d.CLUB.PHONE.replace(/[^+\d]/g, ''),
         address: {
           '@type': 'PostalAddress',
           streetAddress: d.CLUB.ADDRESS,
-          addressLocality: 'Санкт-Петербург',
-          addressRegion: 'Санкт-Петербург',
+          addressLocality: cityOf(d),
+          addressRegion: d.CLUB.CITY === 'Махачкала' ? 'Республика Дагестан' : 'Санкт-Петербург',
           addressCountry: 'RU',
         },
         geo: {
@@ -42,13 +54,15 @@ export function buildClubSchema(d: ClubData) {
           opens: '00:00',
           closes: '23:59',
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '5.0',
-          reviewCount: d.CLUB.REVIEWS_COUNT_NUM,
-          bestRating: '5',
-          worstRating: '1',
-        },
+        ...(d.CLUB.REVIEWS_COUNT_NUM > 0 && {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '5.0',
+            reviewCount: d.CLUB.REVIEWS_COUNT_NUM,
+            bestRating: '5',
+            worstRating: '1',
+          },
+        }),
         priceRange: `от ${minPrice}₽/час`,
         currenciesAccepted: 'RUB',
         amenityFeature: d.FEATURES.map(f => ({
@@ -73,7 +87,7 @@ export function buildClubSchema(d: ClubData) {
       ...(d.CLUB.VIDEO_URL.startsWith('http') ? [{
         '@type': 'VideoObject',
         name: d.CLUB.VIDEO_TITLE ?? `Full Focus ${d.CLUB.NAME} — обзор компьютерного клуба`,
-        description: d.CLUB.VIDEO_DESC ?? `Видеообзор компьютерного клуба Full Focus у м. ${d.CLUB.METRO}. Игровые зоны, оборудование, атмосфера.`,
+        description: d.CLUB.VIDEO_DESC ?? `Видеообзор компьютерного клуба Full Focus ${whereOf(d)}. Игровые зоны, оборудование, атмосфера.`,
         thumbnailUrl: d.CLUB.POSTER_URL,
         uploadDate: '2025-01-01',
         contentUrl: d.CLUB.VIDEO_URL,
@@ -98,13 +112,13 @@ export function buildClubSchema(d: ClubData) {
 
 export function buildClubMetadata(d: ClubData): Metadata {
   const minPrice = Math.min(...d.CLUB_ZONES.map(z => z.priceFrom))
-  const title       = `Full Focus · ${d.CLUB.NAME} — Компьютерный клуб 24/7 у м. ${d.CLUB.METRO}`
-  const description = `Компьютерный клуб Full Focus у м. ${d.CLUB.METRO}: ${d.CLUB_ZONES.length} игровых зон, RTX 5080, PS5, своя кухня. Киберспортивные турниры и корпоративы. От ${minPrice}₽/час. ${d.CLUB.ADDRESS}, СПб.`
+  const title       = `Full Focus · ${d.CLUB.NAME} — Компьютерный клуб 24/7 ${whereOf(d)}`
+  const description = `Компьютерный клуб Full Focus ${whereOf(d)}: ${d.CLUB_ZONES.length} игровых зон, RTX 5080, PS5, своя кухня. Киберспортивные турниры и корпоративы. От ${minPrice}₽/час. ${d.CLUB.ADDRESS}, ${d.CLUB.CITY ?? 'СПб'}.`
 
   return {
     title,
     description,
-    keywords: `компьютерный клуб ${d.CLUB.METRO}, киберспортивный клуб ${d.CLUB.METRO}, компьютерный клуб Санкт-Петербург, игровой клуб СПб, Full Focus ${d.CLUB.NAME}`,
+    keywords: `компьютерный клуб ${d.CLUB.METRO}, киберспортивный клуб ${d.CLUB.METRO}, компьютерный клуб ${cityOf(d)}, игровой клуб СПб, Full Focus ${d.CLUB.NAME}`,
     metadataBase: new URL('https://fullfocusclub.ru'),
     alternates: { canonical: `/clubs/${d.CLUB.SLUG}` },
     openGraph: {

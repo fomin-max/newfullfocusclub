@@ -8,7 +8,7 @@ const STATIC_ITEMS = [
   <>промокод <em key="c">SITE500</em></>,
   <>Школьникам час за <em key="p">120₽</em> · пн-пт 10:00-16:00</>,
   <>Пригласи друга — играйте бесплатно</>,
-  <>Скоро открытие — <em key="sh">Full Focus Шушары</em></>,
+  <>Мы открылись — <em key="sh">Full Focus Шушары</em> · Вилеровский пер., 6</>,
 ]
 
 function formatTickerDate(iso: string) {

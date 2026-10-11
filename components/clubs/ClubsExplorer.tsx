@@ -145,7 +145,7 @@ export default function ClubsExplorer() {
           <span className="ff-tag">Карта клубов</span>
           <h2 className="ff-section-head__title">Найди свой клуб</h2>
           <p className="ff-section-head__sub">
-            7 локаций в шаговой доступности от метро. Фильтруй по городу и зонам — карта и карточки обновятся.
+            8 локаций в Санкт-Петербурге и Махачкале. Фильтруй по городу и зонам — карта и карточки обновятся.
           </p>
         </Reveal>
 

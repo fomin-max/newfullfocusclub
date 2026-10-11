@@ -33,6 +33,12 @@ const { CLUB, CLUB_ZONES, TARIFFS, ... } = useClubData()
 Данные провайдятся из page.tsx через `<ClubDataProvider data={CLUB_DATA}>`.
 Бронирование провайдится через `<BookingProvider>`.
 
+## Пустые данные (с 2026-10-12)
+- `ClubHero`: нет `POSTER_URL`/`VIDEO_URL` → не рендерит Image/video.
+- `ClubZones`: пустой `image` → карточка без фото.
+- `ClubGallery`: пустой `GALLERY` → секция скрыта. `ClubReviews`: пустой `REVIEWS` → секция скрыта.
+- `Features`: deco-ячейка «ОДИН ИЗ ВОСЬМИ КЛУБОВ FF» — при открытии нового клуба обновлять число.
+
 ## Что НЕ реализовано
 
 - Langame API в LiveMap (сейчас статические mock-данные из data-файла)

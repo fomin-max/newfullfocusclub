@@ -8,4 +8,5 @@ export const ALL_CLUBS: ClubRef[] = [
   { slug: 'sadovaya',         name: 'Садовая',          metro: 'Садовая',          color: '#8E479B', addr: 'Ул. Казанская, 33' },
   { slug: 'tekhnologichesky', name: 'Технологический',  metro: 'Технологический',  color: '#E4171B', addr: '3-я Красноармейская, 10' },
   { slug: 'makhachkala',      name: 'Махачкала',        metro: 'Центр города',     color: '#888888', addr: 'Ул. Манташева, 107Б' },
+  { slug: 'shushary',         name: 'Шушары',           metro: 'ЖК «Юнион»',       color: '#888888', addr: 'Вилеровский пер., 6' },
 ]

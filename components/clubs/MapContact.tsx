@@ -91,6 +91,7 @@ const CLUB_PAGES: Record<string, string> = {
   sadovaya:         '/clubs/sadovaya',
   tekhnologichesky: '/clubs/tekhnologichesky',
   makhachkala:      '/clubs/makhachkala',
+  shushary:         '/clubs/shushary',
 }
 
 const CLUB_ZONES: Record<string, string[]> = {
@@ -101,6 +102,7 @@ const CLUB_ZONES: Record<string, string[]> = {
   sadovaya:         ['PRO', 'MAX', 'BOOTCAMP', 'DUO', 'LOUNGE'],
   tekhnologichesky: ['PRO', 'MAX', 'BOOTCAMP', 'LOUNGE'],
   makhachkala:      ['BOOTCAMP', 'QUADRO', 'TRIO', 'DUO', 'SOLO', 'LOUNGE'],
+  shushary:         ['PRO', 'BOOTCAMP', 'QUADRO', 'TRIO', 'DUO', 'SOLO', 'LOUNGE'],
 }
 
 function RouteDropdown({ lat, lng, yandexUrl, slug }: { lat: number; lng: number; yandexUrl: string; slug: string }) {

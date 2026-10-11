@@ -6,7 +6,7 @@ import Icon from '@/components/ui/Icon'
 
 const FACTS = [
   { icon: 'users'   as const, val: 'До 80 человек',   lbl: 'Вместимость флагмана' },
-  { icon: 'trophy'  as const, val: '7 клубов сети',   lbl: 'Площадки в СПб и Махачкале' },
+  { icon: 'trophy'  as const, val: '8 клубов сети',   lbl: 'Площадки в СПб и Махачкале' },
   { icon: 'bolt'    as const, val: 'Под ключ',         lbl: 'Берём всю организацию на себя' },
 ]
 

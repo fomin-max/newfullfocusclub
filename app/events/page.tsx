@@ -20,7 +20,7 @@ const eventsProof      = eventsProofMedia()
 export const metadata: Metadata = {
   title: 'Мероприятия в Full Focus — Корпоративы, дни рождения, турниры',
   description:
-    'Организуем корпоратив, день рождения или закрытый турнир в компьютерном клубе Full Focus под ключ. Кейтеринг, ведущий, трансляция, призы. До 80 человек. 7 клубов в СПб и Махачкале.',
+    'Организуем корпоратив, день рождения или закрытый турнир в компьютерном клубе Full Focus под ключ. Кейтеринг, ведущий, трансляция, призы. До 80 человек. 8 клубов в СПб и Махачкале.',
   metadataBase: new URL('https://fullfocusclub.ru'),
   alternates: { canonical: '/events' },
   openGraph: {
@@ -49,7 +49,7 @@ const schemaOrg = {
       '@type': 'EventReservation',
       name: 'Мероприятия в Full Focus Club',
       description:
-        'Корпоративы, дни рождения, закрытые турниры — организуем под ключ в 7 клубах Full Focus.',
+        'Корпоративы, дни рождения, закрытые турниры — организуем под ключ в 8 клубах Full Focus.',
       url: 'https://fullfocusclub.ru/events',
     },
   ],

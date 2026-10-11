@@ -53,7 +53,7 @@ export default function FranchiseHero() {
           </Reveal>
           <Reveal delay={360}>
             <div className="ff-hero__strip">
-              <span>7 клубов</span>
+              <span>8 клубов</span>
               <span>Санкт-Петербург &amp; Махачкала</span>
               <span>С 2022 года</span>
               <span>Собственная IT-экосистема</span>

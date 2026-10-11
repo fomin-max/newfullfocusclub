@@ -12,6 +12,7 @@ const CLUB_SLUGS = [
   'prosvescheniya',
   'sadovaya',
   'makhachkala',
+  'shushary',
 ]
 
 const STATIC_ROUTES: MetadataRoute.Sitemap = [

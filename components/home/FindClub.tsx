@@ -97,7 +97,7 @@ export default function FindClub() {
         <Reveal className="ff-section-head">
           <span className="ff-tag">Карта клубов</span>
           <h2 className="ff-section-head__title">Найди свой клуб</h2>
-          <p className="ff-section-head__sub">7 локаций в шаговой доступности от метро. Открыто 24/7.</p>
+          <p className="ff-section-head__sub">8 локаций в СПб и Махачкале. Открыто 24/7.</p>
         </Reveal>
 
         <Reveal>

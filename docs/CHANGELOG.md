@@ -11,6 +11,23 @@
 
 ---
 
+## [Unreleased] — 2026-10-12 — открытие клуба Шушары
+
+### Added
+- Страница `/clubs/shushary` (`lib/clubs/shushary.ts`, `app/clubs/shushary/`): 20 ПК (PRO 5, BOOTCAMP 5, QUADRO 4, TRIO 3, DUO 2, SOLO 1) + 3 PS5 LOUNGE, железо и прайс по материалам клиента. Langame `ff52shush` (тарифы live), TG-чат броней, контакты клуба, ориентир ЖК «Юнион» (метро рядом нет).
+- Шушары в `ALL_CLUBS`, `CLUB_PAGES`/`CLUB_ZONES` (MapContact), sitemap, booking route.
+- `ClubMeta.CITY` / `ClubMeta.LOCATION` — город и локация для клубов без метро.
+
+### Changed
+- «7 клубов» → «8» по всему сайту (meta, hero, FAQ, events, franchise, агрегатор, bento «один из восьми»).
+- Убраны «Скоро открытие» (тикер, футер, карточки, карта): `comingSoon` снят с Шушар, механизм оставлен для будущих клубов.
+- «Стандартный тариф (PRO ZONE) — от 140₽/час» (было 170) в FAQ главной и `/clubs`; формулировки «все клубы у метро» исправлены.
+- Махачкала: убрано «QUADRO ROOM — только здесь» (теперь есть и в Шушарах), FAQ про QUADRO приведён к реальному железу.
+- `ClubHero`/`ClubZones` не рендерят пустые медиа, `ClubReviews` скрывается без отзывов.
+
+### SEO
+- `schema.ts`: для клубов без метро — FAQ «Где находится…» вместо «рядом с метро…», title/description «в посёлке Шушары», `addressLocality` из `CITY` (у Махачкалы был «Санкт-Петербург»). `aggregateRating` не выводится при 0 отзывах.
+
 ## [Unreleased] — 2026-10-11
 
 ### Fixed

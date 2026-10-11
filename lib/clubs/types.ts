@@ -31,6 +31,10 @@ export interface ClubMeta {
   SLUG: string
   ADDRESS: string
   HAS_METRO?: boolean
+  /** Город для адреса и schema.org; по умолчанию Санкт-Петербург */
+  CITY?: string
+  /** Где находится клуб, если рядом нет метро: «в посёлке Шушары» */
+  LOCATION?: string
   METRO: string
   METRO_COLOR: string
   METRO_TIME: string

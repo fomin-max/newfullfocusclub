@@ -29,7 +29,7 @@ export default function ClubZones() {
                      className={['cl-zonecard', z.flagship && 'cl-zonecard--flagship', z.wide && 'cl-zonecard--wide'].filter(Boolean).join(' ')}
                      style={{ '--zone-accent': z.accent } as React.CSSProperties}>
               <div className="cl-zonecard__media">
-                <Image src={z.image} alt={z.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                {z.image && <Image src={z.image} alt={z.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />}
                 <span className="cl-zonecard__idx">0{i + 1} / 0{CLUB_ZONES.length}</span>
               </div>
               {z.badge && <span className="cl-zonecard__badge">{z.flagship ? '★ ' : ''}{z.badge}</span>}

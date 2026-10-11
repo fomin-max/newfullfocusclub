@@ -13,13 +13,13 @@ import { ALL_CLUBS } from '@/lib/clubs/shared'
 import './clubs-agg.css'
 
 export const metadata: Metadata = {
-  title: 'Клубы Full Focus — 7 киберспортивных клубов в СПб и Махачкале',
-  description: 'Все клубы сети Full Focus: 7 локаций в Санкт-Петербурге и Махачкале. RTX 5080, PS5, круглосуточно. Карта, метро, зоны и онлайн-бронирование.',
+  title: 'Клубы Full Focus — 8 киберспортивных клубов в СПб и Махачкале',
+  description: 'Все клубы сети Full Focus: 8 локаций в Санкт-Петербурге и Махачкале. RTX 5080, PS5, круглосуточно. Карта, метро, зоны и онлайн-бронирование.',
   keywords: 'компьютерный клуб Санкт-Петербург, киберспортивный клуб СПб, игровой клуб рядом с метро',
   metadataBase: new URL('https://fullfocusclub.ru'),
   alternates: { canonical: '/clubs' },
   openGraph: {
-    title: 'Клубы Full Focus — 7 локаций в СПб и Махачкале',
+    title: 'Клубы Full Focus — 8 локаций в СПб и Махачкале',
     description: 'Full Focus — компьютерные клубы и киберспортивные арены в СПб и Махачкале. RTX 5080, PS5, 24/7.',
     url: 'https://fullfocusclub.ru/clubs',
     siteName: 'Full Focus Club',
@@ -44,7 +44,7 @@ const schemaOrg = {
     {
       '@type': 'ItemList',
       name: 'Клубы сети Full Focus',
-      description: '7 компьютерных клубов Full Focus в Санкт-Петербурге и Махачкале',
+      description: '8 компьютерных клубов Full Focus в Санкт-Петербурге и Махачкале',
       url: `${BASE}/clubs`,
       numberOfItems: ALL_CLUBS.length,
       itemListElement: ALL_CLUBS.map((c, i) => ({

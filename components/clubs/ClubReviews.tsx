@@ -34,6 +34,9 @@ export default function ClubReviews() {
   const bottom = REVIEWS.slice(half)
   const reviewUrl = yandexReviewUrl(CLUB.ROUTE_URL)
 
+  // Новый клуб: пока нет реальных отзывов — секцию не показываем
+  if (REVIEWS.length === 0) return null
+
   return (
     <section id="reviews" className="ff-section" data-screen-label="08 · ОТЗЫВЫ">
       <div className="ff-section__inner">

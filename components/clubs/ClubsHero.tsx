@@ -55,7 +55,7 @@ export default function ClubsHero() {
         </Reveal>
         <Reveal delay={80}>
           <h1 className="cla-hero__title">
-            7 КЛУБОВ<br />В ДВУХ <span className="brand">ГОРОДАХ</span>
+            8 КЛУБОВ<br />В ДВУХ <span className="brand">ГОРОДАХ</span>
           </h1>
         </Reveal>
         <Reveal delay={150}>
