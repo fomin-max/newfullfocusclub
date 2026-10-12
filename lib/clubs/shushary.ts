@@ -1,10 +1,9 @@
 import type { ClubData, ClubMeta, ClubZone, ClubTariffs, Feature, FloorPlan, Review, FAQItem, EventItem } from './types'
 import { ALL_CLUBS } from './shared'
-import { clubMedia } from '@/lib/cdn'
 
-// TODO(shushary): своих фото/видео пока нет — временно постер и фото зон других клубов.
-// Когда снимут — залить на CDN в clubs/shushary/ и перейти на clubMedia('shushary').
-const placeholder = clubMedia('makhachkala')
+// Свои фото лежат в public/clubs/shushary (CDN-ключи не работают — не через clubMedia).
+// TODO(shushary): фото по зонам пока нет — в карточках зон временно фото других клубов.
+const media = (rel: string) => `/clubs/shushary/${rel}`
 
 const CLUB: ClubMeta = {
   NAME: 'Шушары',
@@ -24,8 +23,8 @@ const CLUB: ClubMeta = {
   ROUTE_URL: 'https://yandex.ru/maps/?rtext=~59.811180,30.364321&rtt=auto',
   COORDS: '59.811° N · 30.364° E',
   VIDEO_URL: '',
-  POSTER_URL: placeholder.poster,
-  GALLERY: [],
+  POSTER_URL: media('hero-poster.jpg'),
+  GALLERY: [1, 2, 3, 4, 5, 6].map(i => media(`gallery/0${i}.jpg`)),
   REVIEWS_COUNT: 'новый клуб',
   REVIEWS_COUNT_NUM: 0,
   GEO: { lat: 59.811180, lng: 30.364321 },

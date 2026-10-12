@@ -6,6 +6,7 @@ import { useClubData } from './ClubDataContext'
 import { useBooking } from './BookingContext'
 import type { LiveSeat } from '@/lib/clubs/langame'
 import type { FloorPOIIcon } from '@/lib/clubs/types'
+import { placesWord } from '@/lib/utils'
 
 const POI_ICON: Record<FloorPOIIcon, string> = {
   wc:       '🚻',
@@ -229,7 +230,7 @@ export default function LiveMap() {
         <Reveal delay={200}>
           <div className="cl-live__count">
             <strong>{freeCount}</strong>
-            <em>из <strong>{totalCount}</strong> мест свободно сейчас</em>
+            <em>из <strong>{totalCount}</strong> {placesWord(totalCount, true)} свободно сейчас</em>
             {!loading && seats.length === 0 && (
               <div className="cl-live__action">
                 <button

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useClubData } from './ClubDataContext'
 import { useBooking } from './BookingContext'
+import { seatsLabel } from '@/lib/utils'
 
 // 30-min slots 10:00 → 08:00 (next day), 45 entries
 const SLOTS: string[] = Array.from({ length: 45 }, (_, i) => {
@@ -311,7 +312,7 @@ function BookingModal() {
               {CLUB_ZONES.map(z => (
                 <button key={z.id} className={`cl-modal__zone ${zone === z.id ? 'is-on' : ''}`} onClick={() => setZone(z.id)}>
                   <strong>{z.name}</strong>
-                  <span>от {z.priceFrom} ₽/час · {z.seats} мест</span>
+                  <span>от {z.priceFrom} ₽/час · {seatsLabel(z.seats)}</span>
                 </button>
               ))}
             </div>

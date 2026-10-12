@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useClubData } from './ClubDataContext'
+import { seatsLabel } from '@/lib/utils'
 
 const scrollToLive = () =>
   document.getElementById('live')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -36,7 +37,7 @@ export default function ClubZones() {
               <div className="cl-zonecard__body">
                 <h3 className="cl-zonecard__name">{z.name}</h3>
                 <div className="cl-zonecard__meta">
-                  <span><strong>{z.seats}</strong> мест</span>
+                  <span><strong>{z.seats}</strong>{seatsLabel(z.seats).slice(String(z.seats).length)}</span>
                   {z.priceFrom > 0 && <span>от <em>{z.priceFrom} ₽</em>/{z.priceUnit ?? 'час'}</span>}
                 </div>
                 <p className="cl-zonecard__desc">{z.desc}</p>
