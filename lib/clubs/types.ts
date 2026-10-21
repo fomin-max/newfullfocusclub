@@ -75,6 +75,8 @@ export interface ClubZone {
   image: string
   cta: string
   ctaHref?: string
+  /** Фото зоны для лайтбокса — добавляет кнопку «ФОТО» */
+  photos?: string[]
   flagship: boolean
   wide: boolean
   badge?: string
@@ -115,6 +117,10 @@ export interface Feature {
   tag: string | null
   icon: string | null
   note: string | null
+  /** Фото, открываемые в лайтбоксе по клику на карточку */
+  photos?: string[]
+  /** Подпись кнопки, напр. «СМОТРЕТЬ МЕНЮ»; по умолчанию «СМОТРЕТЬ ФОТО» */
+  photosLabel?: string
 }
 
 export interface Seat {

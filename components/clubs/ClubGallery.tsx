@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import Image from 'next/image'
 import Reveal from '@/components/ui/Reveal'
 import { useClubData } from './ClubDataContext'
+import Lightbox from './Lightbox'
 
 function distributeColumns(ratios: (number | null)[], count: number): number[][] {
   const cols: number[][] = Array.from({ length: count }, () => [])
@@ -22,7 +23,6 @@ export default function ClubGallery() {
   const [lightbox, setLightbox] = useState<number | null>(null)
   const [ratios, setRatios] = useState<(number | null)[]>(() => photos.map(() => null))
   const [colCount, setColCount] = useState(3)
-  const touchStartX = useRef<number | null>(null)
 
   useEffect(() => {
     const update = () => setColCount(window.innerWidth <= 640 ? 1 : window.innerWidth <= 1024 ? 2 : 3)
@@ -43,28 +43,6 @@ export default function ClubGallery() {
   )
 
   const close = useCallback(() => setLightbox(null), [])
-  const prev  = useCallback(() => setLightbox(i => i !== null ? (i - 1 + photos.length) % photos.length : null), [photos.length])
-  const next  = useCallback(() => setLightbox(i => i !== null ? (i + 1) % photos.length : null), [photos.length])
-
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX }
-  const onTouchEnd   = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return
-    const dx = e.changedTouches[0].clientX - touchStartX.current
-    if (Math.abs(dx) > 50) dx < 0 ? next() : prev()
-    touchStartX.current = null
-  }
-
-  useEffect(() => {
-    if (lightbox === null) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape')     close()
-      if (e.key === 'ArrowLeft')  prev()
-      if (e.key === 'ArrowRight') next()
-    }
-    window.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
-  }, [lightbox, close, prev, next])
 
   if (photos.length === 0) return null
 
@@ -112,19 +90,8 @@ export default function ClubGallery() {
       </section>
 
       {lightbox !== null && (
-        <div className="cl-lb" role="dialog" aria-modal="true"
-             onClick={close} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <button className="cl-lb__close" onClick={close} aria-label="Закрыть">×</button>
-          <button className="cl-lb__arrow cl-lb__arrow--prev" aria-label="Предыдущее фото"
-                  onClick={e => { e.stopPropagation(); prev() }}>‹</button>
-          <div className="cl-lb__img" onClick={e => e.stopPropagation()}>
-            <Image src={photos[lightbox]} alt={`${CLUB.NAME} — фото ${lightbox + 1}`}
-                   fill sizes="100vw" style={{ objectFit: 'contain' }} priority />
-          </div>
-          <button className="cl-lb__arrow cl-lb__arrow--next" aria-label="Следующее фото"
-                  onClick={e => { e.stopPropagation(); next() }}>›</button>
-          <div className="cl-lb__counter">{lightbox + 1} / {photos.length}</div>
-        </div>
+        <Lightbox photos={photos} index={lightbox} alt={CLUB.NAME}
+                  onIndex={setLightbox} onClose={close} />
       )}
     </>
   )

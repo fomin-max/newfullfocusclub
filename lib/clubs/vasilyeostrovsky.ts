@@ -4,6 +4,8 @@ import { clubMedia } from '@/lib/cdn'
 
 const media = clubMedia('vasilyeostrovsky')
 
+const BILLIARD_PHOTOS = [1, 2, 3].map(i => `/clubs/vasilyeostrovsky/billiard/0${i}.jpg`)
+
 const CLUB: ClubMeta = {
   NAME: 'Василеостровская',
   SLUG: 'vasilyeostrovsky',
@@ -78,7 +80,8 @@ const CLUB_ZONES: ClubZone[] = [
     specShort: 'PS5 · 65" OLED · отдельный этаж', image: '/clubs/vasilyeostrovsky/zones/ps5vip.jpg', cta: 'ЗАБРОНИРОВАТЬ', flagship: false, wide: false },
   { id: 'billiard', name: 'БИЛЬЯРД',     accent: '#6632FA', seats: 4,  priceFrom: 10, priceUnit: 'мин',
     desc: 'Стол американка — платишь только за время игры. Перерыв между катками или отдельная сессия.',
-    specShort: 'Стол американка · оплата по факту', image: '/clubs/vasilyeostrovsky/features/billiard.jpg', cta: 'ЗАНЯТЬ СТОЛ', flagship: false, wide: false },
+    specShort: 'Стол американка · оплата по факту', image: '/clubs/vasilyeostrovsky/billiard/01.jpg', cta: 'ЗАНЯТЬ СТОЛ',
+    photos: BILLIARD_PHOTOS, flagship: false, wide: false },
   { id: 'poker',   name: 'ПОКЕР',        accent: '#6632FA', seats: 'до 30',  priceFrom: 0,
     desc: 'Игры проводятся несколько раз в неделю. Расписание и запись — в Telegram-канале клуба.',
     specShort: 'Спортивный покер · несколько раз в неделю', image: '/clubs/vasilyeostrovsky/features/poker.jpg', cta: 'ЗАПИСАТЬСЯ В TELEGRAM', ctaHref: 'https://t.me/PulsePoker_SPb_bot', flagship: false, wide: false },
@@ -169,10 +172,12 @@ const FEATURES: Feature[] = [
     image: '/clubs/vasilyeostrovsky/features/arena.jpg', tag: 'Флагман', icon: null, note: null },
   { id: 'kitchen',   size: 'wide',  name: 'СВОЯ КУХНЯ',
     desc: 'Хот-доги, горячие блюда и охлаждённое пиво — не отрываясь от матча.',
-    icon: null, image: '/clubs/vasilyeostrovsky/features/kitchen.jpg', tag: null, note: null },
+    icon: null, image: '/clubs/vasilyeostrovsky/features/kitchen.jpg', tag: null, note: null,
+    photos: ['/clubs/vasilyeostrovsky/menu.jpg'], photosLabel: 'СМОТРЕТЬ МЕНЮ' },
   { id: 'billiard',  size: 'small', name: 'БИЛЬЯРД',
     desc: 'Стол американка Dynamic III — как на профессиональных турнирах.',
-    icon: null, image: '/clubs/vasilyeostrovsky/features/billiard.jpg', tag: null, note: null },
+    icon: null, image: '/clubs/vasilyeostrovsky/billiard/01.jpg', tag: null, note: null,
+    photos: BILLIARD_PHOTOS },
   { id: 'poker',     size: 'small', name: 'СПОРТИВНЫЙ ПОКЕР',
     desc: 'Турниры в формате спортивных соревнований — стратегия и атмосфера.',
     note: '* Мероприятие проводится в формате спортивных соревнований, не является азартной игрой.',

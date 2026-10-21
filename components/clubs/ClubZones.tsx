@@ -3,14 +3,17 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useClubData } from './ClubDataContext'
+import Lightbox from './Lightbox'
+import type { ClubZone } from '@/lib/clubs/types'
 import { seatsLabel } from '@/lib/utils'
 
 const scrollToLive = () =>
   document.getElementById('live')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
 export default function ClubZones() {
-  const { CLUB_ZONES } = useClubData()
+  const { CLUB, CLUB_ZONES } = useClubData()
   const [openGames, setOpenGames] = useState<string | null>(null)
+  const [photos, setPhotos] = useState<{ z: ClubZone; i: number } | null>(null)
 
   return (
     <section id="zones" className="cl-zones" data-screen-label="03 · ZONES">
@@ -74,12 +77,22 @@ export default function ClubZones() {
                       {z.cta} →
                     </button>
                   )}
+                  {z.photos && z.photos.length > 0 && (
+                    <button className="ff-btn ff-btn--ghost" onClick={() => setPhotos({ z, i: 0 })}>
+                      ФОТО{z.photos.length > 1 ? ` · ${z.photos.length}` : ''}
+                    </button>
+                  )}
                 </div>
               </div>
             </article>
           )
         })}
       </div>
+
+      {photos && (
+        <Lightbox photos={photos.z.photos!} index={photos.i} alt={`${CLUB.NAME} — ${photos.z.name.toLowerCase()}`}
+                  onIndex={i => setPhotos({ z: photos.z, i })} onClose={() => setPhotos(null)} />
+      )}
     </section>
   )
 }
