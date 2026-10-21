@@ -86,6 +86,7 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
       <div className="ff-footer__legal">
         <div className="ff-footer__legal-top">
           <a href="/privacy" className="ff-footer__policy">Политика обработки персональных данных</a>
+          <a href="/consent" className="ff-footer__policy">Согласие на обработку персональных данных</a>
           <a href="/privacy#cookie" className="ff-footer__policy">Использование файлов cookie</a>
           <CookieSettingsBtn />
           <span className="ff-footer__legal-site">fullfocusclub.ru</span>

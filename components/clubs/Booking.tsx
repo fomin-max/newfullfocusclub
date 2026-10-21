@@ -211,6 +211,8 @@ function BookingModal() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [agree,      setAgree]      = useState(false)
   const [agreeError, setAgreeError] = useState(false)
+  const [consent,      setConsent]      = useState(false)
+  const [consentError, setConsentError] = useState(false)
   type ZonePricing = { hourly: number; perMin: number; packages: Record<number, number> }
   type ByZone = Record<string, { weekday: ZonePricing; weekend: ZonePricing }>
   const [tariffs, setTariffs] = useState<ByZone>({})
@@ -232,6 +234,8 @@ function BookingModal() {
       setSubmitError(null)
       setAgree(false)
       setAgreeError(false)
+      setConsent(false)
+      setConsentError(false)
       const today = todayStr()
       if (!date) setDate(today)
       const firstSlot = availableSlots(date || today)[0] ?? null
@@ -396,13 +400,28 @@ function BookingModal() {
               />
               <span>
                 Я ознакомлен и согласен с{' '}
-                <a href="/rules" target="_blank" rel="noopener">правилами посещения</a>,
-                прайс-листом и{' '}
-                <a href="/privacy" target="_blank" rel="noopener">политикой обработки персональных данных</a>
+                <a href="/rules" target="_blank" rel="noopener">правилами посещения</a>{' '}
+                и прайс-листом
               </span>
             </label>
             {agreeError && (
               <span className="cl-field__error">Отметьте согласие, чтобы продолжить</span>
+            )}
+            <label className={`cl-agree${consentError ? ' is-error' : ''}`}>
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={e => { setConsent(e.target.checked); if (e.target.checked) setConsentError(false) }}
+              />
+              <span>
+                Я даю{' '}
+                <a href="/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a>{' '}
+                и подтверждаю ознакомление с{' '}
+                <a href="/privacy" target="_blank" rel="noopener">политикой обработки персональных данных</a>
+              </span>
+            </label>
+            {consentError && (
+              <span className="cl-field__error">Отметьте согласие на обработку персональных данных</span>
             )}
             {submitError && (
               <p className="cl-modal__error">{submitError}</p>
@@ -413,7 +432,11 @@ function BookingModal() {
                 className="ff-btn ff-btn--primary is-pulse"
                 disabled={loading || !name || !contact || !/^[\+\d\s\-\(\)@a-zA-Z0-9_\.]+$/.test(contact)}
                 onClick={async () => {
-                  if (!agree) { setAgreeError(true); return }
+                  if (!agree || !consent) {
+                    setAgreeError(!agree)
+                    setConsentError(!consent)
+                    return
+                  }
                   setLoading(true)
                   setSubmitError(null)
                   try {

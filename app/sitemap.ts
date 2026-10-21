@@ -26,6 +26,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: `${BASE}/franchise`,         lastModified: LAST_MOD, changeFrequency: 'monthly', priority: 0.80 },
   { url: `${BASE}/rules`,             lastModified: '2026-08-31', changeFrequency: 'yearly', priority: 0.40 },
   { url: `${BASE}/privacy`,           lastModified: LAST_MOD, changeFrequency: 'yearly',  priority: 0.30 },
+  { url: `${BASE}/consent`,           lastModified: '2026-10-21', changeFrequency: 'yearly', priority: 0.30 },
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

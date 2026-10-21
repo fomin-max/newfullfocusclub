@@ -21,9 +21,10 @@ export default function ConsentCheckbox({ checked, onChange, error, id = 'ff-con
         onChange={e => onChange(e.target.checked)}
       />
       <span>
-        Я даю согласие на обработку моих персональных данных в соответствии с{' '}
-        <a href="/privacy" target="_blank" rel="noopener">Политикой обработки персональных данных</a>{' '}
-        и подтверждаю ознакомление с ней.
+        Я даю{' '}
+        <a href="/consent" target="_blank" rel="noopener">согласие на обработку персональных данных</a>{' '}
+        и подтверждаю ознакомление с{' '}
+        <a href="/privacy" target="_blank" rel="noopener">Политикой обработки персональных данных</a>.
       </span>
     </label>
   )
