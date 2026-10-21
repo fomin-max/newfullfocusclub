@@ -1,0 +1,105 @@
+.bk {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--ff-grad-radial) center -240px / 900px 600px no-repeat, var(--ff-deep-memory);
+  color: var(--ff-softlight);
+}
+.bk-wrap { max-width: 520px; margin: 0 auto; padding: 28px 16px 56px; }
+
+.bk-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 40px; }
+.bk-logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--ff-font-display);
+  font-size: 17px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--ff-softlight); text-decoration: none;
+}
+.bk-logo svg { color: var(--ff-glitch-core); filter: drop-shadow(0 0 8px rgba(102,50,250,0.6)); }
+.bk-back {
+  font-family: var(--ff-font-heading); font-weight: 700;
+  font-size: 12px; letter-spacing: var(--ff-track-button);
+  text-transform: uppercase; color: var(--ff-system-fog);
+  text-decoration: none; transition: color 160ms;
+}
+.bk-back:hover { color: var(--ff-neon-bloom); }
+
+.bk-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--ff-font-heading); font-weight: 600;
+  font-size: 12px; letter-spacing: var(--ff-track-label);
+  text-transform: uppercase; color: var(--ff-neon-bloom);
+  margin-bottom: 12px;
+}
+.bk-tag::before { content: ""; width: 16px; height: 1px; background: var(--ff-neon-bloom); }
+
+.bk h1 {
+  font-family: var(--ff-font-heading); font-weight: 700;
+  font-size: clamp(28px, 8vw, 40px); line-height: 1.05;
+  letter-spacing: var(--ff-track-heading); text-transform: uppercase;
+  margin: 0 0 10px;
+}
+.bk-sub { font-family: var(--ff-font-body); font-size: 14px; line-height: 1.5; color: var(--ff-system-fog); margin: 0 0 28px; }
+
+.bk-list { display: flex; flex-direction: column; gap: 10px; list-style: none; margin: 0; padding: 0; }
+
+/* Кнопка-строка: и клуб в списке, и способ брони */
+.bk-item {
+  display: flex; align-items: center; gap: 14px;
+  min-height: 68px; padding: 14px 16px;
+  background: var(--ff-surface);
+  border: 1px solid var(--ff-white-10);
+  border-radius: 14px;
+  color: var(--ff-softlight); text-decoration: none;
+  transition: border-color 160ms, background 160ms, transform 160ms;
+}
+.bk-item:hover { border-color: var(--ff-glitch-core-soft); background: var(--ff-surface-elev); }
+.bk-item:active { transform: scale(0.985); }
+.bk-item__body { flex: 1; min-width: 0; }
+.bk-item__title {
+  display: block;
+  font-family: var(--ff-font-heading); font-weight: 700;
+  font-size: 16px; letter-spacing: 0.02em; text-transform: uppercase;
+}
+.bk-item__meta {
+  display: block; margin-top: 3px;
+  font-family: var(--ff-font-body); font-size: 13px; color: var(--ff-system-fog);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bk-item__arrow { color: var(--ff-white-40); flex-shrink: 0; transition: color 160ms, transform 160ms; }
+.bk-item:hover .bk-item__arrow { color: var(--ff-neon-bloom); transform: translateX(3px); }
+
+.bk-item__icon {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--ff-glitch-core-wash); color: var(--ff-softlight);
+}
+.bk-metro { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; background: var(--metro-color); box-shadow: 0 0 10px var(--metro-color); }
+
+/* Главный способ — бронь на сайте */
+/* border-box: иначе градиент повторяется под прозрачной рамкой и по краям видны полоски */
+.bk-item--primary { background: var(--ff-grad-linear) border-box; border-color: transparent; color: var(--ff-deep-memory); }
+.bk-item--primary:hover { background: var(--ff-grad-linear) border-box; border-color: transparent; filter: brightness(1.08); }
+.bk-item--primary .bk-item__meta { color: rgba(8, 2, 35, 0.72); }
+.bk-item--primary .bk-item__icon { background: rgba(8, 2, 35, 0.16); color: var(--ff-deep-memory); }
+.bk-item--primary .bk-item__arrow,
+.bk-item--primary:hover .bk-item__arrow { color: var(--ff-deep-memory); }
+
+.bk-group { margin: 28px 0 10px; font-family: var(--ff-font-heading); font-weight: 600; font-size: 12px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: var(--ff-system-fog); }
+.bk-group:first-of-type { margin-top: 0; }
+
+.bk-foot { margin-top: 32px; text-align: center; font-family: var(--ff-font-body); font-size: 13px; color: var(--ff-system-fog-deep); }
+.bk-foot a { color: var(--ff-system-fog); }
+
+/* /links — переключатель города, отступ блока «Ещё», сноска про Meta */
+.bk-cities { display: flex; gap: 4px; padding: 3px; border: 1px solid var(--ff-white-10); border-radius: 999px; }
+.bk-cities a {
+  padding: 6px 10px; border-radius: 999px;
+  font-family: var(--ff-font-heading); font-weight: 700;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ff-system-fog); text-decoration: none; white-space: nowrap;
+  transition: color 160ms, background 160ms;
+}
+.bk-cities a:hover { color: var(--ff-softlight); }
+.bk-cities a[aria-current="page"] { background: var(--ff-glitch-core); color: var(--ff-softlight); }
+.bk-group--gap { margin-top: 28px !important; }
+.bk-note { margin: 28px 0 0; font-family: var(--ff-font-body); font-size: 11px; line-height: 1.5; color: var(--ff-system-fog-deep); }
+.bk-item__logo { display: block; width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; }

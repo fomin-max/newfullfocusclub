@@ -17,7 +17,7 @@ const CLUBS = AGG_CLUBS.map(c => ({
   color: c.color,
   zones: c.zones,
   comingSoon: c.comingSoon,
-  href: c.comingSoon ? 'https://t.me/fullfocusclubru?direct' : (c.slug ? `/clubs/${c.slug}` : 'https://t.me/fullfocusclub'),
+  href: c.comingSoon ? 'https://t.me/fullfocusclubru?direct' : (c.slug ? `/clubs/${c.slug}` : 'https://t.me/fullfocusclubru'),
 }))
 
 function ClubCard({ c, setActive }: { c: typeof CLUBS[0]; setActive: (id: string | null) => void }) {

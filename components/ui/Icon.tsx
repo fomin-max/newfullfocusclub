@@ -8,7 +8,7 @@ export type IconName =
   | 'speakers' | 'route' | 'map' | 'leaf'
   | 'broadcast' | 'check' | 'mic' | 'award' | 'info' | 'swords'
   | 'camera' | 'list' | 'ruble' | 'zoom' | 'burger' | 'plus' | 'minus'
-  | 'mouse' | 'headphones'
+  | 'mouse' | 'headphones' | 'tiktok' | 'youtube' | 'instagram'
 
 interface IconProps {
   name: IconName
@@ -69,6 +69,9 @@ const PATHS: Record<IconName, React.ReactNode> = {
   plus:       (<><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>),
   minus:      (<line x1="5" y1="12" x2="19" y2="12"/>),
   mouse:      (<><rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="2" x2="12" y2="10"/></>),
+  tiktok:     (<><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.6 2.4 4.6 5 4.9"/></>),
+  youtube:    (<><rect x="2" y="5" width="20" height="14" rx="4"/><polygon points="10 9 15 12 10 15 10 9"/></>),
+  instagram:  (<><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></>),
   headphones: (<><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></>),
 }
 

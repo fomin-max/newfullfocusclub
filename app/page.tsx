@@ -51,7 +51,7 @@ const schemaOrg = {
       logo: 'https://fullfocusclub.ru/assets/full-focus-wordmark.svg',
       telephone: '+78126605596',
       email: 'info@fullfocusclub.ru',
-      sameAs: ['https://vk.com/fullfocusclub', 'https://t.me/fullfocusclub'],
+      sameAs: ['https://vk.com/fullfocusclub', 'https://t.me/fullfocusclubru'],
     },
     {
       '@type': 'WebSite',

@@ -556,7 +556,7 @@ body.ff-no-scroll { overflow: hidden; }
 .ff-pay__own { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; font-family: var(--ff-font-heading); font-weight: 700; font-size: 11px; letter-spacing: var(--ff-track-label); text-transform: uppercase; color: var(--ff-neon-bloom); padding: 6px 12px; border: 1px solid var(--ff-neon-bloom-line); background: rgba(0,255,182,0.06); margin-top: -8px; }
 .ff-pay__own::before { content: "✓"; font-weight: 800; }
 .ff-pay__brand { font-family: var(--ff-font-display); font-size: 28px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ff-softlight); display: inline-flex; align-items: center; gap: 12px; }
-.ff-pay__brand-mark { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; background: var(--ff-glitch-core); color: var(--ff-softlight); clip-path: var(--ff-clip-notch-12); }
+.ff-pay__brand-mark { display: block; width: 44px; height: 44px; flex-shrink: 0; }
 .ff-pay__title { font-family: var(--ff-font-heading); font-weight: 700; font-size: clamp(28px, 3vw, 40px); letter-spacing: var(--ff-track-heading); text-transform: uppercase; line-height: 1.05; margin: 0; }
 .ff-pay__desc { font-size: 16px; line-height: 1.55; color: rgba(242,242,247,0.7); margin: 0; max-width: 44ch; }
 .ff-pay__services { display: flex; flex-wrap: wrap; gap: 10px; padding: 20px; background: rgba(8,2,35,0.6); border: 1px solid var(--ff-glitch-core-line); border-radius: var(--ff-radius-md); }

@@ -10,7 +10,7 @@ export default function FFPay() {
         <div className="ff-pay__card">
           <div className="ff-pay__left">
             <span className="ff-pay__brand">
-              <span className="ff-pay__brand-mark">F</span>
+              <img className="ff-pay__brand-mark" src="/logo-pay-mark.svg" width={44} height={44} alt="" />
               FULL FOCUS <span style={{ color: 'var(--ff-neon-bloom)' }}>PAY</span>
             </span>
             <span className="ff-pay__own">Собственная разработка Full Focus</span>

@@ -69,7 +69,7 @@ const UPCOMING_TILE = {
   badge: 'АНОНС СКОРО',
   date: 'СЛЕДУЮЩИЙ ТУРНИР',
   title: 'Дисциплина: объявим позже',
-  note: 'Следи за @fullfocusclub в Telegram',
+  note: 'Следи за @fullfocusclubru в Telegram',
   cta: { label: 'ПОДПИСАТЬСЯ НА АНОНСЫ', href: 'https://t.me/fullfocusclubru?direct' },
   prize: null as string | null,
   href: null as string | null,

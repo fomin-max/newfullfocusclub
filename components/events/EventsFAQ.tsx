@@ -32,7 +32,7 @@ export default function EventsFAQ({ items }: { items: FAQItem[] }) {
           ))}
         </div>
         <div className="ev-faq__cta">
-          <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer"
+          <a href="https://t.me/fullfocusclubru?direct" target="_blank" rel="noopener noreferrer"
              className="ff-btn ff-btn--secondary">
             Остались вопросы? Напишите нам
           </a>

@@ -9,7 +9,7 @@ import Icon from '@/components/ui/Icon'
 import ClubsMap from './ClubsMap'
 import { AGG_CLUBS, CITY_META, ZONE_FILTERS, type AggClub } from '@/lib/clubs/aggregatorData'
 
-const TELEGRAM = 'https://t.me/fullfocusclub'
+const TELEGRAM = 'https://t.me/fullfocusclubru'
 
 function ClubCard({
   c, activeZone, isActive, onEnter, onLeave,

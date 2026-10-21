@@ -116,7 +116,7 @@ export default function FranchiseApplicationForm() {
                 </span>
                 <h3>ЗАЯВКА ПРИНЯТА!</h3>
                 <p>Свяжемся в течение одного рабочего дня.</p>
-                <a className="ff-btn ff-btn--secondary" href="https://t.me/fullfocusclub"
+                <a className="ff-btn ff-btn--secondary" href="https://t.me/fullfocusclubru?direct"
                    target="_blank" rel="noopener noreferrer">
                   НАПИСАТЬ СЕЙЧАС <Icon name="telegram" size={15} />
                 </a>

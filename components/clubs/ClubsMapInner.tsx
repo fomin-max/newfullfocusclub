@@ -100,7 +100,7 @@ export default function ClubsMapInner({
           el.addEventListener('mouseleave', scheduleLeave)
           el.addEventListener('click', () => onMarkerClick(c.id))
 
-          const bookUrl = c.comingSoon ? 'https://t.me/fullfocusclubru?direct' : (c.slug ? `/clubs/${c.slug}#live` : 'https://t.me/fullfocusclub')
+          const bookUrl = c.comingSoon ? 'https://t.me/fullfocusclubru?direct' : (c.slug ? `/clubs/${c.slug}#live` : 'https://t.me/fullfocusclubru')
           const btnLabel = c.comingSoon ? 'СКОРО ОТКРЫТИЕ →' : 'ЗАБРОНИРОВАТЬ →'
           const popup = new ml.Popup({ offset: 18, closeButton: false, className: 'cla-map-popup', focusAfterOpen: false })
             .setHTML(`

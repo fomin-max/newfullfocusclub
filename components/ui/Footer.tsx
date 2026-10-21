@@ -35,7 +35,7 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
             <a href="https://vk.com/fullfocusclub" aria-label="VK" rel="noopener noreferrer" target="_blank">
               <Icon name="vk" size={20} />
             </a>
-            <a href="https://t.me/fullfocusclub" aria-label="Telegram" rel="noopener noreferrer" target="_blank">
+            <a href="https://t.me/fullfocusclubru" aria-label="Telegram" rel="noopener noreferrer" target="_blank">
               <Icon name="telegram" size={20} />
             </a>
           </div>
@@ -74,7 +74,7 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
           <ul>
             <li><a href="tel:+78126605596">+7 (812) 660-55-96</a></li>
             <li><a href={`mailto:${email}`}>{email}</a></li>
-            <li>Telegram · <a href="https://t.me/fullfocusclub" target="_blank" rel="noopener noreferrer">@fullfocusclub</a></li>
+            <li>Telegram · <a href="https://t.me/fullfocusclubru" target="_blank" rel="noopener noreferrer">@fullfocusclubru</a></li>
             <li>VK · <a href="https://vk.com/fullfocusclub" target="_blank" rel="noopener noreferrer">vk.com/fullfocusclub</a></li>
             <li style={{ color: 'var(--ff-system-fog)', marginTop: 8, fontSize: 12 }}>
               Круглосуточно · 24/7
