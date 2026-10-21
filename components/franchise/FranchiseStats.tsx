@@ -36,7 +36,7 @@ export default function FranchiseStats() {
         <div className="ff-stats__grid">
           <StatTile pre="от" target={7}      unit="МЛН ₽"    label="Инвестиции на старте" />
           <StatTile pre="от" target={10}     unit="МЕС"      label="Срок окупаемости" />
-          <StatTile          target={7}      unit="КЛУБОВ"   label="Работают прямо сейчас" />
+          <StatTile          target={8}      unit="КЛУБОВ"   label="Работают прямо сейчас" />
           <StatTile          target={500000} unit="₽ / МЕС"  label="Средняя прибыль клуба"
                              format={formatRu} />
         </div>

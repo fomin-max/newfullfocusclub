@@ -41,12 +41,12 @@ Server Components, динамические страницы турниров.
 | `FRANCHISE_CHAT_ID` | **секрет** | /api/franchise |
 | `SMTP_USER` | **секрет** | /api/franchise (nodemailer → reg.ru) |
 | `SMTP_PASS` | **секрет** | /api/franchise (nodemailer → reg.ru) |
-| `LANGAME_API_KEY_*` | **секрет** | /api/seats/[slug] (7 ключей по клубам) |
+| `LANGAME_API_KEY_*` | **секрет** | /api/seats/[slug] (8 ключей по клубам) |
 | `NEXT_PUBLIC_CDN_BASE` | публичная | ссылки на ассеты (пустая пока CDN не готов) |
 
 > `SUPABASE_SERVICE_ROLE_KEY` даёт полный обход Row Level Security — никогда не светить в клиентском коде.
 
-### 3. Langame API — 7 отдельных ключей
+### 3. Langame API — 8 отдельных ключей
 Каждый клуб имеет свой ключ:
 ```
 LANGAME_API_KEY_VASILYEOSTROVSKY
@@ -56,6 +56,7 @@ LANGAME_API_KEY_PROSVESCHENIYA
 LANGAME_API_KEY_SADOVAYA
 LANGAME_API_KEY_TEKHNOLOGICHESKY
 LANGAME_API_KEY_MAKHACHKALA
+LANGAME_API_KEY_SHUSHARY
 ```
 Если ключ не задан — `/api/seats/[slug]` вернёт пустой массив с `warning`, не упадёт.
 

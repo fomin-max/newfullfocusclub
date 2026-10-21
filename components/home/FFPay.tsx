@@ -35,7 +35,7 @@ export default function FFPay() {
             </div>
             <div style={{ display: 'flex', gap: 16, fontFamily: 'var(--ff-font-heading)', fontSize: 11, letterSpacing: 'var(--ff-track-label)', textTransform: 'uppercase', color: 'var(--ff-system-fog)', marginTop: 4 }}>
               <span>· Без VPN</span>
-              <span>· Без комиссий</span>
+              <span>· Моментально</span>
               <span>· Гарантия</span>
             </div>
           </div>

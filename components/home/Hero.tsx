@@ -50,7 +50,7 @@ export default function Hero() {
         </div>
 
         <div className="ff-hero__strip" role="list">
-          <span><strong>7</strong> клубов</span>
+          <span><strong>8</strong> клубов</span>
           <span>С <strong>2022</strong> года</span>
           <span>от <strong>120₽</strong>/час</span>
           <span><strong>3000+</strong> отзывов</span>

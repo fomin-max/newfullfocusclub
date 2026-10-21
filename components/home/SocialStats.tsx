@@ -26,7 +26,7 @@ export default function SocialStats() {
       <Reveal>
         <div className="ff-stats__grid">
           <Stat pre="Минимальный тариф" target={120}  unit="₽/час" lbl="Школьникам и студентам в будни" />
-          <Stat pre="Клубов сети"        target={7}               lbl="Санкт-Петербург и Махачкала" />
+          <Stat pre="Клубов сети"        target={8}               lbl="Санкт-Петербург и Махачкала" />
           <Stat pre="Отзывов гостей"     target={3000} unit="+"   lbl="Яндекс · 2ГИС · Google" />
           <Stat pre="Средняя оценка"     target={5.0}  unit="★" decimals={1} lbl="По всем клубам сети" />
         </div>
