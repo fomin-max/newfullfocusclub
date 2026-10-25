@@ -29,6 +29,7 @@ export const SLUG_TO_ASSET_CODE: Record<string, string> = {
   makhachkala:      'MAH',
   sadovaya:         'SAD',
   tekhnologichesky: 'TEH',
+  shushary:         'SHU',
 }
 
 export interface LiveSeat {

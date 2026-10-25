@@ -19,8 +19,7 @@ const CLUB: ClubMeta = {
   VK: 'https://vk.ru/fullfocusclub_shushary',
   PHONE: '+7 (911) 218-16-02',
   MAPS_URL: 'https://yandex.com/maps/-/CXurvVIj',
-  // TODO(shushary): добавить &ruri=…org%3Foid%3D<oid> из карточки — тогда появится кнопка «Оставить отзыв»
-  ROUTE_URL: 'https://yandex.ru/maps/?rtext=~59.811180,30.364321&rtt=auto',
+  ROUTE_URL: 'https://yandex.ru/maps/?rtext=~59.811180,30.364321&rtt=auto&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D46721033616',
   COORDS: '59.811° N · 30.364° E',
   VIDEO_URL: '',
   POSTER_URL: media('hero-poster.jpg'),

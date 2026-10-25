@@ -16,6 +16,7 @@ const GIS_FIRMS: Record<string, { id: string; city: string; point: string }> = {
   tekhnologichesky: { id: '70000001082667324', city: 'spb',          point: '30.313841,59.914375' },
   sadovaya:         { id: '70000001090366257', city: 'spb',          point: '30.311634,59.929743' },
   makhachkala:      { id: '70000001112442496', city: 'makhachkala',  point: '47.519868,42.976506' },
+  shushary:         { id: '70000001117422185', city: 'spb',          point: '30.364195,59.811483' },
 }
 
 function gis2RouteUrl(slug: string): string {
