@@ -1,6 +1,7 @@
 import Icon from './Icon'
 import LogoFull from './LogoFull'
 import CookieSettingsBtn from './CookieSettingsBtn'
+import { SPB_SOCIALS } from '@/lib/socials'
 
 const CLUBS = [
   ['Василеостровская', '#009E40', '/clubs/vasilyeostrovsky'],
@@ -32,12 +33,11 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
             Сеть киберспортивных клубов нового поколения · С 2022 года
           </p>
           <div className="ff-footer__social">
-            <a href="https://vk.com/fullfocusclub" aria-label="VK" rel="noopener noreferrer" target="_blank">
-              <Icon name="vk" size={20} />
-            </a>
-            <a href="https://t.me/fullfocusclubru" aria-label="Telegram" rel="noopener noreferrer" target="_blank">
-              <Icon name="telegram" size={20} />
-            </a>
+            {SPB_SOCIALS.map(s => (
+              <a key={s.href} href={s.href} aria-label={s.title} title={`${s.title}${s.extremist ? '*' : ''}`} rel="noopener noreferrer" target="_blank">
+                <Icon name={s.icon} size={20} />
+              </a>
+            ))}
           </div>
         </div>
 
@@ -100,6 +100,8 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
           <p>ОГРН 1227800036860</p>
           <p>196128, г. Санкт-Петербург, вн.тер.г. муниципальный округ Московская застава, пр-кт Московский, д. 149А, литера А, помещ. 1-Н, раб.м. 1-Ф</p>
           <p>Реестр операторов ПДн (Роскомнадзор): рег. № 78-25-109259</p>
+          <p>&nbsp;</p>
+          <p>* Instagram принадлежит компании Meta Platforms Inc., деятельность которой признана экстремистской и запрещена на территории Российской Федерации.</p>
         </div>
       </div>
     </footer>

@@ -1,17 +1,9 @@
 import '../book/book.css'
 import LogoMark from '@/components/ui/LogoMark'
-import Icon, { type IconName } from '@/components/ui/Icon'
+import Icon from '@/components/ui/Icon'
+import { SPB_SOCIALS, type SocialLink } from '@/lib/socials'
 
-export interface SocialLink {
-  href:   string
-  icon:   IconName
-  /** Картинка-логотип вместо иконки из набора */
-  img?:   string
-  title:  string
-  meta:   string
-  /** Сноска про Meta — для Instagram */
-  extremist?: boolean
-}
+export type { SocialLink }
 
 export interface LinksCity {
   slug:    'spb' | 'makhachkala'
@@ -28,13 +20,7 @@ export const FULLFOCUSPAY: SocialLink = {
 export const CITIES: LinksCity[] = [
   {
     slug: 'spb', name: 'Петербург', path: '/links', bookHref: '/book',
-    socials: [
-      { href: 'https://t.me/fullfocusclubru',              icon: 'telegram',  title: 'Telegram',  meta: '@fullfocusclubru' },
-      { href: 'https://vk.ru/fullfocusclub',               icon: 'vk',        title: 'VK',        meta: 'vk.ru/fullfocusclub' },
-      { href: 'https://www.tiktok.com/@fullfocusclub',     icon: 'tiktok',    title: 'TikTok',    meta: '@fullfocusclub' },
-      { href: 'https://www.youtube.com/@fullfocusclub',    icon: 'youtube',   title: 'YouTube',   meta: '@fullfocusclub' },
-      { href: 'https://www.instagram.com/fullfocusclubru', icon: 'instagram', title: 'Instagram', meta: '@fullfocusclubru', extremist: true },
-    ],
+    socials: SPB_SOCIALS,
   },
   {
     slug: 'makhachkala', name: 'Махачкала', path: '/links/makhachkala', bookHref: '/book/makhachkala',
