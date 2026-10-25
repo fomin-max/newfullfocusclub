@@ -10,6 +10,7 @@ export default function NavigationProgress() {
   const overlayRef  = useRef<HTMLDivElement>(null)
   const prevPath    = useRef(pathname)
   const navigating  = useRef(false)
+  const safetyTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   // Intercept clicks on internal <a> tags (capture phase = fires before router)
   useEffect(() => {
@@ -34,8 +35,19 @@ export default function NavigationProgress() {
       start()
     }
 
+    // Back/forward during a pending navigation aborts it — pathname may never
+    // change, so finish the bar here instead of leaving the overlay stuck
+    function onPopState() {
+      if (navigating.current) complete()
+    }
+
     document.addEventListener('click', onClick, true)
-    return () => document.removeEventListener('click', onClick, true)
+    window.addEventListener('popstate', onPopState)
+    return () => {
+      document.removeEventListener('click', onClick, true)
+      window.removeEventListener('popstate', onPopState)
+      clearTimeout(safetyTimer.current)
+    }
   }, [])
 
   // Complete when pathname actually changes
@@ -48,6 +60,11 @@ export default function NavigationProgress() {
 
   function start() {
     navigating.current = true
+    // Safety net: never keep the page dimmed if navigation silently fails
+    clearTimeout(safetyTimer.current)
+    safetyTimer.current = setTimeout(() => {
+      if (navigating.current) complete()
+    }, 10000)
     const bar     = barRef.current
     const wrap    = wrapRef.current
     const overlay = overlayRef.current
@@ -71,6 +88,7 @@ export default function NavigationProgress() {
 
   function complete() {
     navigating.current = false
+    clearTimeout(safetyTimer.current)
     const bar     = barRef.current
     const wrap    = wrapRef.current
     const overlay = overlayRef.current
