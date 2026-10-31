@@ -14,9 +14,10 @@ import { clubMedia, eventsProofMedia } from '@/lib/cdn'
 import { ALL_CLUBS } from '@/lib/clubs/shared'
 import './events.css'
 
-const vasilyeostrovsky = clubMedia('vasilyeostrovsky')
-const komendantsky     = clubMedia('komendantsky')
-const eventsProof      = eventsProofMedia()
+// Фото берём локально из public/ — на CDN части файлов нет
+const vasilyeostrovsky = clubMedia('vasilyeostrovsky', { local: true })
+const komendantsky     = clubMedia('komendantsky', { local: true })
+const eventsProof      = eventsProofMedia({ local: true })
 
 export const metadata: Metadata = {
   title: 'Мероприятия в Full Focus — Корпоративы, дни рождения, турниры',
@@ -160,7 +161,7 @@ const GALLERY = [
   { span: 'std',  src: vasilyeostrovsky.path('features/arena.jpg'),  label: 'ARENA 5×5' },
   { span: 'std',  src: vasilyeostrovsky.gallery(3),               label: 'Турнир' },
   { span: 'tall', src: vasilyeostrovsky.path('features/ps5vip.jpg'), label: 'PS5 VIP Lounge' },
-  { span: 'std',  src: vasilyeostrovsky.path('features/kitchen.jpg'), label: 'Кейтеринг' },
+  { span: 'std',  src: '/events/gallery/catering.jpg',            label: 'Кейтеринг' },
   { span: 'wide', src: vasilyeostrovsky.gallery(4),               label: 'Награждение' },
   { span: 'std',  src: vasilyeostrovsky.gallery(6),               label: 'Атмосфера' },
 ]

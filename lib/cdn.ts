@@ -3,8 +3,9 @@
 // Without CDN — files are served from public/clubs/{slug}/
 const BASE = (process.env.NEXT_PUBLIC_CDN_BASE ?? '').replace(/\/$/, '')
 
-export function clubMedia(slug: string) {
-  const prefix = BASE ? `${BASE}/clubs/${slug}` : `/clubs/${slug}`
+// local: true — всегда отдавать из public/, даже если CDN задан (когда файла на CDN нет)
+export function clubMedia(slug: string, { local = false } = {}) {
+  const prefix = BASE && !local ? `${BASE}/clubs/${slug}` : `/clubs/${slug}`
   return {
     video:          `${prefix}/hero.mp4`,
     videoDesktop:   `${prefix}/hero-desktop.mp4`,
@@ -21,8 +22,8 @@ export function tournamentMedia() {
   }
 }
 
-export function eventsProofMedia() {
-  const prefix = BASE ? `${BASE}/events/proof` : '/events/proof'
+export function eventsProofMedia({ local = false } = {}) {
+  const prefix = BASE && !local ? `${BASE}/events/proof` : '/events/proof'
   return {
     photo: (i: number) => `${prefix}/${String(i).padStart(2, '0')}.jpg`,
   }
