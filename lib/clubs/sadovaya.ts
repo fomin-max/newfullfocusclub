@@ -20,10 +20,11 @@ const CLUB: ClubMeta = {
   COORDS: '59.930° N · 30.312° E',
   VIDEO_URL: media.video,
   VIDEO_URL_DESKTOP: media.videoDesktop,
-  POSTER_URL: media.poster,
+  // Фото лежат локально в public/clubs/sadovaya (CDN не отвечает — не через clubMedia).
+  POSTER_URL: '/clubs/sadovaya/hero-poster.jpg',
   VIDEO_TITLE: 'Full Focus Садовая — обзор компьютерного клуба',
   VIDEO_DESC: 'Видеообзор компьютерного клуба Full Focus у м. Садовая. Игровые зоны, оборудование, атмосфера.',
-  GALLERY: [],
+  GALLERY: [1, 2, 3, 4, 5, 6, 7].map(i => `/clubs/sadovaya/gallery/0${i}.jpg`),
   REVIEWS_COUNT: '190+ отзывов',
   REVIEWS_COUNT_NUM: 190,
   GEO: { lat: 59.929723, lng: 30.311556 },
