@@ -6,7 +6,7 @@ export default function EventsBanner() {
     <section id="events" className="ff-section">
       <div className="ff-section__inner">
         <Reveal>
-          <a href="/events#form" className="ff-events-banner">
+          <div className="ff-events-banner">
             <div className="ff-events-banner__text">
               <span className="ff-banner__hash">//// МЕРОПРИЯТИЯ</span>
               <h3 className="ff-banner__title">
@@ -15,16 +15,21 @@ export default function EventsBanner() {
               <p className="ff-banner__sub">
                 Организуем мероприятие под ключ в любом клубе сети. Кейтеринг, ведущий, кастомные награды, прямой эфир — всё включено.
               </p>
-              <span className="ff-banner__cta ff-btn ff-btn--secondary" style={{ alignSelf: 'flex-start' }}>
-                Оставить заявку <Icon name="arrowRight" size={14} />
-              </span>
+              <div className="ff-events-banner__actions">
+                <a href="/events" className="ff-btn ff-btn--primary">
+                  Подробнее <Icon name="arrowRight" size={14} />
+                </a>
+                <a href="/events#form" className="ff-btn ff-btn--secondary">
+                  Оставить заявку
+                </a>
+              </div>
             </div>
             <div
               className="ff-events-banner__photo"
               style={{ backgroundImage: 'url(/assets/club-interior.jpg)' }}
               aria-hidden="true"
             />
-          </a>
+          </div>
         </Reveal>
       </div>
     </section>

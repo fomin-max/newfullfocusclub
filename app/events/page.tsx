@@ -11,6 +11,7 @@ import Icon from '@/components/ui/Icon'
 import EventsHero from '@/components/events/EventsHero'
 import EventsForm from '@/components/events/EventsForm'
 import { clubMedia, eventsProofMedia } from '@/lib/cdn'
+import { ALL_CLUBS } from '@/lib/clubs/shared'
 import './events.css'
 
 const vasilyeostrovsky = clubMedia('vasilyeostrovsky')
@@ -115,13 +116,8 @@ const VENUES = [
   },
 ]
 
-const SMALL_CLUBS = [
-  { name: 'Электросила',     color: '#0062AC', href: '/clubs/elektrosila' },
-  { name: 'Просвещения',     color: '#0062AC', href: '/clubs/prosvescheniya' },
-  { name: 'Садовая',         color: '#8E479B', href: '/clubs/sadovaya' },
-  { name: 'Технологический', color: '#E4171B', href: '/clubs/tekhnologichesky' },
-  { name: 'Махачкала',       color: '#888888', href: '/clubs/makhachkala' },
-]
+// Все клубы сети, кроме площадок из VENUES — новые клубы появятся автоматически
+const SMALL_CLUBS = ALL_CLUBS.filter(c => !VENUES.some(v => v.href === `/clubs/${c.slug}`))
 
 const INCLUDED = [
   { icon: 'gamepad'   as const, name: 'ИГРОВОЕ ОБОРУДОВАНИЕ', desc: 'Топовые ПК и PS5 готовы к старту — без настройки и ожидания.' },

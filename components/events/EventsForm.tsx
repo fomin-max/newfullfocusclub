@@ -5,28 +5,15 @@ import { useSearchParams } from 'next/navigation'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 import ConsentCheckbox from '@/components/ui/ConsentCheckbox'
+import { ALL_CLUBS } from '@/lib/clubs/shared'
 
 const FORM_TYPES = ['Корпоратив', 'День рождения', 'Закрытый турнир', 'Другое']
-const FORM_CLUBS = [
-  'Василеостровская',
-  'Комендантский проспект',
-  'Электросила',
-  'Просвещения',
-  'Садовая',
-  'Технологический',
-  'Махачкала',
-  'Другое',
-]
-
-const SLUG_TO_CLUB: Record<string, string> = {
-  vasilyeostrovsky: 'Василеостровская',
-  komendantsky:     'Комендантский проспект',
-  elektrosila:      'Электросила',
-  prosvescheniya:   'Просвещения',
-  sadovaya:         'Садовая',
-  tekhnologichesky: 'Технологический',
-  makhachkala:      'Махачкала',
-}
+// Клубы из общего списка сети — новые появятся в форме автоматически
+const NAME_OVERRIDES: Record<string, string> = { komendantsky: 'Комендантский проспект' }
+const SLUG_TO_CLUB: Record<string, string> = Object.fromEntries(
+  ALL_CLUBS.map(c => [c.slug, NAME_OVERRIDES[c.slug] ?? c.name])
+)
+const FORM_CLUBS = [...Object.values(SLUG_TO_CLUB), 'Другое']
 
 export default function EventsForm() {
   const params = useSearchParams()
