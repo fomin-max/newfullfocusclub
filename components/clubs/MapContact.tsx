@@ -38,6 +38,41 @@ const GOOGLE_MAPS_URLS: Record<string, string> = {
   prosvescheniya:   'https://www.google.com/maps/search/Full+Focus/@60.045799,30.365117,17z',
 }
 
+// Партнёрская кнопка «Мы на карте Иду! Бегу!» — разметка и стили из их кода, меняется только id
+const IDUBEGU_IDS: Record<string, string> = {
+  elektrosila:      'p125093',
+  komendantsky:     'p125094',
+  prosvescheniya:   'p125095',
+  vasilyeostrovsky: 'p125096',
+  sadovaya:         'p125097',
+  tekhnologichesky: 'p125098',
+  shushary:         'p125099',
+}
+
+function IdubeguBadge({ id }: { id: string }) {
+  return (
+    <a
+      href={`https://idubegu.ru/map?id=${id}`}
+      target="_blank"
+      rel="noopener"
+      title="Мы на Иду! Бегу!"
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 8px 4px 5px',
+        borderRadius: 7, background: '#fff7f0', border: '1px solid #ffd9b8',
+        fontFamily: '-apple-system,Segoe UI,Roboto,Arial,sans-serif', color: '#1a1a1a',
+        textDecoration: 'none', lineHeight: 1, alignSelf: 'flex-start',
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`https://idubegu.ru/pismo/knopka.svg?p=${id}`} width={20} height={20} alt="" style={{ display: 'block', border: 0, flex: 'none' }} />
+      <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <span style={{ fontSize: 9, color: '#8a7f75' }}>Мы на карте</span>
+        <span style={{ fontSize: 11, fontWeight: 700 }}>Иду! Бегу!</span>
+      </span>
+    </a>
+  )
+}
+
 function MapsDropdown({ yandexUrl, slug }: { yandexUrl: string; slug: string }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -242,6 +277,7 @@ export default function MapContact() {
                 />
                 <MapsDropdown yandexUrl={CLUB.MAPS_URL} slug={CLUB.SLUG} />
               </div>
+              {IDUBEGU_IDS[CLUB.SLUG] && <IdubeguBadge id={IDUBEGU_IDS[CLUB.SLUG]} />}
             </aside>
           </div>
         </Reveal>

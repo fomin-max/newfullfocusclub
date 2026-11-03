@@ -63,6 +63,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="ru"
       className={`${grandisExtended.variable} ${magistral.variable} ${orbitron.variable}`}
+      suppressHydrationWarning
     >
       <body className="antialiased">
         {/* Runs synchronously before first paint — hides loader for returning visitors */}
