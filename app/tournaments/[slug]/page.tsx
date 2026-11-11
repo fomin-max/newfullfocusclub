@@ -257,18 +257,37 @@ export default async function TournamentPage({ params }: Props) {
                   <Reveal delay={70}><h2 className="cd-block__title">ПАРТНЁРЫ</h2></Reveal>
                 </div>
                 <div className="cd-partners">
-                  {partners.map((p, i) => (
-                    <Reveal key={i} className="cd-partner" delay={i * 70}>
-                      <div className="cd-partner__logo">
-                        {p.logo_url
-                          ? <img src={p.logo_url} alt={p.name} />
-                          : <span className="cd-partner__logo-placeholder">{p.name}</span>
+                  {partners.map((p, i) => {
+                    const content = (
+                      <>
+                        <div className="cd-partner__logo">
+                          {p.logo_url
+                            ? <img src={p.logo_url} alt={p.name} />
+                            : <span className="cd-partner__logo-placeholder">{p.name}</span>
+                          }
+                        </div>
+                        <span className="cd-partner__name">{p.name}</span>
+                        {p.description && <p className="cd-partner__desc">{p.description}</p>}
+                      </>
+                    )
+                    return (
+                      <Reveal key={i} className="cd-partner-wrap" delay={i * 70}>
+                        {p.url
+                          ? (
+                            <a
+                              className="cd-partner cd-partner--link"
+                              href={p.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {content}
+                            </a>
+                          )
+                          : <div className="cd-partner">{content}</div>
                         }
-                      </div>
-                      <span className="cd-partner__name">{p.name}</span>
-                      {p.description && <p className="cd-partner__desc">{p.description}</p>}
-                    </Reveal>
-                  ))}
+                      </Reveal>
+                    )
+                  })}
                 </div>
               </section>
             </div>

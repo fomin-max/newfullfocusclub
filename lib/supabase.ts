@@ -38,7 +38,7 @@ export interface Tournament {
   description: string | null
   rules: string | null
   format_steps: string[] | null
-  partners: { name: string; logo_url?: string; description?: string }[] | null
+  partners: { name: string; logo_url?: string; description?: string; url?: string }[] | null
   show_participants: boolean
   created_at: string
 }

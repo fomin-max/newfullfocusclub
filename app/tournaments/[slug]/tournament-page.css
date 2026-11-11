@@ -420,6 +420,9 @@
 
 /* ── Partners ────────────────────────────────────────────── */
 .cd-partners { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.cd-partner-wrap { display: flex; }
+.cd-partner-wrap > .cd-partner { width: 100%; }
+.cd-partner--link { text-decoration: none; color: inherit; cursor: pointer; }
 .cd-partner {
   display: flex; flex-direction: column; align-items: center; gap: 16px;
   padding: 32px 24px;
