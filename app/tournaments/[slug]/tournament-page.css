@@ -263,6 +263,9 @@
     rgba(102,50,250,.18) 0%, transparent 65%);
 }
 .tp-reg > * { position: relative; z-index: 1; }
+.tp-main, .tp-aside { min-width: 0; }
+.tp-reg .ff-btn { white-space: normal; text-align: center; }
+.tp-reg a { overflow-wrap: anywhere; }
 .tp-reg__title {
   font-family: var(--ff-font-heading); font-weight: 700; font-size: 20px;
   letter-spacing: var(--ff-track-button); text-transform: uppercase;
@@ -514,7 +517,8 @@
   .tp-stats { grid-template-columns: repeat(2, 1fr); }
   .tp-stat:nth-child(odd) { border-left: 0; }
   .tp-stat:nth-child(3), .tp-stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,.07); }
-  .tp-body-wrap { grid-template-columns: 1fr; padding: 80px 24px 32px; gap: 48px; }
+  /* minmax(0,1fr): иначе min-content содержимого (кнопки с nowrap) распирает колонку шире экрана */
+  .tp-body-wrap { grid-template-columns: minmax(0, 1fr); padding: 80px 24px 32px; gap: 48px; }
   .tp-aside { position: static; scroll-margin-top: 108px; }
   .cd-wide { padding: 0 24px 80px; }
   .cd-partners { grid-template-columns: 1fr 1fr; }

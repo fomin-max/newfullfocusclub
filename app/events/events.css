@@ -978,3 +978,8 @@
   .ev-format, .ev-gallery__tile { transform: none !important; transition: none !important; }
   .ev-how__step.is-reached:first-child .ev-how__dot { animation: none !important; }
 }
+
+@media (max-width: 640px) {
+  /* «МЕРОПРИЯТИЕ» at 38px is wider than a 375px screen */
+  .ev-hero__title { font-size: clamp(28px, 9vw, 38px); }
+}

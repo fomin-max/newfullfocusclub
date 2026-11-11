@@ -257,6 +257,7 @@
 .cla-card.is-hidden { display: none; }
 .cla-card--clickable { cursor: pointer; }
 .cla-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.cla-card__head > :first-child { min-width: 0; overflow-wrap: break-word; }
 .cla-card__name {
   font-family: var(--ff-font-heading); font-weight: 700;
   font-size: 21px; letter-spacing: 0.01em; text-transform: uppercase;

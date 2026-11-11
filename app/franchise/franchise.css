@@ -671,6 +671,7 @@
 }
 .ff-form {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
   max-width: 480px;
 }
@@ -869,7 +870,7 @@
   .ff-formats__grid { grid-template-columns: 1fr 1fr; }
   .ff-pack__grid { grid-template-columns: 1fr 1fr; }
   .ff-concept__grid { grid-template-columns: 1fr; gap: 32px; }
-  .ff-final__inner { grid-template-columns: 1fr; gap: 32px; }
+  .ff-final__inner { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .ff-steps__list { grid-template-columns: 1fr 1fr; gap: 32px; }
   .ff-steps__list::before { display: none; }
   .ff-gallery__grid { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; height: 720px; }
@@ -883,7 +884,7 @@
   .ff-pack__grid { grid-template-columns: 1fr; }
   .ff-steps__list { grid-template-columns: 1fr; }
   .ff-format-card.is-featured { transform: none; }
-  .ff-form__row { grid-template-columns: 1fr; }
+  .ff-form__row { grid-template-columns: minmax(0, 1fr); }
   .ff-final { padding: 80px 20px 64px; }
   .ff-appform { grid-template-columns: 1fr; }
   .ff-appform-card { padding: 24px; }
@@ -900,4 +901,10 @@
 @media (prefers-reduced-motion: reduce) {
   .ff-it-card::after { animation: none !important; }
   .ff-step:first-child::before { animation: none !important; }
+}
+
+@media (max-width: 640px) {
+  /* messenger toggle: three buttons share the field width instead of overflowing the card */
+  .ff-toggle { display: flex; align-self: stretch; max-width: 100%; }
+  .ff-toggle button { flex: 1 1 0; min-width: 0; padding: 8px 6px; }
 }

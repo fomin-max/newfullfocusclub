@@ -1032,3 +1032,8 @@ html[data-loader-skip] #ff-loader { display: none !important; }
 .ff-consent a { color: var(--ff-neon-bloom); text-decoration: underline; }
 .ff-consent.is-error { color: #f5a623; }
 .ff-consent.is-error input { outline: 2px solid #f5a623; outline-offset: 2px; }
+
+/* Mobile: long button labels wrap instead of pushing the layout wider than the screen */
+@media (max-width: 640px) {
+  .ff-btn { white-space: normal; text-align: center; max-width: 100%; }
+}

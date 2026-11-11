@@ -1534,7 +1534,7 @@ button.cl-bento__cell {
 }
 .cl-contact-row {
   display: grid;
-  grid-template-columns: 28px 1fr;
+  grid-template-columns: 28px minmax(0, 1fr);
   gap: 12px;
   align-items: flex-start;
   padding: 12px 0;
@@ -1545,7 +1545,7 @@ button.cl-bento__cell {
 .cl-contact-row dt {
   display: none;
 }
-.cl-contact-row dd { margin: 0; }
+.cl-contact-row dd { margin: 0; min-width: 0; overflow-wrap: break-word; }
 .cl-contact-row dd strong {
   display: block;
   font-family: var(--ff-font-heading);
@@ -2077,7 +2077,7 @@ button.cl-bento__cell {
   .cl-bento__cell--big { grid-column: span 2; grid-row: span 2; }
   .cl-bento__cell--wide { grid-column: span 2; }
   .cl-events__grid { grid-template-columns: 1fr; }
-  .cl-map__wrap { grid-template-columns: 1fr; }
+  .cl-map__wrap { grid-template-columns: minmax(0, 1fr); }
   .cl-crumbs { top: 90px; }
   .cl-crumbs__inner { font-size: 9px; padding: 6px 12px; gap: 10px; }
 }
