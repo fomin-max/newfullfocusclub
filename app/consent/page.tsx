@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import '../privacy/privacy.css'
 import LogoMark from '@/components/ui/LogoMark'
@@ -13,11 +14,11 @@ export default function ConsentPage() {
   return (
     <>
       <div className="pp-top">
-        <a className="pp-logo" href="/" aria-label="Full Focus — на главную">
+        <Link className="pp-logo" href="/" aria-label="Full Focus — на главную">
           <LogoMark size={20} />
           FULL FOCUS
-        </a>
-        <a className="pp-back" href="/">← На главную</a>
+        </Link>
+        <Link className="pp-back" href="/">← На главную</Link>
       </div>
 
       <main className="pp-wrap">
@@ -72,7 +73,7 @@ export default function ConsentPage() {
 
         {/* 7 */}
         <h2><span className="pp-no">07</span> Прочие условия</h2>
-        <p>Порядок и условия обработки персональных данных, а также мои права как субъекта персональных данных изложены в <a href="/privacy">Политике обработки персональных данных</a>, с которой я ознакомлен(а).</p>
+        <p>Порядок и условия обработки персональных данных, а также мои права как субъекта персональных данных изложены в <Link href="/privacy">Политике обработки персональных данных</Link>, с которой я ознакомлен(а).</p>
 
         <hr className="pp-divider" />
         <div className="pp-note">

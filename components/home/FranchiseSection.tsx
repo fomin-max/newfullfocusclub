@@ -2,6 +2,7 @@
 
 import { useRef, useCallback } from 'react'
 import { useScramble, useCountFromTo } from '@/lib/hooks'
+import Link from 'next/link'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 
@@ -50,12 +51,12 @@ export default function FranchiseSection() {
           </Reveal>
           <Reveal delay={200}>
             <div className="ff-fr__ctas">
-              <a href="/franchise" className="ff-btn ff-btn--primary is-pulse">
+              <Link href="/franchise" className="ff-btn ff-btn--primary is-pulse">
                 Условия франшизы <Icon name="arrowRight" size={14} />
-              </a>
-              <a href="/franchise#contacts" className="ff-btn ff-btn--secondary ff-btn--on-purple">
+              </Link>
+              <Link href="/franchise#contacts" className="ff-btn ff-btn--secondary ff-btn--on-purple">
                 Оставить заявку
-              </a>
+              </Link>
             </div>
           </Reveal>
         </div>

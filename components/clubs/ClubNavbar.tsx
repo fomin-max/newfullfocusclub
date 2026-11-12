@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useScrolled, useActiveSection } from '@/lib/hooks'
 import Icon from '@/components/ui/Icon'
 import LogoFull from '@/components/ui/LogoFull'
@@ -26,10 +27,10 @@ export function ClubNavbar() {
   return (
     <header className={`ff-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="ff-header__inner">
-        <a className="ff-logo" href="/" aria-label="Full Focus — на главную">
+        <Link className="ff-logo" href="/" aria-label="Full Focus — на главную">
           <LogoFull className="ff-logo__full" height={34} />
           <LogoMark className="ff-logo__mark" size={32} />
-        </a>
+        </Link>
         <ul className="ff-nav">
           {CLUB_NAV.map(l => (
             <li key={l.id}>
@@ -50,7 +51,7 @@ export function ClubCrumbs() {
   return (
     <nav className="cl-crumbs" aria-label="breadcrumb">
       <div className="cl-crumbs__inner">
-        <a href="/#find">← Все клубы</a>
+        <Link href="/#find">← Все клубы</Link>
         <span className="cl-crumbs__sep">/</span>
         <span>FULL FOCUS</span>
         <span className="cl-crumbs__sep">/</span>

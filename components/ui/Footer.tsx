@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Icon from './Icon'
 import LogoFull from './LogoFull'
 import CookieSettingsBtn from './CookieSettingsBtn'
@@ -21,9 +22,9 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
         <span className="ff-footer__promo-text">
           Промокод <span className="ff-footer__promo-code">SITE500</span> — 500₽ новым гостям при первом пополнении
         </span>
-        <a href="/#find" className="ff-btn ff-btn--accent ff-btn--sm">
+        <Link href="/#find" className="ff-btn ff-btn--accent ff-btn--sm">
           ЗАБРАТЬ БОНУС <Icon name="arrowRight" size={12} />
-        </a>
+        </Link>
       </div>
 
       <div className="ff-footer__inner">
@@ -58,14 +59,14 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
         <div className="ff-footer__col">
           <h4>Разделы</h4>
           <ul>
-            <li><a href="/clubs">Все клубы</a></li>
-            <li><a href="/#zones">Зоны и форматы</a></li>
-            <li><a href="/promo">Акции</a></li>
-            <li><a href="/#loyalty">Программа лояльности</a></li>
-            <li><a href="/tournaments">Турниры</a></li>
-            <li><a href="/events">Мероприятия</a></li>
-            <li><a href="/franchise">Франшиза</a></li>
-            <li><a href="/rules">Правила посещения</a></li>
+            <li><Link href="/clubs">Все клубы</Link></li>
+            <li><Link href="/#zones">Зоны и форматы</Link></li>
+            <li><Link href="/promo">Акции</Link></li>
+            <li><Link href="/#loyalty">Программа лояльности</Link></li>
+            <li><Link href="/tournaments">Турниры</Link></li>
+            <li><Link href="/events">Мероприятия</Link></li>
+            <li><Link href="/franchise">Франшиза</Link></li>
+            <li><Link href="/rules">Правила посещения</Link></li>
           </ul>
         </div>
 
@@ -85,9 +86,9 @@ export default function Footer({ email = 'info@fullfocusclub.ru' }: { email?: st
 
       <div className="ff-footer__legal">
         <div className="ff-footer__legal-top">
-          <a href="/privacy" className="ff-footer__policy">Политика обработки персональных данных</a>
-          <a href="/consent" className="ff-footer__policy">Согласие на обработку персональных данных</a>
-          <a href="/privacy#cookie" className="ff-footer__policy">Использование файлов cookie</a>
+          <Link href="/privacy" className="ff-footer__policy">Политика обработки персональных данных</Link>
+          <Link href="/consent" className="ff-footer__policy">Согласие на обработку персональных данных</Link>
+          <Link href="/privacy#cookie" className="ff-footer__policy">Использование файлов cookie</Link>
           <CookieSettingsBtn />
           <span className="ff-footer__legal-site">fullfocusclub.ru</span>
         </div>

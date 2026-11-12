@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import '../book/book.css'
 import LogoMark from '@/components/ui/LogoMark'
 import Icon from '@/components/ui/Icon'
@@ -55,13 +56,13 @@ export default function LinksView({ city }: { city: LinksCity }) {
     <main className="bk">
       <div className="bk-wrap">
         <div className="bk-top">
-          <a className="bk-logo" href="/" aria-label="Full Focus — на главную">
+          <Link className="bk-logo" href="/" aria-label="Full Focus — на главную">
             <LogoMark size={20} />
             FULL FOCUS
-          </a>
+          </Link>
           <nav className="bk-cities" aria-label="Город">
             {CITIES.map(c => (
-              <a key={c.slug} href={c.path} aria-current={c.slug === city.slug ? 'page' : undefined}>{c.name}</a>
+              <Link key={c.slug} href={c.path} aria-current={c.slug === city.slug ? 'page' : undefined}>{c.name}</Link>
             ))}
           </nav>
         </div>

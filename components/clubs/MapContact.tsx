@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Icon from '@/components/ui/Icon'
@@ -286,10 +287,10 @@ export default function MapContact() {
           <Reveal>
             <div className="cl-other-clubs__head">
               <h3 className="cl-other-clubs__title">— Другие клубы сети</h3>
-              <a href="/#find" style={{ fontFamily: 'var(--ff-font-heading)', fontWeight: 700, fontSize: 11,
+              <Link href="/#find" style={{ fontFamily: 'var(--ff-font-heading)', fontWeight: 700, fontSize: 11,
                 letterSpacing: 'var(--ff-track-button)', color: 'var(--ff-neon-bloom)', textTransform: 'uppercase' }}>
                 ВСЕ КЛУБЫ НА КАРТЕ →
-              </a>
+              </Link>
             </div>
           </Reveal>
 
@@ -307,7 +308,7 @@ export default function MapContact() {
                       {c.zones.map(z => <span key={z} className="ff-club__zone">{z}</span>)}
                     </div>
                   )}
-                  <a href={c.href} className="ff-club__more" role="button">Подробнее</a>
+                  <Link href={c.href} className="ff-club__more" role="button">Подробнее</Link>
                 </Card>
               </div>
             ))}

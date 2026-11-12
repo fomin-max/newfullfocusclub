@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import '../book.css'
@@ -39,11 +40,11 @@ export default async function BookClubPage({ params }: Props) {
     <main className="bk">
       <div className="bk-wrap">
         <div className="bk-top">
-          <a className="bk-logo" href="/" aria-label="Full Focus — на главную">
+          <Link className="bk-logo" href="/" aria-label="Full Focus — на главную">
             <LogoMark size={20} />
             FULL FOCUS
-          </a>
-          <a className="bk-back" href="/book">← Другой клуб</a>
+          </Link>
+          <Link className="bk-back" href="/book">← Другой клуб</Link>
         </div>
 
         <div className="bk-tag">
@@ -72,7 +73,7 @@ export default async function BookClubPage({ params }: Props) {
           ))}
         </ul>
 
-        <p className="bk-foot"><a href={`/clubs/${c.slug}`}>Подробнее о клубе</a></p>
+        <p className="bk-foot"><Link href={`/clubs/${c.slug}`}>Подробнее о клубе</Link></p>
       </div>
     </main>
   )

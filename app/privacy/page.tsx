@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import './privacy.css'
 import LogoMark from '@/components/ui/LogoMark'
@@ -13,11 +14,11 @@ export default function PrivacyPage() {
   return (
     <>
       <div className="pp-top">
-        <a className="pp-logo" href="/" aria-label="Full Focus — на главную">
+        <Link className="pp-logo" href="/" aria-label="Full Focus — на главную">
           <LogoMark size={20} />
           FULL FOCUS
-        </a>
-        <a className="pp-back" href="/">← На главную</a>
+        </Link>
+        <Link className="pp-back" href="/">← На главную</Link>
       </div>
 
       <main className="pp-wrap">
@@ -89,7 +90,7 @@ export default function PrivacyPage() {
         <p>3.2. Дополнительные основания обработки:</p>
         <ul>
           <li>договоры, заключаемые с субъектами персональных данных;</li>
-          <li>согласие субъекта персональных данных на обработку персональных данных (текст согласия размещён на странице <a href="/consent">fullfocusclub.ru/consent</a>).</li>
+          <li>согласие субъекта персональных данных на обработку персональных данных (текст согласия размещён на странице <Link href="/consent">fullfocusclub.ru/consent</Link>).</li>
         </ul>
 
         {/* 4 */}

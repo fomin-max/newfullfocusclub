@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 
@@ -16,12 +17,12 @@ export default function EventsBanner() {
                 Организуем мероприятие под ключ в любом клубе сети. Кейтеринг, ведущий, кастомные награды, прямой эфир — всё включено.
               </p>
               <div className="ff-events-banner__actions">
-                <a href="/events" className="ff-btn ff-btn--primary">
+                <Link href="/events" className="ff-btn ff-btn--primary">
                   Подробнее <Icon name="arrowRight" size={14} />
-                </a>
-                <a href="/events#form" className="ff-btn ff-btn--secondary">
+                </Link>
+                <Link href="/events#form" className="ff-btn ff-btn--secondary">
                   Оставить заявку
-                </a>
+                </Link>
               </div>
             </div>
             <div

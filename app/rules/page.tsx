@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import './rules.css'
 import LogoMark from '@/components/ui/LogoMark'
@@ -53,11 +54,11 @@ export default function RulesPage() {
       />
 
       <div className="rp-top">
-        <a className="rp-logo" href="/" aria-label="Full Focus — на главную">
+        <Link className="rp-logo" href="/" aria-label="Full Focus — на главную">
           <LogoMark size={20} />
           FULL FOCUS
-        </a>
-        <a className="rp-back" href="/">← На главную</a>
+        </Link>
+        <Link className="rp-back" href="/">← На главную</Link>
       </div>
 
       <main className="rp-wrap">
@@ -144,7 +145,7 @@ export default function RulesPage() {
             В целях бронирования, работы программы лояльности и обратной связи с Гостем Администрация
             обрабатывает предоставленные Гостем персональные данные (ФИО, номер телефона, адрес
             электронной почты) в соответствии с{' '}
-            <a href="/privacy">Политикой обработки персональных данных</a>, размещённой на сайте{' '}
+            <Link href="/privacy">Политикой обработки персональных данных</Link>, размещённой на сайте{' '}
             <a href="https://fullfocusclub.ru/">https://fullfocusclub.ru/</a>. Оформляя бронирование
             или регистрируясь в программе лояльности, Гость даёт согласие на обработку указанных данных
             на условиях этой Политики.

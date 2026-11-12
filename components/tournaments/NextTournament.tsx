@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
@@ -127,7 +128,7 @@ export default function NextTournament() {
             <div className="tn-next__main">
               <span className="tn-next__date">{formatDate(tournament.date)}</span>
               <h3 className="tn-next__title">
-                <a href={`/tournaments/${tournament.slug}`} className="ff-tournament__title-link">{tournament.title}</a>
+                <Link href={`/tournaments/${tournament.slug}`} className="ff-tournament__title-link">{tournament.title}</Link>
               </h3>
               {tournament.location_name && (
                 <div className="tn-next__venue">

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Reveal from '@/components/ui/Reveal'
 import Icon from '@/components/ui/Icon'
 import { getTournaments } from '@/lib/supabase'
@@ -54,7 +55,7 @@ export default async function Tournament() {
                   <span>· {formatWeekdayTime(t.date)}</span>
                 </div>
                 <h3 className="ff-tournament__title">
-                  <a href={`/tournaments/${t.slug}`} className="ff-tournament__title-link">{title}</a>
+                  <Link href={`/tournaments/${t.slug}`} className="ff-tournament__title-link">{title}</Link>
                 </h3>
                 {t.location_name && (
                   <p className="ff-tournament__loc">
@@ -64,17 +65,17 @@ export default async function Tournament() {
                 )}
                 <div className="ff-tournament__cta">
                   {canRegister ? (
-                    <a href={`/tournaments/${t.slug}#registration`} className="ff-btn ff-btn--primary is-pulse">
+                    <Link href={`/tournaments/${t.slug}#registration`} className="ff-btn ff-btn--primary is-pulse">
                       Зарегистрироваться <Icon name="arrowRight" size={14} />
-                    </a>
+                    </Link>
                   ) : (
-                    <a href={`/tournaments/${t.slug}`} className="ff-btn ff-btn--secondary">
+                    <Link href={`/tournaments/${t.slug}`} className="ff-btn ff-btn--secondary">
                       Подробнее о турнире <Icon name="arrowRight" size={14} />
-                    </a>
+                    </Link>
                   )}
-                  <a href="/tournaments" className="ff-btn ff-btn--secondary">
+                  <Link href="/tournaments" className="ff-btn ff-btn--secondary">
                     Все турниры <Icon name="arrowRight" size={14} />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <dl className="ff-tournament__meta">
@@ -99,9 +100,9 @@ export default async function Tournament() {
                      className="ff-btn ff-btn--primary">
                     Telegram-канал <Icon name="telegram" size={14} />
                   </a>
-                  <a href="/tournaments" className="ff-btn ff-btn--secondary">
+                  <Link href="/tournaments" className="ff-btn ff-btn--secondary">
                     Все турниры <Icon name="arrowRight" size={14} />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

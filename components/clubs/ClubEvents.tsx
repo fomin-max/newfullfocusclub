@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Icon from '@/components/ui/Icon'
 import Reveal from '@/components/ui/Reveal'
 import { useClubData } from './ClubDataContext'
@@ -35,9 +36,9 @@ export default function ClubEvents() {
         </div>
         <Reveal delay={400}>
           <div className="cl-events__cta">
-            <a className="ff-btn ff-btn--primary is-pulse" href={`/events?club=${CLUB.SLUG}#form`}>
+            <Link className="ff-btn ff-btn--primary is-pulse" href={`/events?club=${CLUB.SLUG}#form`}>
               ОСТАВИТЬ ЗАЯВКУ НА МЕРОПРИЯТИЕ →
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>
