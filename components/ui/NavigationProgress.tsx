@@ -41,11 +41,19 @@ export default function NavigationProgress() {
       if (navigating.current) complete()
     }
 
+    // Plain <a> links do a full page load; going back restores this page from
+    // bfcache frozen mid-navigation (overlay on, bar crawling) — hide instantly
+    function onPageShow(e: PageTransitionEvent) {
+      if (e.persisted) reset()
+    }
+
     document.addEventListener('click', onClick, true)
     window.addEventListener('popstate', onPopState)
+    window.addEventListener('pageshow', onPageShow)
     return () => {
       document.removeEventListener('click', onClick, true)
       window.removeEventListener('popstate', onPopState)
+      window.removeEventListener('pageshow', onPageShow)
       clearTimeout(safetyTimer.current)
     }
   }, [])
@@ -84,6 +92,22 @@ export default function NavigationProgress() {
     bar.getBoundingClientRect() // force reflow
     bar.style.transition = 'width 9s cubic-bezier(0.04, 0.8, 0.08, 1)'
     bar.style.width = '75%'
+  }
+
+  function reset() {
+    navigating.current = false
+    clearTimeout(safetyTimer.current)
+    const bar     = barRef.current
+    const wrap    = wrapRef.current
+    const overlay = overlayRef.current
+    if (!bar || !wrap || !overlay) return
+
+    overlay.style.transition = 'none'
+    overlay.style.opacity = '0'
+    wrap.style.transition = 'none'
+    wrap.style.opacity = '0'
+    bar.style.transition = 'none'
+    bar.style.width = '0%'
   }
 
   function complete() {
