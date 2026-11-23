@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: '/p/', // внутренний портал проектов для подрядчиков
     },
     sitemap: 'https://fullfocusclub.ru/sitemap.xml',
   }

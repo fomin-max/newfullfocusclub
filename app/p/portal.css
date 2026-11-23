@@ -1,0 +1,76 @@
+/* Стили портала проектов. Всё под классом .ffp, чтобы не задевать остальной сайт. */
+.ffp {
+  min-height: 100vh;
+  background: var(--ff-deep-memory);
+  color: var(--ff-softlight);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+/* Баннер cookie сайта на внутреннем портале не нужен (без согласия Метрика не загружается) */
+body:has(.ffp) .ff-cookie { display: none !important; }
+
+.ffp h1, .ffp h2, .ffp h3, .ffp-head { font-family: var(--font-magistral), system-ui, sans-serif; }
+
+/* Базовые компоненты — в слое components, чтобы утилиты Tailwind (py-6, w-auto, px-3…) могли их переопределять */
+@layer components {
+  .ffp-wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+  .ffp-card { background: var(--ff-surface); border: 1px solid var(--ff-white-10); border-radius: 14px; }
+  .ffp-muted { color: var(--ff-system-fog); }
+  .ffp-btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px;
+    font-size: 14px; font-weight: 600; border: 1px solid var(--ff-white-10); background: var(--ff-white-03);
+    color: var(--ff-softlight); cursor: pointer; white-space: nowrap; text-decoration: none;
+  }
+  .ffp-btn:hover { border-color: var(--ff-white-25); }
+  .ffp-btn-primary { background: var(--ff-glitch-core); border-color: var(--ff-glitch-core); color: #fff; }
+  .ffp-btn-primary:hover { border-color: #8a63ff; background: #7647ff; }
+  .ffp-btn-danger { color: var(--ff-danger); }
+  .ffp-btn:disabled { opacity: .5; cursor: default; }
+  .ffp-badge {
+    display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    border: 1px solid var(--ff-white-10); color: var(--ff-white-80);
+  }
+  .ffp-badge-on { border-color: var(--ff-neon-bloom-line); color: var(--ff-neon-bloom); }
+  .ffp-input, :where(.ffp) select, :where(.ffp) textarea {
+    width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--ff-white-10);
+    background: var(--ff-deep-memory); color: var(--ff-softlight); font: inherit;
+  }
+  .ffp-input:focus, :where(.ffp) select:focus, :where(.ffp) textarea:focus { outline: 2px solid var(--ff-glitch-core-soft); outline-offset: 0; }
+}
+/* Общее правило сайта a { color: inherit } стоит вне слоёв — для ссылок-кнопок цвет задаём явно */
+.ffp a.ffp-btn { color: var(--ff-softlight); }
+.ffp a.ffp-btn-primary { color: #fff; }
+.ffp a.ffp-link { color: var(--ff-neon-bloom); text-decoration: underline; text-underline-offset: 3px; }
+
+.ffp-banner { border: 1px solid rgba(255, 184, 0, .45); background: rgba(255, 184, 0, .08); border-radius: 12px; padding: 10px 14px; }
+
+/* ── Текст документов из Markdown ── */
+.ffp-prose { color: var(--ff-white-80); overflow-wrap: break-word; }
+.ffp-prose h1 { font-size: 26px; line-height: 1.25; color: #fff; margin: 0 0 16px; }
+.ffp-prose h2 { font-size: 21px; color: #fff; margin: 36px 0 12px; padding-top: 18px; border-top: 1px solid var(--ff-white-10); }
+.ffp-prose h3 { font-size: 17px; color: #fff; margin: 24px 0 8px; }
+.ffp-prose p { margin: 0 0 12px; }
+.ffp-prose ul, .ffp-prose ol { margin: 0 0 12px; padding-left: 22px; }
+.ffp-prose ul { list-style: disc; }
+.ffp-prose ol { list-style: decimal; }
+.ffp-prose li { margin: 3px 0; }
+.ffp-prose strong { color: #fff; }
+.ffp-prose a { color: var(--ff-neon-bloom); text-decoration: underline; text-underline-offset: 3px; }
+.ffp-prose code { font-size: 0.9em; padding: 1px 5px; border-radius: 5px; background: var(--ff-white-10); color: #fff; }
+.ffp-prose hr { border: 0; border-top: 1px solid var(--ff-white-10); margin: 24px 0; }
+.ffp-prose blockquote { margin: 0 0 14px; padding: 10px 14px; border-left: 3px solid var(--ff-warning); background: rgba(255, 184, 0, .07); border-radius: 0 10px 10px 0; }
+.ffp-prose blockquote p:last-child { margin-bottom: 0; }
+.ffp-prose table {
+  display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse;
+  margin: 0 0 16px; font-size: 13.5px; line-height: 1.4;
+}
+.ffp-prose th, .ffp-prose td { border: 1px solid var(--ff-white-10); padding: 6px 9px; text-align: left; vertical-align: top; min-width: 90px; overflow-wrap: normal; word-break: normal; }
+.ffp-prose th { background: var(--ff-surface-elev); color: #fff; font-weight: 600; white-space: nowrap; }
+.ffp-prose tr:nth-child(even) td { background: var(--ff-white-03); }
+
+/* ── Таблица CSV ── */
+.ffp-table { border-collapse: collapse; font-size: 13px; line-height: 1.35; width: max-content; min-width: 100%; }
+.ffp-table th, .ffp-table td { border: 1px solid var(--ff-white-10); padding: 5px 8px; text-align: left; vertical-align: top; max-width: 320px; }
+.ffp-table th { position: sticky; top: 0; background: var(--ff-surface-elev); color: #fff; z-index: 1; white-space: nowrap; }
+.ffp-table tr:nth-child(even) td { background: var(--ff-white-03); }
